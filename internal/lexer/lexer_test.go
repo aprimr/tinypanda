@@ -12,7 +12,22 @@ func TestNextToken(t *testing.T) {
 			a + b;
 		}
 		
-		bamboo res = add(x, y);`
+		bamboo res = add(x, y);
+		
+		!-/*5;
+		5 < 10 > 5;
+
+		iff (5 < 10) {
+			return true;
+		} otherwise {
+			return false;
+		}
+
+		10 == 10;
+		10 != 9;
+
+		echo x;
+		`
 
 	tests := []struct {
 		expectedType    TokenType
@@ -55,6 +70,51 @@ func TestNextToken(t *testing.T) {
 		{COMMA, ","},
 		{IDENT, "y"},
 		{RPAREN, ")"},
+		{SEMICOLON, ";"},
+
+		{EXCLAM, "!"},
+		{MINUS, "-"},
+		{SLASH, "/"},
+		{ASTERISK, "*"},
+		{INT, "5"},
+		{SEMICOLON, ";"},
+
+		{INT, "5"},
+		{LT, "<"},
+		{INT, "10"},
+		{GT, ">"},
+		{INT, "5"},
+		{SEMICOLON, ";"},
+
+		{IFF, "iff"},
+		{LPAREN, "("},
+		{INT, "5"},
+		{LT, "<"},
+		{INT, "10"},
+		{RPAREN, ")"},
+		{LBRACE, "{"},
+		{RETURN, "return"},
+		{TRUE, "true"},
+		{SEMICOLON, ";"},
+		{RBRACE, "}"},
+		{OTHERWISE, "otherwise"},
+		{LBRACE, "{"},
+		{RETURN, "return"},
+		{FALSE, "false"},
+		{SEMICOLON, ";"},
+		{RBRACE, "}"},
+
+		{INT, "10"},
+		{EQUALS, "=="},
+		{INT, "10"},
+		{SEMICOLON, ";"},
+		{INT, "10"},
+		{NOTEQUALS, "!="},
+		{INT, "9"},
+		{SEMICOLON, ";"},
+
+		{ECHO, "echo"},
+		{IDENT, "x"},
 		{SEMICOLON, ";"},
 	}
 

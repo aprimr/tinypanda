@@ -13,8 +13,18 @@ const (
 	INT   TokenType = "INT"
 
 	// Operators
-	ASSIGN TokenType = "="
-	PLUS   TokenType = "+"
+	ASSIGN   TokenType = "="
+	PLUS     TokenType = "+"
+	MINUS    TokenType = "-"
+	ASTERISK TokenType = "*"
+	SLASH    TokenType = "/"
+	EXCLAM   TokenType = "!"
+
+	// Comparision
+	LT        TokenType = "<"
+	GT        TokenType = ">"
+	EQUALS    TokenType = "=="
+	NOTEQUALS TokenType = "!="
 
 	// Others
 	COMMA     TokenType = ","
@@ -26,11 +36,14 @@ const (
 	RBRACE TokenType = "}"
 
 	// Keywords
-	BAMBOO TokenType = "BAMBOO" // let
-	FN     TokenType = "FN"     // function
-	// IFF       TokenType = "IFF"       // if
-	// OTHERWISE TokenType = "OTHERWISE" // else
-	ECHO TokenType = "ECHO" // print
+	BAMBOO    TokenType = "BAMBOO"    // let
+	FN        TokenType = "FN"        // function
+	IFF       TokenType = "IFF"       // if
+	OTHERWISE TokenType = "OTHERWISE" // else
+	ECHO      TokenType = "ECHO"      // print
+	TRUE      TokenType = "TRUE"
+	FALSE     TokenType = "FALSE"
+	RETURN    TokenType = "RETURN"
 )
 
 // Token represents a single unit produced by the Lexer.
@@ -42,9 +55,14 @@ type Token struct {
 
 // A dictionary of string keyowrds to their corresponding TokenType.
 var keywords = map[string]TokenType{
-	"bamboo": BAMBOO,
-	"fn":     FN,
-	"echo":   ECHO,
+	"bamboo":    BAMBOO,
+	"fn":        FN,
+	"echo":      ECHO,
+	"iff":       IFF,
+	"otherwise": OTHERWISE,
+	"true":      TRUE,
+	"false":     FALSE,
+	"return":    RETURN,
 }
 
 // LookupIdent maps an identifier literal string to its corresponding TokenType.

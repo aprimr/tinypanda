@@ -35,9 +35,33 @@ func (l *Lexer) NextToken() Token {
 
 	switch l.char {
 	case '=':
-		tok = newToken(ASSIGN, l.char)
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			tok = Token{Type: EQUALS, Literal: string(char) + string(l.char)}
+		} else {
+			tok = newToken(ASSIGN, l.char)
+		}
 	case '+':
 		tok = newToken(PLUS, l.char)
+	case '-':
+		tok = newToken(MINUS, l.char)
+	case '*':
+		tok = newToken(ASTERISK, l.char)
+	case '/':
+		tok = newToken(SLASH, l.char)
+	case '!':
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			tok = Token{Type: NOTEQUALS, Literal: string(char) + string(l.char)}
+		} else {
+			tok = newToken(EXCLAM, l.char)
+		}
+	case '<':
+		tok = newToken(LT, l.char)
+	case '>':
+		tok = newToken(GT, l.char)
 	case ',':
 		tok = newToken(COMMA, l.char)
 	case ';':
@@ -112,4 +136,14 @@ func (l *Lexer) readNumber() string {
 
 func isDigit(char byte) bool {
 	return char >= '0' && char <= '9'
+}
+
+// peekChar returns the next character in the input without incrementing the lexer's position.
+// It is used to peek one step to check multi-character operators.
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.readPosition]
+	}
 }
