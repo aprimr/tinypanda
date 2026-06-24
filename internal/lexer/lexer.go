@@ -111,7 +111,7 @@ func newToken(tokenType TokenType, char byte) Token {
 func (l *Lexer) readIdentfier() string {
 	position := l.position
 
-	for isLetter(l.char) {
+	for isLetter(l.char) || isDigit(l.char) {
 		l.readChar()
 	}
 	return l.input[position:l.position]
