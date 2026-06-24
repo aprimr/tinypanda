@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/aprimr/tinypanda/internal/repl"
+	"tinypanda/internal/repl"
 )
 
 func main() {

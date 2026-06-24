@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/aprimr/tinypanda/internal/lexer"
+	"tinypanda/internal/lexer"
 )
 
 const Green = "\033[32m"

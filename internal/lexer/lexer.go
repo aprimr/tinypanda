@@ -96,15 +96,15 @@ func (l *Lexer) NextToken() Token {
 	return tok
 }
 
+func newToken(tokenType TokenType, char byte) Token {
+	return Token{Type: tokenType, Literal: string(char)}
+}
+
 // skipWhitespace skips spaces, tabs, and newline formatting to find next valid token.
 func (l *Lexer) skipWhitespace() {
 	for l.char == ' ' || l.char == '\n' || l.char == '\t' || l.char == '\r' {
 		l.readChar()
 	}
-}
-
-func newToken(tokenType TokenType, char byte) Token {
-	return Token{Type: tokenType, Literal: string(char)}
 }
 
 // readIdentifier reads characters until a non letter character is reached, returing the complete string literal.

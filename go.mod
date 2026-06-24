@@ -1,3 +1,3 @@
-module github.com/aprimr/tinypanda
+module tinypanda
 
 go 1.26.3
