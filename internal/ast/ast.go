@@ -45,6 +45,15 @@ type BambooStatement struct {
 func (bs *BambooStatement) statementNode()       {}
 func (bs *BambooStatement) TokenLiteral() string { return bs.Token.Literal }
 
+// ReturnStatement: "return <expression>;". e.g: return 2; return x; or return a+b;
+type ReturnStatement struct {
+	Token       lexer.Token
+	ReturnValue Expression
+}
+
+func (rs *ReturnStatement) statementNode()       {}
+func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
+
 // Identifier represents a variable name (e.g., 'x', 'myAge').
 // Even though it's a name, it is an Expression because we can assign a variable with value of another variable.
 type Identifier struct {

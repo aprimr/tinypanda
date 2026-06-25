@@ -58,6 +58,8 @@ func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.Type {
 	case lexer.BAMBOO:
 		return p.parseBambooStatement()
+	case lexer.RETURN:
+		return p.parseReturnStatement()
 	default:
 		return nil
 	}
@@ -78,9 +80,24 @@ func (p *Parser) parseBambooStatement() *ast.BambooStatement {
 
 	// TODO: skipping the expression  part
 
+	// Call nextToken until semicolon is found
 	for !p.curTokenIs(lexer.SEMICOLON) {
 		p.nextToken()
 	}
+	return stmt
+}
+
+func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
+	stmt := &ast.ReturnStatement{Token: p.curToken}
+	p.nextToken()
+
+	// TODO: Implement expression part; skipping it for now
+
+	// Call nextToken until semicolon is found
+	for !p.curTokenIs(lexer.SEMICOLON) {
+		p.nextToken()
+	}
+
 	return stmt
 }
 
