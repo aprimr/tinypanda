@@ -1,11 +1,13 @@
 package ast
 
 import (
+	"bytes"
 	"tinypanda/internal/lexer"
 )
 
 type Node interface {
 	TokenLiteral() string
+	String() string
 }
 
 // Statement represents an instruction (e.g: bamboo x = 10;).
@@ -35,6 +37,16 @@ func (p *Program) TokenLiteral() string {
 	}
 }
 
+func (p *Program) String() string {
+	var out bytes.Buffer
+
+	for _, s := range p.Statements {
+		out.WriteString(s.String())
+	}
+
+	return out.String()
+}
+
 // BambooStatement represents a variable creation: "bamboo <name> = <expression>;"
 type BambooStatement struct {
 	Token lexer.Token
@@ -44,6 +56,20 @@ type BambooStatement struct {
 
 func (bs *BambooStatement) statementNode()       {}
 func (bs *BambooStatement) TokenLiteral() string { return bs.Token.Literal }
+func (bs *BambooStatement) String() string {
+	var out bytes.Buffer
+
+	out.WriteString(bs.TokenLiteral())
+	out.WriteString(" ")
+	out.WriteString(bs.Name.String())
+	out.WriteString(" = ")
+	if bs.Value != nil {
+		out.WriteString(bs.Value.String())
+	}
+	out.WriteString(";")
+
+	return out.String()
+}
 
 // ReturnStatement: "return <expression>;". e.g: return 2; return x; or return a+b;
 type ReturnStatement struct {
@@ -53,6 +79,34 @@ type ReturnStatement struct {
 
 func (rs *ReturnStatement) statementNode()       {}
 func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
+func (rs *ReturnStatement) String() string {
+	var out bytes.Buffer
+
+	out.WriteString(rs.TokenLiteral())
+	out.WriteString(" ")
+	if rs.ReturnValue != nil {
+		out.WriteString(rs.ReturnValue.String())
+	}
+	out.WriteString(";")
+
+	return out.String()
+}
+
+// ExpressionStatement: e.g: 5 + 5, x + y, etc
+type ExpressionStatement struct {
+	Token      lexer.Token // The first token of the expression (e.g: x for x + y)
+	Expression Expression  // The actual expression (x + y)
+}
+
+func (es *ExpressionStatement) statementNode()       {}
+func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }
+func (es *ExpressionStatement) String() string {
+	if es.Expression != nil {
+		return es.Expression.String()
+	} else {
+		return ""
+	}
+}
 
 // Identifier represents a variable name (e.g., 'x', 'myAge').
 // Even though it's a name, it is an Expression because we can assign a variable with value of another variable.
@@ -63,3 +117,4 @@ type Identifier struct {
 
 func (i *Identifier) expressionNode()      {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
+func (i *Identifier) String() string       { return i.Value }
