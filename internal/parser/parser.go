@@ -11,13 +11,25 @@ const (
 	// iota  give the following constants incrementing numbers as values
 	_ int = iota
 	LOWEST
-	EQUAL       // ==
+	EQUALS      // ==
 	LESSGREATER // < or >
 	SUM         // +
 	PRODUCT     // *
 	PREFIX      // +X or !X
 	CALL        // myFn(X)
 )
+
+// This is the precedence table, it associates token types with their precedence.
+var precedences = map[lexer.TokenType]int{
+	lexer.EQUALS:    EQUALS,
+	lexer.NOTEQUALS: EQUALS,
+	lexer.GT:        LESSGREATER,
+	lexer.LT:        LESSGREATER,
+	lexer.PLUS:      SUM,
+	lexer.MINUS:     SUM,
+	lexer.SLASH:     PRODUCT,
+	lexer.ASTERISK:  PRODUCT,
+}
 
 type prefixParseFn func() ast.Expression
 type infixParseFn func(ast.Expression) ast.Expression
@@ -38,11 +50,23 @@ func New(l *lexer.Lexer) *Parser {
 		errors: []string{}, // Initialize error field in the parser
 	}
 
+	// Initialize prefix map: Routes tokens found at the start of an expression to their parser functions.
 	p.prefixParseFns = make(map[lexer.TokenType]prefixParseFn)
 	p.registerPrefix(lexer.IDENT, p.parseIdentifier)
 	p.registerPrefix(lexer.INT, p.parseIntegerLiteral)
-	p.registerPrefix(lexer.EXCLAM, p.parsePrefixExpression)
-	p.registerPrefix(lexer.MINUS, p.parsePrefixExpression)
+	p.registerPrefix(lexer.EXCLAM, p.parsePrefixExpression) // handles '!true', '!x'
+	p.registerPrefix(lexer.MINUS, p.parsePrefixExpression)  // handles '-5', '-x'
+
+	// Initialize infix map: Routes tokens found in the middle of an expression to their parser functions.
+	p.infixParseFns = make(map[lexer.TokenType]infixParseFn)
+	p.registerInfix(lexer.PLUS, p.parseInfixExpression)
+	p.registerInfix(lexer.MINUS, p.parseInfixExpression)
+	p.registerInfix(lexer.SLASH, p.parseInfixExpression)
+	p.registerInfix(lexer.ASTERISK, p.parseInfixExpression)
+	p.registerInfix(lexer.EQUALS, p.parseInfixExpression)
+	p.registerInfix(lexer.NOTEQUALS, p.parseInfixExpression)
+	p.registerInfix(lexer.LT, p.parseInfixExpression)
+	p.registerInfix(lexer.GT, p.parseInfixExpression)
 
 	// Read two tokens to initialize both curToken and peekToken
 	p.nextToken()
@@ -118,6 +142,16 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 		return nil
 	}
 	leftExp := prefix()
+
+	for !p.peekTokenIs(lexer.SEMICOLON) && precedence < p.peekPrecedence() {
+		infix := p.infixParseFns[p.peekToken.Type]
+		if infix == nil {
+			return leftExp
+		}
+		p.nextToken()
+
+		leftExp = infix(leftExp)
+	}
 
 	return leftExp
 }
@@ -204,6 +238,21 @@ func (p *Parser) parsePrefixExpression() ast.Expression {
 	return expr
 }
 
+// parseInfixExpression handles operators between two expressions (e.g., '5 + 10').
+func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
+	expr := &ast.InfixExpression{
+		Token:    p.curToken,
+		Operator: p.curToken.Literal,
+		Left:     left,
+	}
+
+	precedence := p.curPrecedence()
+	p.nextToken()
+	expr.Right = p.parseExpression(precedence)
+
+	return expr
+}
+
 // curTokenIs checks if the token parser is looking at matches a specific token type.
 func (p *Parser) curTokenIs(t lexer.TokenType) bool {
 	return p.curToken.Type == t
@@ -233,4 +282,24 @@ func (p *Parser) registerPrefix(tokenType lexer.TokenType, fn prefixParseFn) {
 
 func (p *Parser) registerInfix(tokenType lexer.TokenType, fn infixParseFn) {
 	p.infixParseFns[tokenType] = fn
+}
+
+// peekPrecedence lookup precedences table and return precedence value for next token.
+// If it doesn’t find a precedence for p.peekToken it defaults to LOWEST
+func (p *Parser) peekPrecedence() int {
+	if p, ok := precedences[p.peekToken.Type]; ok {
+		return p
+	}
+
+	return LOWEST
+}
+
+// curPrecedence lookup precedences table and return precedence value for current token.
+// If it doesn’t find a precedence for p.curToken it defaults to LOWEST
+func (p *Parser) curPrecedence() int {
+	if p, ok := precedences[p.curToken.Type]; ok {
+		return p
+	}
+
+	return LOWEST
 }

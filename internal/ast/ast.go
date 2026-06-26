@@ -141,10 +141,34 @@ func (pe *PrefixExpression) TokenLiteral() string { return pe.Token.Literal }
 func (pe *PrefixExpression) String() string {
 	var out bytes.Buffer
 
-	out.WriteString(" (")
+	out.WriteString("(")
 	out.WriteString(pe.Operator)
 	out.WriteString(pe.Right.String())
-	out.WriteString(") ")
+	out.WriteString(")")
+
+	return out.String()
+}
+
+// InfixExpression: e.g: 5 + 5.
+type InfixExpression struct {
+	Token    lexer.Token // The operator token e.g: + , -
+	Left     Expression
+	Operator string
+	Right    Expression
+}
+
+func (ie *InfixExpression) expressionNode()      {}
+func (ie *InfixExpression) TokenLiteral() string { return ie.Token.Literal }
+func (ie *InfixExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("(")
+	out.WriteString(ie.Left.String())
+	out.WriteString(" ")
+	out.WriteString(ie.Operator)
+	out.WriteString(" ")
+	out.WriteString(ie.Right.String())
+	out.WriteString(")")
 
 	return out.String()
 }
