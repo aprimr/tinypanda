@@ -203,7 +203,7 @@ func (ie *IffExpression) String() string {
 	out.WriteString(ie.Consequence.String())
 
 	if ie.Alternative != nil {
-		out.WriteString("otherwise")
+		out.WriteString(" otherwise ")
 		out.WriteString(ie.Alternative.String())
 	}
 

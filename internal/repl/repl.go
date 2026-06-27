@@ -6,12 +6,14 @@ import (
 	"io"
 
 	"tinypanda/internal/lexer"
+	"tinypanda/internal/parser"
 )
 
 const Green = "\033[32m"
 const White = "\033[37m"
+const Red = "\033[31m"
 
-const BANNER = `																					 
+const BANNER = `%v
   _______             ____                  __   
  /_  __(_)___  __  __/ __ \____ _____  ____/ /___ _
   / / / / __ \/ / / / /_/ / __ '/ __ \/ __  / __ '/
@@ -19,13 +21,19 @@ const BANNER = `
 /_/ /_/_/ /_/\__, /_/    \__,_/_/ /_/\__,_/\__,_/  
             /____/
 
-
 `
 
 const PROMPT = ">> "
 
-func Start(in io.Reader, out io.Writer) {
-	fmt.Fprintf(out, Green+BANNER)
+func Start(in io.Reader, out io.Writer, lexerMode, parserMode bool) {
+	if lexerMode {
+		fmt.Fprintf(out, Green+BANNER, "(Lexer Mode)")
+	} else if parserMode {
+		fmt.Fprintf(out, Green+BANNER, "(Parser Mode)")
+	} else {
+		fmt.Fprintf(out, Green+BANNER, "")
+	}
+
 	sc := bufio.NewScanner(in)
 
 	for {
@@ -40,11 +48,52 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := sc.Text()
-		l := lexer.New(line)
+		if line == "" {
+			continue
+		}
 
-		for tok := l.NextToken(); tok.Type != lexer.EOF; tok = l.NextToken() {
-			fmt.Fprintf(out, "%v \n", tok)
+		if lexerMode {
+			runLexerDebug(line, out)
+			continue
+		}
+
+		if parserMode {
+			runParserDebug(line, out)
+			continue
 		}
 	}
+}
 
+func runLexerDebug(line string, out io.Writer) {
+	l := lexer.New(line)
+	for {
+		tok := l.NextToken()
+
+		if tok.Type == "EOF" || tok.Type == "" {
+			break
+		}
+		fmt.Fprintf(out, "{Type: %s, Value: %q}\n", tok.Type, tok.Literal)
+	}
+}
+
+func runParserDebug(line string, out io.Writer) {
+	l := lexer.New(line)
+	p := parser.New(l)
+
+	program := p.ParseProgram()
+	if len(p.Errors()) != 0 {
+		printParserErrors(out, p.Errors())
+		return
+	}
+
+	io.WriteString(out, program.String())
+	io.WriteString(out, "\n")
+}
+
+func printParserErrors(out io.Writer, errors []string) {
+	fmt.Fprintf(out, "%sWoops! Looks like some syntax errors!%s\n", Red, White)
+
+	for _, msg := range errors {
+		fmt.Fprintf(out, "   %s%s%s\n", Red, msg, White)
+	}
 }
