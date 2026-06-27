@@ -60,6 +60,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(lexer.FALSE, p.parseBoolean)
 	p.registerPrefix(lexer.LPAREN, p.parseGroupedExpression)
 	p.registerPrefix(lexer.IFF, p.parseIffExpression)
+	p.registerPrefix(lexer.FN, p.parseFunctionLiteral)
 
 	// Initialize infix map: Routes tokens found in the middle of an expression to their parser functions.
 	p.infixParseFns = make(map[lexer.TokenType]infixParseFn)
@@ -315,6 +316,60 @@ func (p *Parser) parseIffExpression() ast.Expression {
 	}
 
 	return expr
+}
+
+// parseFunctionLiteral parses function and constructs its AST node.
+// Expected syntax : fn (<params>) {<statements>}
+func (p *Parser) parseFunctionLiteral() ast.Expression {
+	lit := &ast.FunctionLiteral{Token: p.curToken}
+
+	// check if expected token is '('
+	if !p.expectPeek(lexer.LPAREN) {
+		return nil
+	}
+
+	// function parameters:  fn (a, b, c) ...
+	lit.Params = p.parseFunctionParams()
+
+	// check if expected token is '{' and if so parse the function body
+	if !p.expectPeek(lexer.LBRACE) {
+		return nil
+	}
+
+	lit.Body = p.parseBlockStatement()
+
+	return lit
+}
+
+// parseFunctionParams parses the parameter list of a function declaration, e.g., (x, y, z).
+func (p *Parser) parseFunctionParams() []*ast.Identifier {
+	identifiers := []*ast.Identifier{}
+
+	//  if the fn declaration is like fn(){...}
+	//  return empty params list
+	if p.peekTokenIs(lexer.RPAREN) {
+		p.nextToken()
+		return identifiers
+	}
+
+	p.nextToken()
+
+	ident := &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+	identifiers = append(identifiers, ident)
+
+	for p.peekTokenIs(lexer.COMMA) {
+		p.nextToken()
+		p.nextToken()
+		ident := &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+		identifiers = append(identifiers, ident)
+	}
+
+	// Check if the ')' is present
+	if !p.expectPeek(lexer.RPAREN) {
+		return nil
+	}
+
+	return identifiers
 }
 
 // parseBlockStatement parses statements enclosed in the braces.
