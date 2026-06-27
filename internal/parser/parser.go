@@ -59,6 +59,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(lexer.TRUE, p.parseBoolean)
 	p.registerPrefix(lexer.FALSE, p.parseBoolean)
 	p.registerPrefix(lexer.LPAREN, p.parseGroupedExpression)
+	p.registerPrefix(lexer.IFF, p.parseIffExpression)
 
 	// Initialize infix map: Routes tokens found in the middle of an expression to their parser functions.
 	p.infixParseFns = make(map[lexer.TokenType]infixParseFn)
@@ -272,6 +273,67 @@ func (p *Parser) parseGroupedExpression() ast.Expression {
 	}
 
 	return exp
+}
+
+// parseIfExpression parses conditional 'iff' expression and constructs its AST node.
+// Expected syntax: iff (condition) { <consequence> } otherwise { <alternative> }
+func (p *Parser) parseIffExpression() ast.Expression {
+	expr := &ast.IffExpression{Token: p.curToken}
+
+	// Check for '(' after iff token
+	if !p.expectPeek(lexer.LPAREN) {
+		return nil
+	}
+
+	p.nextToken()
+	expr.Condition = p.parseExpression(LOWEST)
+
+	// Check for ')' after the if condition
+	if !p.expectPeek(lexer.RPAREN) {
+		return nil
+	}
+
+	// Check for '{' after the '(' token
+	if !p.expectPeek(lexer.LBRACE) {
+		return nil
+	}
+
+	// Parse block statements after IFF parenthesis
+	expr.Consequence = p.parseBlockStatement()
+
+	// Parse otherwise block if present
+	if p.peekTokenIs(lexer.OTHERWISE) {
+		p.nextToken()
+
+		// Check for '{' after the OTHERWISE token
+		if !p.expectPeek(lexer.LBRACE) {
+			return nil
+		}
+
+		// Parse block statements after OTHERWISE parenthesis
+		expr.Alternative = p.parseBlockStatement()
+	}
+
+	return expr
+}
+
+// parseBlockStatement parses statements enclosed in the braces.
+// e.g: { stmt1; stmt2; }
+func (p *Parser) parseBlockStatement() *ast.BlockStatement {
+	block := &ast.BlockStatement{Token: p.curToken}
+	block.Statements = []ast.Statement{}
+
+	p.nextToken()
+
+	for !p.curTokenIs(lexer.RBRACE) && !p.curTokenIs(lexer.EOF) {
+		stmt := p.parseStatement()
+		if stmt != nil {
+			block.Statements = append(block.Statements, stmt)
+		}
+		p.nextToken()
+	}
+
+	return block
 }
 
 // curTokenIs checks if the token parser is looking at matches a specific token type.

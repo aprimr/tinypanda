@@ -182,3 +182,45 @@ type Boolean struct {
 func (b *Boolean) expressionNode()      {}
 func (b *Boolean) TokenLiteral() string { return b.Token.Literal }
 func (b *Boolean) String() string       { return b.Token.Literal }
+
+// IffExpression: e.g: iff (condition) {statements} otherwise {statements}
+type IffExpression struct {
+	Token       lexer.Token
+	Condition   Expression
+	Consequence *BlockStatement
+	Alternative *BlockStatement
+}
+
+func (ie *IffExpression) expressionNode()      {}
+func (ie *IffExpression) TokenLiteral() string { return ie.Token.Literal }
+func (ie *IffExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("iff")
+	out.WriteString(ie.Condition.String())
+	out.WriteString(" ")
+	out.WriteString(ie.Consequence.String())
+
+	if ie.Alternative != nil {
+		out.WriteString("otherwise")
+		out.WriteString(ie.Alternative.String())
+	}
+
+	return out.String()
+}
+
+// BlockStatement is the statements between the curly braces in iff/otherwise or function
+type BlockStatement struct {
+	Token      lexer.Token
+	Statements []Statement
+}
+
+func (bs *BlockStatement) statementNode()       {}
+func (bs *BlockStatement) TokenLiteral() string { return bs.Token.Literal }
+func (bs *BlockStatement) String() string {
+	var out bytes.Buffer
+	for _, s := range bs.Statements {
+		out.WriteString(s.String())
+	}
+	return out.String()
+}
