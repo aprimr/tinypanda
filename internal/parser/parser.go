@@ -29,6 +29,7 @@ var precedences = map[lexer.TokenType]int{
 	lexer.MINUS:     SUM,
 	lexer.SLASH:     PRODUCT,
 	lexer.ASTERISK:  PRODUCT,
+	lexer.LPAREN:    CALL,
 }
 
 type prefixParseFn func() ast.Expression
@@ -72,6 +73,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(lexer.NOTEQUALS, p.parseInfixExpression)
 	p.registerInfix(lexer.LT, p.parseInfixExpression)
 	p.registerInfix(lexer.GT, p.parseInfixExpression)
+	p.registerInfix(lexer.LPAREN, p.parseCallExpression)
 
 	// Read two tokens to initialize both curToken and peekToken
 	p.nextToken()
@@ -389,6 +391,38 @@ func (p *Parser) parseBlockStatement() *ast.BlockStatement {
 	}
 
 	return block
+}
+
+// parseCallExpression parses a function call invocation expression in the AST.
+func (p *Parser) parseCallExpression(function ast.Expression) ast.Expression {
+	exp := &ast.CallExpression{Token: p.curToken, Function: function}
+	exp.Arguments = p.parseCallArguments()
+	return exp
+}
+
+// parseCallArguments
+func (p *Parser) parseCallArguments() []ast.Expression {
+	args := []ast.Expression{}
+
+	if p.peekTokenIs(lexer.RPAREN) {
+		p.nextToken()
+		return args
+	}
+
+	p.nextToken()
+	args = append(args, p.parseExpression(LOWEST))
+
+	for p.peekTokenIs(lexer.COMMA) {
+		p.nextToken()
+		p.nextToken()
+		args = append(args, p.parseExpression(LOWEST))
+	}
+
+	if !p.expectPeek(lexer.RPAREN) {
+		return nil
+	}
+
+	return args
 }
 
 // curTokenIs checks if the token parser is looking at matches a specific token type.
