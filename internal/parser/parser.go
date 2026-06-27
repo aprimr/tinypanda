@@ -56,6 +56,9 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(lexer.INT, p.parseIntegerLiteral)
 	p.registerPrefix(lexer.EXCLAM, p.parsePrefixExpression) // handles '!true', '!x'
 	p.registerPrefix(lexer.MINUS, p.parsePrefixExpression)  // handles '-5', '-x'
+	p.registerPrefix(lexer.TRUE, p.parseBoolean)
+	p.registerPrefix(lexer.FALSE, p.parseBoolean)
+	p.registerPrefix(lexer.LPAREN, p.parseGroupedExpression)
 
 	// Initialize infix map: Routes tokens found in the middle of an expression to their parser functions.
 	p.infixParseFns = make(map[lexer.TokenType]infixParseFn)
@@ -251,6 +254,24 @@ func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
 	expr.Right = p.parseExpression(precedence)
 
 	return expr
+}
+
+// parseBoolean handles the boolean tokens `true` and `false`
+func (p *Parser) parseBoolean() ast.Expression {
+	return &ast.Boolean{Token: p.curToken, Value: p.curTokenIs(lexer.TRUE)}
+}
+
+// parseGroupedExpression parses an expression enclosed in parentheses, e.g., (expression).
+func (p *Parser) parseGroupedExpression() ast.Expression {
+	p.nextToken()
+
+	exp := p.parseExpression(LOWEST)
+
+	if !p.expectPeek(lexer.RPAREN) {
+		return nil
+	}
+
+	return exp
 }
 
 // curTokenIs checks if the token parser is looking at matches a specific token type.

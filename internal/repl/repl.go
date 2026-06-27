@@ -11,8 +11,7 @@ import (
 const Green = "\033[32m"
 const White = "\033[37m"
 
-const BANNER = `
- 																					 
+const BANNER = `																					 
   _______             ____                  __   
  /_  __(_)___  __  __/ __ \____ _____  ____/ /___ _
   / / / / __ \/ / / / /_/ / __ '/ __ \/ __  / __ '/
@@ -23,7 +22,7 @@ const BANNER = `
 
 `
 
-const PROMPT = " >> "
+const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	fmt.Fprintf(out, Green+BANNER)
