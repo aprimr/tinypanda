@@ -176,8 +176,10 @@ func (p *Parser) parseBambooStatement() *ast.BambooStatement {
 	if !p.expectPeek(lexer.ASSIGN) {
 		return nil
 	}
+	p.nextToken()
 
-	// TODO: skipping the expression  part
+	// parse the value(expression)
+	stmt.Value = p.parseExpression(LOWEST)
 
 	// Call nextToken until semicolon is found
 	for !p.curTokenIs(lexer.SEMICOLON) {
@@ -191,7 +193,8 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 	stmt := &ast.ReturnStatement{Token: p.curToken}
 	p.nextToken()
 
-	// TODO: Implement expression part; skipping it for now
+	// parse expression
+	stmt.ReturnValue = p.parseExpression(LOWEST)
 
 	// Call nextToken until semicolon is found
 	for !p.curTokenIs(lexer.SEMICOLON) {
