@@ -6,11 +6,13 @@ import (
 )
 
 var (
+	// These represents the global single memory reference for the Null, Boolean True and Boolean False primitive.
 	NULL  = &object.Null{}
 	TRUE  = &object.Boolean{Value: true}
 	FALSE = &object.Boolean{Value: false}
 )
 
+// Eval is the entry point for the TinyPanda tree-walking interpreter.
 func Eval(node ast.Node) object.Object {
 	switch node := node.(type) {
 
@@ -40,6 +42,7 @@ func Eval(node ast.Node) object.Object {
 	return nil
 }
 
+// evalStatements iterates sequentially through a block of statements
 func evalStatements(stmts []ast.Statement) object.Object {
 	var result object.Object
 
@@ -50,6 +53,7 @@ func evalStatements(stmts []ast.Statement) object.Object {
 	return result
 }
 
+// evalPrefixExpression evaluates prefix operators '!' and '-'
 func evalPrefixExpression(operator string, right object.Object) object.Object {
 	switch operator {
 	case "!":
@@ -61,6 +65,7 @@ func evalPrefixExpression(operator string, right object.Object) object.Object {
 	return NULL
 }
 
+// evalInfixExpression processes binary operations sitting between two node expressions
 func evalInfixExpression(operator string, left, right object.Object) object.Object {
 	switch {
 	// If both left and right are intiger
@@ -79,6 +84,7 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 	}
 }
 
+// evalIntegerInfixExpression executes mathematical operations (+, -, *, /) and comparison operations (<, >, ==, !=)
 func evalIntegerInfixExpression(operator string, left, right object.Object) object.Object {
 	leftVal := left.(*object.Integer).Value
 	rightVal := right.(*object.Integer).Value
@@ -113,6 +119,7 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 	}
 }
 
+// evalExclamOperatorExpression evaluates the expression after the '!' operator.
 func evalExclamOperatorExpression(right object.Object) object.Object {
 	switch right {
 	case TRUE:
@@ -126,6 +133,7 @@ func evalExclamOperatorExpression(right object.Object) object.Object {
 	}
 }
 
+// evalMinusOperatorExpression extracts the raw value of a numerical object and assigns negative value to new integer object.
 func evalMinusOperatorExpression(right object.Object) object.Object {
 	if right.Type() != object.INTEGER_OBJ {
 		return NULL
