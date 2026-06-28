@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 
+	"tinypanda/internal/eval"
 	"tinypanda/internal/lexer"
 	"tinypanda/internal/parser"
 )
@@ -55,12 +56,14 @@ func Start(in io.Reader, out io.Writer, lexerMode, parserMode bool) {
 		if lexerMode {
 			runLexerDebug(line, out)
 			continue
-		}
-
-		if parserMode {
+		} else if parserMode {
 			runParserDebug(line, out)
 			continue
+		} else {
+			runEvalator(line, out)
+			continue
 		}
+
 	}
 }
 
@@ -88,6 +91,22 @@ func runParserDebug(line string, out io.Writer) {
 
 	io.WriteString(out, program.String())
 	io.WriteString(out, "\n")
+}
+
+func runEvalator(line string, out io.Writer) {
+	l := lexer.New(line)
+	p := parser.New(l)
+
+	program := p.ParseProgram()
+	if len(p.Errors()) != 0 {
+		printParserErrors(out, p.Errors())
+	}
+
+	evaluated := eval.Eval(program)
+	if evaluated != nil {
+		io.WriteString(out, evaluated.Inspect())
+		io.WriteString(out, "\n")
+	}
 }
 
 func printParserErrors(out io.Writer, errors []string) {
