@@ -7,6 +7,7 @@ import (
 
 	"tinypanda/internal/eval"
 	"tinypanda/internal/lexer"
+	"tinypanda/internal/object"
 	"tinypanda/internal/parser"
 )
 
@@ -36,6 +37,7 @@ func Start(in io.Reader, out io.Writer, lexerMode, parserMode bool) {
 	}
 
 	sc := bufio.NewScanner(in)
+	env := object.NewEnvironment()
 
 	for {
 		fmt.Fprint(out, White+PROMPT)
@@ -60,7 +62,7 @@ func Start(in io.Reader, out io.Writer, lexerMode, parserMode bool) {
 			runParserDebug(line, out)
 			continue
 		} else {
-			runEvalator(line, out)
+			runEvalator(line, env, out)
 			continue
 		}
 
@@ -93,7 +95,7 @@ func runParserDebug(line string, out io.Writer) {
 	io.WriteString(out, "\n")
 }
 
-func runEvalator(line string, out io.Writer) {
+func runEvalator(line string, env *object.Environment, out io.Writer) {
 	l := lexer.New(line)
 	p := parser.New(l)
 
@@ -102,7 +104,7 @@ func runEvalator(line string, out io.Writer) {
 		printParserErrors(out, p.Errors())
 	}
 
-	evaluated := eval.Eval(program)
+	evaluated := eval.Eval(program, env)
 	if evaluated != nil {
 		io.WriteString(out, evaluated.Inspect())
 		io.WriteString(out, "\n")
