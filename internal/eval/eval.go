@@ -1,6 +1,7 @@
 package eval
 
 import (
+	"fmt"
 	"tinypanda/internal/ast"
 	"tinypanda/internal/object"
 )
@@ -11,6 +12,14 @@ var (
 	TRUE  = &object.Boolean{Value: true}
 	FALSE = &object.Boolean{Value: false}
 )
+
+func isError(obj object.Object) bool {
+	if obj != nil {
+		return obj.Type() == object.ERROR_OBJ
+	}
+
+	return false
+}
 
 // Eval is the entry point for the TinyPanda tree-walking interpreter.
 func Eval(node ast.Node) object.Object {
@@ -30,11 +39,22 @@ func Eval(node ast.Node) object.Object {
 
 	case *ast.PrefixExpression:
 		right := Eval(node.Right)
+
+		if isError(right) {
+			return right
+		}
 		return evalPrefixExpression(node.Operator, right)
 
 	case *ast.InfixExpression:
 		left := Eval(node.Left)
+		if isError(left) {
+			return left
+		}
+
 		right := Eval(node.Right)
+		if isError(right) {
+			return right
+		}
 
 		return evalInfixExpression(node.Operator, left, right)
 
@@ -46,6 +66,10 @@ func Eval(node ast.Node) object.Object {
 
 	case *ast.ReturnStatement:
 		val := Eval(node.ReturnValue)
+
+		if isError(val) {
+			return val
+		}
 		return &object.ReturnValue{Value: val}
 	}
 
@@ -59,8 +83,11 @@ func evalProgram(stmts []ast.Statement) object.Object {
 	for _, stmt := range stmts {
 		result = Eval(stmt)
 
-		if returnValue, ok := result.(*object.ReturnValue); ok {
-			return returnValue.Value
+		switch result := result.(type) {
+		case *object.ReturnValue:
+			return result.Value
+		case *object.Error:
+			return result
 		}
 	}
 
@@ -74,8 +101,12 @@ func evalBlockStatements(block *ast.BlockStatement) object.Object {
 	for _, statement := range block.Statements {
 		result = Eval(statement)
 
-		if result != nil && result.Type() == object.RETURN_VALUE_OVJ {
-			return result
+		if result != nil {
+			rt := result.Type()
+
+			if rt == object.RETURN_VALUE_OBJ || rt == object.ERROR_OBJ {
+				return result
+			}
 		}
 	}
 
@@ -87,11 +118,13 @@ func evalPrefixExpression(operator string, right object.Object) object.Object {
 	switch operator {
 	case "!":
 		return evalExclamOperatorExpression(right)
+
 	case "-":
 		return evalMinusOperatorExpression(right)
-	}
 
-	return NULL
+	default:
+		return newError("unknown operator: %s%s", operator, right.Type())
+	}
 }
 
 // evalInfixExpression processes binary operations sitting between two node expressions
@@ -108,8 +141,12 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 	case operator == "!=":
 		return nativeBoolToBooleanObject(left != right)
 
+	// if type of left operand is not same as of right
+	case left.Type() != right.Type():
+		return newError("type mismatch: %s %s %s", left.Type(), operator, right.Type())
+
 	default:
-		return NULL
+		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
 	}
 }
 
@@ -144,7 +181,7 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 		return nativeBoolToBooleanObject(leftVal != rightVal)
 
 	default:
-		return NULL
+		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
 	}
 }
 
@@ -165,7 +202,7 @@ func evalExclamOperatorExpression(right object.Object) object.Object {
 // evalMinusOperatorExpression extracts the raw value of a numerical object and assigns negative value to new integer object.
 func evalMinusOperatorExpression(right object.Object) object.Object {
 	if right.Type() != object.INTEGER_OBJ {
-		return NULL
+		return newError("unknown operator: -%s", right.Type())
 	}
 
 	value := right.(*object.Integer).Value
@@ -185,6 +222,10 @@ func nativeBoolToBooleanObject(input bool) *object.Boolean {
 // else returns NULL
 func evalIffExpression(ie *ast.IffExpression) object.Object {
 	condition := Eval(ie.Condition)
+
+	if isError(condition) {
+		return condition
+	}
 
 	if isTruthy(condition) {
 		return Eval(ie.Consequence)
@@ -206,4 +247,9 @@ func isTruthy(obj object.Object) bool {
 	default:
 		return true
 	}
+}
+
+// newError returns new error object
+func newError(format string, a ...any) *object.Error {
+	return &object.Error{Message: fmt.Sprintf(format, a...)}
 }
