@@ -89,7 +89,7 @@ func (p *Parser) Errors() []string {
 // peekError push an error to the Errors slice.
 // Called if the next token type doesn't match the expected token type.
 func (p *Parser) peekError(t lexer.TokenType) {
-	msg := fmt.Sprintf("expected next token to be %v, got %v instead", t, p.peekToken.Type)
+	msg := fmt.Sprintf("panda expected '%s', got '%s' instead", t, p.peekToken.Literal)
 	p.errors = append(p.errors, msg)
 }
 

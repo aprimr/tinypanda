@@ -102,6 +102,7 @@ func runEvalator(line string, env *object.Environment, out io.Writer) {
 	program := p.ParseProgram()
 	if len(p.Errors()) != 0 {
 		printParserErrors(out, p.Errors())
+		return
 	}
 
 	evaluated := eval.Eval(program, env)
