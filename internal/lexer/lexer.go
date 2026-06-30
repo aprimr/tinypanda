@@ -3,6 +3,8 @@
 
 package lexer
 
+import "strings"
+
 type Lexer struct {
 	input        string // raw source code to be tokenized
 	position     int    // index of current character
@@ -42,14 +44,19 @@ func (l *Lexer) NextToken() Token {
 		} else {
 			tok = newToken(ASSIGN, l.char)
 		}
+
 	case '+':
 		tok = newToken(PLUS, l.char)
+
 	case '-':
 		tok = newToken(MINUS, l.char)
+
 	case '*':
 		tok = newToken(ASTERISK, l.char)
+
 	case '/':
 		tok = newToken(SLASH, l.char)
+
 	case '!':
 		if l.peekChar() == '=' {
 			char := l.char
@@ -58,25 +65,39 @@ func (l *Lexer) NextToken() Token {
 		} else {
 			tok = newToken(EXCLAM, l.char)
 		}
+
 	case '<':
 		tok = newToken(LT, l.char)
+
 	case '>':
 		tok = newToken(GT, l.char)
+
 	case ',':
 		tok = newToken(COMMA, l.char)
+
 	case ';':
 		tok = newToken(SEMICOLON, l.char)
+
 	case '(':
 		tok = newToken(LPAREN, l.char)
+
 	case ')':
 		tok = newToken(RPAREN, l.char)
+
 	case '{':
 		tok = newToken(LBRACE, l.char)
+
 	case '}':
 		tok = newToken(RBRACE, l.char)
+
 	case 0:
 		tok.Type = EOF
 		tok.Literal = ""
+
+	case '"':
+		tok.Type = STRING
+		tok.Literal = l.readString()
+		return tok
 
 	default:
 		if isLetter(l.char) {
@@ -132,6 +153,48 @@ func (l *Lexer) readNumber() string {
 	}
 
 	return l.input[position:l.position]
+}
+
+// readString reads a series of chars starting from `"` and continues until it encounters a closing `"`
+func (l *Lexer) readString() string {
+	var out strings.Builder
+
+	// Skip the first `"`
+	l.readChar()
+
+	for l.char != '"' && l.char != 0 {
+		if l.char == '\\' { // if we hit a backshash, look ahead if it is a escape sequence
+			l.readChar()
+
+			switch l.char {
+			case 'n':
+				out.WriteByte('\n')
+
+			case 't':
+				out.WriteByte('\t')
+
+			case '"':
+				out.WriteByte('"')
+
+			case '\\':
+				out.WriteByte('\\')
+
+			default:
+				out.WriteByte(l.char)
+			}
+
+		} else {
+			out.WriteByte(l.char)
+		}
+
+		l.readChar()
+	}
+
+	if l.char == '"' {
+		l.readChar()
+	}
+
+	return out.String()
 }
 
 func isDigit(char byte) bool {

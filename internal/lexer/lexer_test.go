@@ -26,7 +26,11 @@ func TestNextToken(t *testing.T) {
 		10 == 10;
 		10 != 9;
 
-		echo x;
+		"Hello World";
+		"aprim.dev";
+		"aprim \nregmi";
+		"Hello \tWorld";
+		"Hello \\World";
 		`
 
 	tests := []struct {
@@ -113,8 +117,15 @@ func TestNextToken(t *testing.T) {
 		{INT, "9"},
 		{SEMICOLON, ";"},
 
-		{ECHO, "echo"},
-		{IDENT, "x"},
+		{STRING, "Hello World"},
+		{SEMICOLON, ";"},
+		{STRING, "aprim.dev"},
+		{SEMICOLON, ";"},
+		{STRING, "aprim \nregmi"},
+		{SEMICOLON, ";"},
+		{STRING, "Hello \tWorld"},
+		{SEMICOLON, ";"},
+		{STRING, "Hello \\World"},
 		{SEMICOLON, ";"},
 	}
 
