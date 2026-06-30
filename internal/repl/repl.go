@@ -107,8 +107,12 @@ func runEvalator(line string, env *object.Environment, out io.Writer) {
 
 	evaluated := eval.Eval(program, env)
 	if evaluated != nil {
-		io.WriteString(out, evaluated.Inspect())
-		io.WriteString(out, "\n")
+		if evaluated.Type() == object.ERROR_OBJ {
+			fmt.Fprintf(out, "%s%s%s\n", Red, evaluated.Inspect(), White)
+		} else {
+			io.WriteString(out, evaluated.Inspect())
+			io.WriteString(out, "\n")
+		}
 	}
 }
 
