@@ -130,6 +130,16 @@ func (il *IntegerLiteral) expressionNode()      {}
 func (il *IntegerLiteral) TokenLiteral() string { return il.Token.Literal }
 func (il *IntegerLiteral) String() string       { return il.Token.Literal }
 
+// StringLiteral: e.g: "hello world";
+type StringLiteral struct {
+	Token lexer.Token
+	Value string
+}
+
+func (il *StringLiteral) expressionNode()      {}
+func (il *StringLiteral) TokenLiteral() string { return il.Token.Literal }
+func (il *StringLiteral) String() string       { return il.Token.Literal }
+
 // PrefixExpression: e.g: - 5, - a.
 type PrefixExpression struct {
 	Token    lexer.Token

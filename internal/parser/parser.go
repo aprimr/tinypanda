@@ -62,6 +62,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(lexer.LPAREN, p.parseGroupedExpression)
 	p.registerPrefix(lexer.IFF, p.parseIffExpression)
 	p.registerPrefix(lexer.FN, p.parseFunctionLiteral)
+	p.registerPrefix(lexer.STRING, p.parseStringLiteral)
 
 	// Initialize infix map: Routes tokens found in the middle of an expression to their parser functions.
 	p.infixParseFns = make(map[lexer.TokenType]infixParseFn)
@@ -230,6 +231,11 @@ func (p *Parser) parseIntegerLiteral() ast.Expression {
 
 	lit.Value = value
 	return lit
+}
+
+// parseStringLiteral returns a AST expression node.
+func (p *Parser) parseStringLiteral() ast.Expression {
+	return &ast.StringLiteral{Token: p.curToken, Value: p.curToken.Literal}
 }
 
 // parsePrefixExpression handles '!' or '-' operators.
