@@ -109,6 +109,28 @@ func (es *ExpressionStatement) String() string {
 	}
 }
 
+// AssignmentExpressin: e.g: name = "new value";
+// Assigns new value to a existing identifier
+type AssignmentExpression struct {
+	Token      lexer.Token
+	Name       *Identifier // Identifier being assigned new value
+	Expression Expression  // The new expression value being assigned
+}
+
+func (ae *AssignmentExpression) expressionNode()      {}
+func (ae *AssignmentExpression) TokenLiteral() string { return ae.Token.Literal }
+func (ae *AssignmentExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString(ae.Name.String())
+	out.WriteString(" = ")
+	if ae.Expression != nil {
+		out.WriteString(ae.Expression.String())
+	}
+
+	return out.String()
+}
+
 // Identifier represents a variable name (e.g., 'x', 'myAge').
 // Even though it's a name, it is an Expression because we can assign a variable with value of another variable.
 type Identifier struct {

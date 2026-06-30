@@ -318,3 +318,52 @@ func TestStringConcatenation(t *testing.T) {
 		t.Errorf("String has wrong value. got=%q", str.Value)
 	}
 }
+
+func TestIdentAssignment(t *testing.T) {
+	input := `
+		bamboo name = "tiny panda";
+		name = "hello! TinyPanda";
+		name;
+	`
+
+	evaluated := testEval(input)
+
+	str, ok := evaluated.(*object.String)
+	if !ok {
+		t.Fatalf("object is not String. got=%T (%+v)", evaluated, evaluated)
+	}
+
+	if str.Value != "hello! TinyPanda" {
+		t.Errorf("String has wrong value. expected=%q, got=%q", "hello! TinyPanda", str.Value)
+	}
+}
+
+func TestIdentifierNotFound(t *testing.T) {
+	tests := []struct {
+		input           string
+		expectedMessage string
+	}{
+		{
+			"name = \"tiny panda\";",
+			"identifier `name` not found. It must be initialized before it can be used.",
+		},
+		{
+			"age = 100;",
+			"identifier `age` not found. It must be initialized before it can be used.",
+		},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+
+		errObj, ok := evaluated.(*object.Error)
+		if !ok {
+			t.Errorf("object is not Error. got=%T (%+v)", evaluated, evaluated)
+			continue
+		}
+
+		if errObj.Message != tt.expectedMessage {
+			t.Errorf("wrong error message. expected=%q, got=%q", tt.expectedMessage, errObj.Message)
+		}
+	}
+}

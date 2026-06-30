@@ -43,6 +43,18 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	case *ast.ExpressionStatement:
 		return Eval(node.Expression, env)
 
+	case *ast.AssignmentExpression:
+		val := Eval(node.Expression, env)
+		if isError(val) {
+			return val
+		}
+
+		updated := env.Mutate(node.Name.Value, val)
+		if !updated {
+			return newError("identifier `%s` not found. It must be initialized before it can be used.", node.Name.Value)
+		}
+		return val
+
 	case *ast.FunctionLiteral:
 		params := node.Params
 		body := node.Body

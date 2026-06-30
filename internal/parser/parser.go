@@ -11,6 +11,7 @@ const (
 	// iota  give the following constants incrementing numbers as values
 	_ int = iota
 	LOWEST
+	ASSIGN
 	EQUALS      // ==
 	LESSGREATER // < or >
 	SUM         // +
@@ -30,6 +31,7 @@ var precedences = map[lexer.TokenType]int{
 	lexer.SLASH:     PRODUCT,
 	lexer.ASTERISK:  PRODUCT,
 	lexer.LPAREN:    CALL,
+	lexer.ASSIGN:    ASSIGN,
 }
 
 type prefixParseFn func() ast.Expression
@@ -75,6 +77,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(lexer.LT, p.parseInfixExpression)
 	p.registerInfix(lexer.GT, p.parseInfixExpression)
 	p.registerInfix(lexer.LPAREN, p.parseCallExpression)
+	p.registerInfix(lexer.ASSIGN, p.parseAssignmentExpression)
 
 	// Read two tokens to initialize both curToken and peekToken
 	p.nextToken()
@@ -162,6 +165,22 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 	}
 
 	return leftExp
+}
+
+// parseAssignmentExpression
+func (p *Parser) parseAssignmentExpression(left ast.Expression) ast.Expression {
+	ident, ok := left.(*ast.Identifier)
+	if !ok {
+		p.errors = append(p.errors, fmt.Sprintf("cannot assign values to '%s'", left.String()))
+		return nil
+	}
+
+	expr := &ast.AssignmentExpression{Token: p.curToken, Name: ident}
+
+	p.nextToken()
+	expr.Expression = p.parseExpression(LOWEST)
+
+	return expr
 }
 
 // parseBambooStatement parses a variable assignment line (e.g., 'bamboo x = 5;').

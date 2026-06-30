@@ -35,3 +35,19 @@ func (e *Environment) Set(name string, val Object) Object {
 	e.store[name] = val
 	return val
 }
+
+// Mutate updates existing identifier's value, if identifier doesnt exist it returns false
+func (e *Environment) Mutate(name string, value Object) bool {
+	// Check if ident exist in local scope
+	if _, ok := e.store[name]; ok {
+		e.store[name] = value
+		return true
+	}
+
+	// Check if the ident exists in outer scope
+	if e.outer != nil {
+		return e.outer.Mutate(name, value)
+	}
+
+	return false // If identifier doesnt exists
+}
