@@ -123,8 +123,43 @@ func newToken(tokenType TokenType, char byte) Token {
 
 // skipWhitespace skips spaces, tabs, and newline formatting to find next valid token.
 func (l *Lexer) skipWhitespace() {
-	for l.char == ' ' || l.char == '\n' || l.char == '\t' || l.char == '\r' {
-		l.readChar()
+	for {
+		if l.char == ' ' || l.char == '\n' || l.char == '\t' || l.char == '\r' {
+			l.readChar()
+			continue
+		}
+
+		// Single Line comments
+		if l.char == '/' && l.peekChar() == '/' {
+			l.readChar()
+			l.readChar()
+
+			// Consume every character until we hit a newline or End of File
+			for l.char != '\n' && l.char != '\r' && l.char != 0 {
+				l.readChar()
+			}
+
+			continue
+		}
+
+		// Multi line comments
+		if l.char == '/' && l.peekChar() == '*' {
+			l.readChar()
+			l.readChar()
+
+			for !(l.char == '*' && l.peekChar() == '/') && l.char != 0 {
+				l.readChar()
+			}
+
+			if l.char != 0 {
+				l.readChar()
+				l.readChar()
+			}
+
+			continue
+		}
+
+		break
 	}
 }
 
