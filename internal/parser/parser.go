@@ -100,7 +100,23 @@ func (p *Parser) peekError(t lexer.TokenType) {
 // noPrefixParseFnError push an error to the Errors slice.
 // Called if an expression starts with an undefined token.
 func (p *Parser) noPrefixParseFnError(t lexer.TokenType) {
-	msg := fmt.Sprintf("no prefix parse function for %s found", t)
+	var msg string
+	literal := p.curToken.Literal
+
+	// Handle formatting tokens cleanly
+	if t == lexer.EOF {
+		literal = "end of file (EOF)"
+	} else if literal == "\n" || literal == "\t" || literal == "\r" || literal == "" {
+		literal = string(t)
+	}
+
+	// Structural tokens usually mean a typo occurred right before them
+	if t == lexer.LBRACE || t == lexer.RBRACE || t == lexer.OTHERWISE || t == lexer.SEMICOLON {
+		msg = fmt.Sprintf("panda encountered an unexpected '%s'. Did you misspell a keyword?", literal)
+	} else {
+		msg = fmt.Sprintf("panda doesn't understand what to do with '%s' here", literal)
+	}
+
 	p.errors = append(p.errors, msg)
 }
 
@@ -201,10 +217,14 @@ func (p *Parser) parseBambooStatement() *ast.BambooStatement {
 	// parse the value(expression)
 	stmt.Value = p.parseExpression(LOWEST)
 
-	// Call nextToken until semicolon is found
-	for !p.curTokenIs(lexer.SEMICOLON) {
+	// Check if the next token is a semicolon
+	if p.peekTokenIs(lexer.SEMICOLON) {
 		p.nextToken()
+	} else {
+		p.peekError(lexer.SEMICOLON)
+		return nil
 	}
+
 	return stmt
 }
 
