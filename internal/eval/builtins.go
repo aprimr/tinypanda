@@ -43,11 +43,30 @@ var builtins = map[string]*object.Builtin{
 				}
 
 				// if err occurs parsing string like "abc" return a newError
-				return newError("argument to `num` is an invalid intiger format, got %q", arg.Value)
+				return newError("argument to `num` not supported, got %s", args[0].Type())
 
 			default:
-				return newError("argument to `num` not supported, got %s", arg.Type())
+				return newError("argument to `num` not supported, got %s", args[0].Type())
 			}
+		},
+	},
+
+	// str converts a intiger into string and returns a string object
+	"str": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch arg := args[0].(type) {
+			case *object.Integer:
+				converted := strconv.FormatInt(arg.Value, 10)
+				return &object.String{Value: converted}
+
+			default:
+				return newError("argument to `str` not supported, got %s", args[0].Type())
+			}
+
 		},
 	},
 }

@@ -379,10 +379,16 @@ func TestBuiltinFunctions(t *testing.T) {
 		{`len("tinypanda")`, 9},
 		{`len(1)`, "argument to `len` not supported, got INTEGER"},
 		{`len("one", "two")`, "wrong number of arguments. got=2, expected=1"},
+
 		{`num("10")`, 10},
-		{`num("tinypanda")`, "argument to `num` is an invalid intiger format, got \"tinypanda\""},
+		{`num("tinypanda")`, "argument to `num` not supported, got STRING"},
 		{`num("")`, "argument to `num` not supported, got EMPTY_STRING"},
 		{`num(10)`, "argument to `num` not supported, got INTEGER"},
+
+		{`str(5)`, "5"},
+		{`str()`, "wrong number of arguments. got=0, expected=1"},
+		{`str("hello")`, "argument to `str` not supported, got STRING"},
+		{`str(abc)`, "identifier not found: abc"},
 	}
 
 	for _, tt := range tests {
@@ -393,17 +399,24 @@ func TestBuiltinFunctions(t *testing.T) {
 			testIntegerObject(t, evaluated, int64(expected))
 
 		case string:
-			errObj, ok := evaluated.(*object.Error)
+			if strObj, ok := evaluated.(*object.String); ok {
+				if strObj.Value != expected {
+					t.Errorf("wrong string value. expected=%q, got=%q for input %q",
+						expected, strObj.Value, tt.input)
+				}
+				continue
+			}
 
+			errObj, ok := evaluated.(*object.Error)
 			if !ok {
-				t.Errorf("object is not Error. got=%T (%+v)",
-					evaluated, evaluated)
+				t.Errorf("object is neither String nor Error. got=%T (%+v) for input %q",
+					evaluated, evaluated, tt.input)
 				continue
 			}
 
 			if errObj.Message != expected {
-				t.Errorf("wrong error message. expected=%q, got=%q",
-					expected, errObj.Message)
+				t.Errorf("wrong error message. expected=%q, got=%q for input %q",
+					expected, errObj.Message, tt.input)
 			}
 		}
 	}
