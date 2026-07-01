@@ -1,6 +1,7 @@
 package eval
 
 import (
+	"fmt"
 	"strconv"
 	"tinypanda/internal/object"
 )
@@ -67,6 +68,29 @@ var builtins = map[string]*object.Builtin{
 				return newError("argument to `str` not supported, got %s", args[0].Type())
 			}
 
+		},
+	},
+
+	// echo prints strings or any object side by side
+	"echo": {
+		Fn: func(args ...object.Object) object.Object {
+			for _, arg := range args {
+				fmt.Print(arg.Inspect())
+			}
+
+			return NULL
+		},
+	},
+
+	// echo prints strings or any object side by side and appends a newline at end
+	"echoln": {
+		Fn: func(args ...object.Object) object.Object {
+			for _, arg := range args {
+				fmt.Print(arg.Inspect())
+			}
+			fmt.Println() // Print a newline after all agrs are handled
+
+			return NULL
 		},
 	},
 }

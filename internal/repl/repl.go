@@ -109,6 +109,8 @@ func runEvalator(line string, env *object.Environment, out io.Writer) {
 	if evaluated != nil {
 		if evaluated.Type() == object.ERROR_OBJ {
 			fmt.Fprintf(out, "%s%s%s\n", Red, evaluated.Inspect(), White)
+		} else if evaluated.Type() == object.NULL_OBJ {
+			io.WriteString(out, "\n")
 		} else {
 			io.WriteString(out, evaluated.Inspect())
 			io.WriteString(out, "\n")

@@ -41,7 +41,6 @@ const (
 	FN        TokenType = "FN"        // function
 	IFF       TokenType = "IFF"       // if
 	OTHERWISE TokenType = "OTHERWISE" // else
-	ECHO      TokenType = "ECHO"      // print
 	TRUE      TokenType = "TRUE"
 	FALSE     TokenType = "FALSE"
 	RETURN    TokenType = "RETURN"
@@ -58,7 +57,6 @@ type Token struct {
 var keywords = map[string]TokenType{
 	"bamboo":    BAMBOO,
 	"fn":        FN,
-	"echo":      ECHO,
 	"iff":       IFF,
 	"otherwise": OTHERWISE,
 	"true":      TRUE,
