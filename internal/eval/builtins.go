@@ -1,9 +1,13 @@
 package eval
 
-import "tinypanda/internal/object"
+import (
+	"strconv"
+	"tinypanda/internal/object"
+)
 
 var builtins = map[string]*object.Builtin{
-	"len": &object.Builtin{
+	// len returns the no of characters in a string
+	"len": {
 		Fn: func(args ...object.Object) object.Object {
 			if len(args) != 1 {
 				return newError("wrong number of arguments. got=%d, expected=1", len(args))
@@ -15,6 +19,34 @@ var builtins = map[string]*object.Builtin{
 
 			default:
 				return newError("argument to `len` not supported, got %s", args[0].Type())
+			}
+		},
+	},
+
+	// num converts a string int into a int64 and returns it
+	"num": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch arg := args[0].(type) {
+			case *object.String:
+				// if arg is empty string, return new error
+				if arg.Value == "" {
+					return newError("argument to `num` not supported, got EMPTY_STRING")
+				}
+
+				converted, err := strconv.ParseInt(arg.Value, 10, 64)
+				if err == nil { // if err is nil return the int object with converted value
+					return &object.Integer{Value: converted}
+				}
+
+				// if err occurs parsing string like "abc" return a newError
+				return newError("argument to `num` is an invalid intiger format, got %q", arg.Value)
+
+			default:
+				return newError("argument to `num` not supported, got %s", arg.Type())
 			}
 		},
 	},
