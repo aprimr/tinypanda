@@ -7,6 +7,7 @@ import (
 func TestNextToken(t *testing.T) {
 	input := `bamboo x = 5;
 		bamboo y = 10;
+		bamboo z = 10 >= 10;
 
 		bamboo add = fn(a, b) {
 			a + b;
@@ -14,7 +15,7 @@ func TestNextToken(t *testing.T) {
 		
 		bamboo res = add(x, y);
 		
-		!-/*5;
+		!*-/5;
 		5 < 10 > 5;
 
 		iff (5 < 10) {
@@ -50,6 +51,14 @@ func TestNextToken(t *testing.T) {
 		{SEMICOLON, ";"},
 
 		{BAMBOO, "bamboo"},
+		{IDENT, "z"},
+		{ASSIGN, "="},
+		{INT, "10"},
+		{GT_EQUALS, ">="},
+		{INT, "10"},
+		{SEMICOLON, ";"},
+
+		{BAMBOO, "bamboo"},
 		{IDENT, "add"},
 		{ASSIGN, "="},
 		{FN, "fn"},
@@ -77,9 +86,9 @@ func TestNextToken(t *testing.T) {
 		{SEMICOLON, ";"},
 
 		{EXCLAM, "!"},
+		{ASTERISK, "*"},
 		{MINUS, "-"},
 		{SLASH, "/"},
-		{ASTERISK, "*"},
 		{INT, "5"},
 		{SEMICOLON, ";"},
 

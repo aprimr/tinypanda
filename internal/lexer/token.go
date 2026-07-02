@@ -14,22 +14,24 @@ const (
 	STRING TokenType = "STRING"
 
 	// Operators
-	ASSIGN   TokenType = "="
-	PLUS     TokenType = "+"
-	MINUS    TokenType = "-"
-	ASTERISK TokenType = "*"
-	SLASH    TokenType = "/"
-	EXCLAM   TokenType = "!"
+	ASSIGN   TokenType = "ASSIGN"
+	PLUS     TokenType = "PLUS"
+	MINUS    TokenType = "MINUS"
+	ASTERISK TokenType = "ASTERISK"
+	SLASH    TokenType = "SLASH"
+	EXCLAM   TokenType = "EXCLAM"
 
 	// Comparision
-	LT        TokenType = "<"
-	GT        TokenType = ">"
-	EQUALS    TokenType = "=="
-	NOTEQUALS TokenType = "!="
+	LT        TokenType = "LT"
+	GT        TokenType = "GT"
+	LT_EQUALS TokenType = "LT_EQUALS"
+	GT_EQUALS TokenType = "GT_EQUALS"
+	EQUALS    TokenType = "EQUALS"
+	NOTEQUALS TokenType = "NOTEQUALS"
 
 	// Others
-	COMMA     TokenType = ","
-	SEMICOLON TokenType = ";"
+	COMMA     TokenType = "COMMA"
+	SEMICOLON TokenType = "SELMICOLON"
 
 	LPAREN TokenType = "("
 	RPAREN TokenType = ")"

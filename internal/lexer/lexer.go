@@ -67,10 +67,22 @@ func (l *Lexer) NextToken() Token {
 		}
 
 	case '<':
-		tok = newToken(LT, l.char)
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			tok = Token{Type: LT_EQUALS, Literal: string(char) + string(l.char)}
+		} else {
+			tok = newToken(LT, l.char)
+		}
 
 	case '>':
-		tok = newToken(GT, l.char)
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			tok = Token{Type: GT_EQUALS, Literal: string(char) + string(l.char)}
+		} else {
+			tok = newToken(GT, l.char)
+		}
 
 	case ',':
 		tok = newToken(COMMA, l.char)

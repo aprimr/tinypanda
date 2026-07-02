@@ -75,7 +75,6 @@ func main() {
 	}
 
 	if len(args) == 0 {
-		fmt.Printf("v%s\n", Version)
 		repl.Start(os.Stdin, os.Stdout, *lexerFlag, *parserFlag)
 	} else {
 		flag.Usage()
