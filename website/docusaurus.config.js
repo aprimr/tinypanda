@@ -19,7 +19,7 @@ const config = {
     v4: true,
   },
 
-  url: 'https://tinypanda.com',
+  url: 'https://tinypanda.netlify.app',
   baseUrl: '/',
 
   // GitHub pages deployment config.
