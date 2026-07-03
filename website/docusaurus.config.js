@@ -75,10 +75,9 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       announcementBar: {
-        id: 'new_release',
-        content: '<b>TinyPanda v1.0.0 is now live! <a href="/docs/releases" target="_blank" rel="noopener">Check out what\'s new</a>.</b>',
-        backgroundColor: '#1DCEAB',
-        textColor: '#000',
+        id: 'announcement_bar',
+        content:
+          '<span>TinyPanda v1.0.0 is now live! <b><a href="/docs/releases">Check out what\'s there</a></b>.</span>',
         isCloseable: false,
       },
       docs: {
@@ -139,9 +138,9 @@ const config = {
           
         ],
         logo: {
-          alt: 'TinyPanda Logo',
-          src: 'img/TinyPanda.png',
-          height: 22,
+          src: 'img/mascot-01.svg',
+          alt: "TinyPanda mascot",
+          height: 36,
         },
         copyright: `
           <div class="footer-copyright-custom">
@@ -157,6 +156,13 @@ const config = {
         darkTheme: prismThemes.dracula,
       },
     }),
+
+    stylesheets: [
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap',
+      type: 'text/css',
+    },
+  ],
 };
 
 export default config;

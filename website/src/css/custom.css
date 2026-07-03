@@ -1,5 +1,9 @@
 :root {
+  --ifm-font-family-base: 'Inter', sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', monospace;
+
   --ifm-color-primary: #1DCEAB;
+  --ifm-color-primary-dark: #06c29c;
   --panda-bg: #0f120f;
   --panda-text: #e2e8e4;
   --panda-border: #2d352b;
@@ -10,9 +14,75 @@
   --ifm-color-primary: #1DCEAB;
 }
 
+/* Announcement */
+.theme-announcement-bar {
+  background:
+    radial-gradient(circle at left,
+      rgba(29, 206, 171, 0.55) 0%,
+      rgba(29, 206, 171, 0.15) 20%,
+      transparent 65%),
+    radial-gradient(circle at right,
+      rgba(29, 206, 171, 0.55) 0%,
+      rgba(29, 206, 171, 0.15) 20%,
+      transparent 65%),
+    linear-gradient(
+      90deg,
+      #f7f7f7 0%,
+      #ffffff 50%,
+      #f7f7f7 100%
+    ) !important;
+
+  color: #111;
+  font-family: "Inter";
+}
+
+.theme-announcement-bar a {
+  color: var(--ifm-color-primary);
+  font-family: "Space Grotesk";
+  font-weight: 800;
+}
+
+[data-theme='dark'] .theme-announcement-bar {
+  background:
+    radial-gradient(circle at left,
+      rgba(29, 206, 171, 0.55) 0%,
+      rgba(29, 206, 171, 0.15) 25%,
+      transparent 65%),
+    radial-gradient(circle at right,
+      rgba(29, 206, 171, 0.55) 0%,
+      rgba(29, 206, 171, 0.15) 25%,
+      transparent 65%),
+    linear-gradient(
+      90deg,
+      #08100f 0%,
+      #000000 50%,
+      #08100f 100%
+    ) !important;
+
+  color: #fff;
+  font-family: "Inter";
+}
+
+[data-theme='dark'] .theme-announcement-bar a {
+  color: var(--ifm-color-primary);
+  font-family: "Space Grotesk";
+  font-weight: 800;
+}
+
+.theme-announcement-bar a:hover {
+  text-decoration: none;
+}
+
+/* Button */
+.button {
+  font-family: "Inter";
+  font-weight: 600;
+}
+
 /* Navabr Styles */
 .navbar__item {
   font-weight: 500;
+  font-family: "Inter";
   font-size: 1rem;
   color: var(--ifm-font-color-base);
   transition: color 0.15s ease;
@@ -23,15 +93,33 @@
 }
 
 .navbar__title {
+  font-family: "Space Grotesk";
   font-weight: 600;
   font-size: 1.2rem;
 }
 
+/* Footer Styles */
+.footer__title{
+  font-family: "Space Grotesk";
+  font-size: 1.1rem;
+}
+
 .footer__bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  text-align: left !important;
+  gap: 1rem;
+}
+
+.footer__bottom > .margin-bottom--sm {
+  margin-bottom: 0px !important;
+}
+
+.footer__logo {
+  display: block;
+  margin: 0 !important;
 }
 
 .footer-copyright-custom {
@@ -39,20 +127,69 @@
   align-items: center;
   gap: 1rem;
   font-size: 0.85rem;
+  font-family: "Inter";
   color: var(--ifm-color-emphasis-600);
 }
 
 .footer-copyright-custom a {
   color: var(--ifm-color-primary);
   text-decoration: none;
+  text-decoration: underline;
 }
 
 .footer-copyright-custom a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .footer-copyright-custom span:not(:last-child)::after {
   content: "|";
   margin-left: 1rem;
   color: var(--ifm-color-emphasis-400);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .theme-announcement-bar {
+    background:
+      radial-gradient(
+        ellipse 100% 220% at left center,
+        rgba(29, 206, 171, 0.35) 0%,
+        rgba(29, 206, 171, 0.12) 20%,
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 100% 220% at right center,
+        rgba(29, 206, 171, 0.35) 0%,
+        rgba(29, 206, 171, 0.12) 20%,
+        transparent 65%
+      ),
+      linear-gradient(
+        90deg,
+        #f7f7f7 0%,
+        #ffffff 50%,
+        #f7f7f7 100%
+      ) !important;
+  }
+
+  [data-theme='dark'] .theme-announcement-bar {
+    background:
+      radial-gradient(
+        ellipse 100% 220% at left center,
+        rgba(29, 206, 171, 0.35) 0%,
+        rgba(29, 206, 171, 0.12) 20%,
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 100% 220% at right center,
+        rgba(29, 206, 171, 0.35) 0%,
+        rgba(29, 206, 171, 0.12) 20%,
+        transparent 65%
+      ),
+      linear-gradient(
+        90deg,
+        #08100f 0%,
+        #000000 50%,
+        #08100f 100%
+      ) !important;
+  }
 }

@@ -17,6 +17,11 @@
   border-radius: 8px;
   display: block;
   z-index: 1;
+  transition: transform 0.3s ease-in-out;
+}
+
+.image:hover {
+  transform: scale(1.01);
 }
 
 .logo {

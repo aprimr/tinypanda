@@ -18,7 +18,7 @@ export default function GetStarted() {
         {/* Panda Mascot */}
         <div className={styles.colRight}>
           <img 
-            src="/img/mascot.png" 
+            src="/img/mascot-00.png" 
             alt="TinyPanda Mascot" 
             className={styles.mascotImage} 
           />
