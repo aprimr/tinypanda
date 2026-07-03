@@ -116,7 +116,7 @@ const config = {
             items: [
               { label: 'Playground', to: '/playground' },
               { label: 'Download', to: '/docs/download' },
-              { label: 'Releases', to: '/docs/download' },
+              { label: 'Releases', to: 'https://github.com/aprimr/tinypanda/releases' },
             ],
           },
           {
@@ -130,9 +130,9 @@ const config = {
           {
             title: 'Development ',
             items: [
-              { label: 'Source', to: '/playground' },
-              { label: 'Report an Issue', to: '/docs/download' },
-              { label: 'Contribution', to: '/docs/download' },
+              { label: 'Source', to: 'https://github.com/aprimr/tinypanda' },
+              { label: 'Report an Issue', to: 'https://github.com/aprimr/tinypanda/issues' },
+              { label: 'Contribution', to: 'https://github.com/aprimr/tinypanda/pulls' },
             ],
           },
           
