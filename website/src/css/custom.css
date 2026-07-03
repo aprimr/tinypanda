@@ -33,12 +33,11 @@
     ) !important;
 
   color: #111;
-  font-family: "Inter";
+    font-family: "Space Grotesk";
 }
 
 .theme-announcement-bar a {
   color: var(--ifm-color-primary);
-  font-family: "Space Grotesk";
   font-weight: 800;
 }
 
@@ -152,13 +151,13 @@
   .theme-announcement-bar {
     background:
       radial-gradient(
-        ellipse 100% 220% at left center,
+        ellipse 70% 500% at left center,
         rgba(29, 206, 171, 0.35) 0%,
         rgba(29, 206, 171, 0.12) 20%,
         transparent 65%
       ),
       radial-gradient(
-        ellipse 100% 220% at right center,
+        ellipse 70% 500% at right center,
         rgba(29, 206, 171, 0.35) 0%,
         rgba(29, 206, 171, 0.12) 20%,
         transparent 65%
@@ -174,13 +173,13 @@
   [data-theme='dark'] .theme-announcement-bar {
     background:
       radial-gradient(
-        ellipse 100% 220% at left center,
+        ellipse 70% 500% at left center,
         rgba(29, 206, 171, 0.35) 0%,
         rgba(29, 206, 171, 0.12) 20%,
         transparent 65%
       ),
       radial-gradient(
-        ellipse 100% 220% at right center,
+        ellipse 70% 500% at right center,
         rgba(29, 206, 171, 0.35) 0%,
         rgba(29, 206, 171, 0.12) 20%,
         transparent 65%

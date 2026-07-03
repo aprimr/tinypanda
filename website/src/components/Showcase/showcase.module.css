@@ -32,7 +32,7 @@
   height: 200px;
   z-index: 0; 
   transform: rotate(15deg);
-  filter: grayscale(20%) opacity(0.1);
+  filter: grayscale(50%) opacity(0.2);
 }
 
 .buttonContainer {

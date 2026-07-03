@@ -10,7 +10,7 @@ export default function Showcase() {
           <img src="/img/extension.png" alt=".tp logo" className={styles.logo} />
 
           <img 
-            src="/img/code-snippet.svg" 
+            src="/img/code-snippet.png" 
             alt="Tiny Panda" 
             className={styles.image} 
           />
