@@ -1,0 +1,35 @@
+.hero {
+  padding: 8rem 0;
+  text-align: center;
+  background: transparent;
+}
+
+.title {
+  font-size: 6rem;
+  font-weight: 700;
+  font-family: sans-serif ;
+  letter-spacing: -0.05em;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .title { font-size: 3.3rem; }
+  .subtitle { font-size: 1.3rem; }
+  .buttonGroup { flex-direction: column; }
+}

@@ -1,0 +1,58 @@
+:root {
+  --ifm-color-primary: #1DCEAB;
+  --panda-bg: #0f120f;
+  --panda-text: #e2e8e4;
+  --panda-border: #2d352b;
+  --panda-accent: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #1DCEAB;
+}
+
+/* Navabr Styles */
+.navbar__item {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--ifm-font-color-base);
+  transition: color 0.15s ease;
+}
+
+.navbar__item:hover {
+  color: var( --ifm-color-primary);
+}
+
+.navbar__title {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-copyright-custom {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.footer-copyright-custom a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.footer-copyright-custom a:hover {
+  text-decoration: underline;
+}
+
+.footer-copyright-custom span:not(:last-child)::after {
+  content: "|";
+  margin-left: 1rem;
+  color: var(--ifm-color-emphasis-400);
+}

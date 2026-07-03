@@ -1,0 +1,59 @@
+.getStarted {
+  padding: 3rem;
+  background-color: var(--ifm-background-color);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 4rem;
+}
+
+.colLeft {
+  flex: 1;
+}
+
+.colRight {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.mascotImage {
+  max-width: 230px;
+  height: auto;
+}
+
+.heading {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.subtext {
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 2rem;
+}
+
+.secondaryLink {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: underline;
+}
+
+.secondaryLink:hover {
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
