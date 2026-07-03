@@ -27,7 +27,7 @@ const config = {
   organizationName: 'aprimr', // Usually your GitHub org/user name.
   projectName: 'tinypanda', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -99,8 +99,8 @@ const config = {
             label: 'Docs',
             position: 'right',
           },
-          {to: '/playground', label: 'Playground', position: 'right'},
-          {to: '/docs/download', label: 'Download', position: 'right'},
+          {to: '/', label: 'Playground', position: 'right'},
+          {to: '/', label: 'Download', position: 'right'},
           {
             href: 'https://github.com/aprimr/tinypanda',
             label: 'GitHub',
@@ -114,15 +114,15 @@ const config = {
           {
             title: 'TinyPanda',
             items: [
-              { label: 'Playground', to: '/playground' },
-              { label: 'Download', to: '/docs/download' },
-              { label: 'Releases', to: 'https://github.com/aprimr/tinypanda/releases' },
+              { label: 'Playground', to: '/' },
+              { label: 'Download', to: '/' },
+              { label: 'Releases', href: 'https://github.com/aprimr/tinypanda/releases' },
             ],
           },
           {
             title: 'Get Help',
             items: [
-              { label: 'Docs', to: '/docs' },
+              { label: 'Docs', to: '/' },
               { label: 'Tutorial', to: '/' },
               { label: 'Examples', to: '/' },
             ],
@@ -130,9 +130,9 @@ const config = {
           {
             title: 'Development ',
             items: [
-              { label: 'Source', to: 'https://github.com/aprimr/tinypanda' },
-              { label: 'Report an Issue', to: 'https://github.com/aprimr/tinypanda/issues' },
-              { label: 'Contribution', to: 'https://github.com/aprimr/tinypanda/pulls' },
+              { label: 'Source', href: 'https://github.com/aprimr/tinypanda' },
+              { label: 'Report an Issue', href: 'https://github.com/aprimr/tinypanda/issues' },
+              { label: 'Contribution', href: 'https://github.com/aprimr/tinypanda/pulls' },
             ],
           },
           
