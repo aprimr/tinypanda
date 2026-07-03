@@ -8,7 +8,7 @@ import Link from '@docusaurus/Link';
 
 import Hero from '../components/Hero/Hero'
 import Showcase from '../components/Showcase/Showcase';
-import GetStarted from '../components/Getstarted/Getstarted';
+import GetStarted from '../components/GetStarted/GetStarted';
 
 
 export default function Home() {
