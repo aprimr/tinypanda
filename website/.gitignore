@@ -4,6 +4,9 @@
 # Production
 /build
 
+# Temp
+/docs/getting-started
+
 # Generated files
 .docusaurus
 .cache-loader
