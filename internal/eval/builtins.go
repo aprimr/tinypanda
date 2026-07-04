@@ -32,6 +32,9 @@ var builtins = map[string]*object.Builtin{
 			}
 
 			switch arg := args[0].(type) {
+			case *object.Integer:
+				return arg
+
 			case *object.String:
 				// if arg is empty string, return new error
 				if arg.Value == "" {
@@ -60,6 +63,9 @@ var builtins = map[string]*object.Builtin{
 			}
 
 			switch arg := args[0].(type) {
+			case *object.String:
+				return arg
+
 			case *object.Integer:
 				converted := strconv.FormatInt(arg.Value, 10)
 				return &object.String{Value: converted}
