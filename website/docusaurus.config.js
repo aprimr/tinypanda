@@ -86,6 +86,11 @@ const config = {
         },
       },
 
+      colorMode: {
+        defaultMode: 'light',
+        respectPrefersColorScheme: true,
+      },
+
       navbar: {
         title: 'TinyPanda',
         logo: {
@@ -99,7 +104,7 @@ const config = {
             label: 'Docs',
             position: 'right',
           },
-          {to: '/', label: 'Playground', position: 'right'},
+          {to: '/playground', label: 'Playground', position: 'right'},
           {to: '/', label: 'Download', position: 'right'},
           {
             href: 'https://github.com/aprimr/tinypanda',
@@ -149,7 +154,7 @@ const config = {
             <span><a href="https://github.com/aprimr" target="_blank" rel="noopener">aprimr</a></span>
           </div>
         `,
-      },
+      }, 
       
       prism: {
         theme: prismThemes.github,

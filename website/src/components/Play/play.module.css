@@ -1,0 +1,84 @@
+.playgroundContainer {
+  width: 100%;
+  max-width: 1000px;
+  margin: 3rem auto 6rem;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.mainTitle {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 800;
+  font-family: "Space Grotesk";
+  color: var(--ifm-color-primary);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.linksSection {
+  overflow: hidden;
+  padding: 3rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.mascot {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.linksSection h3 {
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  font-family: "Space Grotesk";
+}
+
+.linkButtonsGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 996px) {
+  .playgroundContainer {
+    padding: 0 1rem;
+  }
+
+  .mascot {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 160px;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .playgroundContainer {
+    margin: 2rem auto 4rem;
+  }
+
+  .linkButtonsGroup {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .linkButtonsGroup a {
+    width: 100%;
+  }
+
+  .linkButtonsGroup a span {
+    display: none;
+  }
+
+  .mascot {
+    display: none;
+  }
+}
