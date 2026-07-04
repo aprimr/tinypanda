@@ -30,7 +30,7 @@ export default function Play() {
         <h3>Want to learn more about TinyPanda?</h3>
         <div className={styles.linkButtonsGroup}>
           <Link className="button button--primary button--lg" to="/docs/intro">Read the Docs</Link>
-          <Link className="button button--secondary button--lg" to="/download">Download TinyPanda <span>v{pkg.version}</span></Link>
+          <Link className="button button--secondary button--lg" to="/">Download TinyPanda <span>v{pkg.version}</span></Link>
         </div>
       </section>
     </main>

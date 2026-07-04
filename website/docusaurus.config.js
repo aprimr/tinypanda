@@ -119,7 +119,7 @@ const config = {
           {
             title: 'TinyPanda',
             items: [
-              { label: 'Playground', to: '/' },
+              { label: 'Playground', to: '/playground' },
               { label: 'Download', to: '/' },
               { label: 'Releases', href: 'https://github.com/aprimr/tinypanda/releases' },
             ],
