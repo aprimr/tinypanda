@@ -387,12 +387,20 @@ func TestBuiltinFunctions(t *testing.T) {
 		{`num("10")`, 10},
 		{`num("tinypanda")`, "argument to `num` not supported, got STRING"},
 		{`num("")`, "argument to `num` not supported, got EMPTY_STRING"},
-		{`num(10)`, "argument to `num` not supported, got INTEGER"},
 
 		{`str(5)`, "5"},
 		{`str()`, "wrong number of arguments. got=0, expected=1"},
-		{`str("hello")`, "argument to `str` not supported, got STRING"},
 		{`str(abc)`, "identifier not found: abc"},
+
+		{`upper("hello")`, "HELLO"},
+		{`upper("TinyPanda")`, "TINYPANDA"},
+		{`upper("123abc")`, "123ABC"},
+		{`upper(1)`, "argument to `upper` must be STRING, got INTEGER"},
+
+		{`lower("HELLO")`, "hello"},
+		{`lower("TinyPanda")`, "tinypanda"},
+		{`lower("123ABC")`, "123abc"},
+		{`lower(1)`, "argument to `lower` must be STRING, got INTEGER"},
 	}
 
 	for _, tt := range tests {

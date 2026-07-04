@@ -3,6 +3,7 @@ package eval
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	"tinypanda/internal/object"
 )
 
@@ -73,7 +74,42 @@ var builtins = map[string]*object.Builtin{
 			default:
 				return newError("argument to `str` not supported, got %s", args[0].Type())
 			}
+		},
+	},
 
+	// upper converts a string to Uppercase
+	"upper": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch arg := args[0].(type) {
+			case *object.String:
+				converted := strings.ToUpper(arg.Value)
+				return &object.String{Value: converted}
+
+			default:
+				return newError("argument to `upper` must be STRING, got %s", args[0].Type())
+			}
+		},
+	},
+
+	// Lower converts a string to lowercase
+	"lower": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch arg := args[0].(type) {
+			case *object.String:
+				converted := strings.ToLower(arg.Value)
+				return &object.String{Value: converted}
+
+			default:
+				return newError("argument to `lower` must be STRING, got %s", args[0].Type())
+			}
 		},
 	},
 
