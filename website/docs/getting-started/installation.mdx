@@ -1,0 +1,110 @@
+---
+id: installation
+title: Installation
+sidebar_label: Installation
+sidebar_position: 1
+description: Install the TinyPanda interpreter.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+TinyPanda is available as a prebuilt binary for **Linux**, **macOS**, and **Windows**.
+This page covers the latest release, earlier versions are available on the [releases page](https://github.com/aprimr/tinypanda/releases).
+
+## Linux
+
+1. Download the latest release.
+
+```bash
+curl -LO https://github.com/aprimr/tinypanda/releases/latest/download/tinypanda-linux
+```
+
+2. Make the binary executable.
+
+```bash
+chmod +x tinypanda-linux
+```
+
+3. Move it to `/usr/local/bin` and rename it to `tinypanda`.
+
+```bash
+sudo mv tinypanda-linux /usr/local/bin/tinypanda
+```
+
+## macOS
+
+TinyPanda is available for both **Apple Silicon (M1/M2/M3/M4)** and **Intel** Macs.
+
+<Tabs groupId="macos-arch">
+  <TabItem value="arm64" label="Apple Silicon (arm64)" default>
+
+1. Download the latest release.
+
+```bash
+curl -LO https://github.com/aprimr/tinypanda/releases/latest/download/tinypanda-macos-arm64
+```
+
+2. Make the binary executable.
+
+```bash
+chmod +x tinypanda-macos-arm64
+```
+
+3. Move it to `/usr/local/bin` and rename it to `tinypanda`.
+
+```bash
+sudo mv tinypanda-macos-arm64 /usr/local/bin/tinypanda
+```
+
+  </TabItem>
+  <TabItem value="amd64" label="Intel (amd64)">
+
+1. Download the latest release.
+
+```bash
+curl -LO https://github.com/aprimr/tinypanda/releases/latest/download/tinypanda-macos-amd64
+```
+
+2. Make the binary executable.
+
+```bash
+chmod +x tinypanda-macos-amd64
+```
+
+3. Move it to `/usr/local/bin` and rename it to `tinypanda`.
+
+```bash
+sudo mv tinypanda-macos-amd64 /usr/local/bin/tinypanda
+```
+
+  </TabItem>
+</Tabs>
+
+## Windows
+
+1. Download `tinypanda-windows.exe` from the [latest release](https://github.com/aprimr/tinypanda/releases/latest) or [Download]() page.
+
+2. Rename it to `tinypanda.exe`.
+
+3. Move it to a folder, for example:
+
+```text
+C:\TinyPanda
+```
+
+4. Add `C:\TinyPanda` to your system `PATH`.
+
+## Verify the installation
+
+Open a new terminal and run:
+
+```bash
+tinypanda --version
+```
+
+If TinyPanda is installed correctly, the installed version will be displayed.
+
+## Next steps
+
+Continue to [Hello TinyPanda](./hello-tinypanda) to write and run your first program.

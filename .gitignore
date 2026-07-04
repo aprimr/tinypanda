@@ -1,0 +1,8 @@
+# build script
+build.ps1
+
+# binaries
+tinypanda-linux
+tinypanda-macos-amd64
+tinypanda-macos-arm64
+tinypanda-windows.exe
