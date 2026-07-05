@@ -21,11 +21,22 @@ export default function Play() {
     const bootstrapWasm = async () => {
       try {
         if (!window.Go) {
-          const script = document.createElement('script');
-          script.src = '/binaries/wasm_exec.js'; 
-          script.async = true;
-          document.body.appendChild(script);
-          await new Promise((resolve) => (script.onload = resolve));
+          await new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = '/binaries/wasm_exec.js'; 
+            script.async = true;
+            
+            script.onload = () => {
+              if (typeof window.Go === 'undefined') {
+                reject(new Error("wasm_exec.js downloaded but window.Go is still undefined. Check script integrity!"));
+              } else {
+                resolve();
+              }
+            };
+            
+            script.onerror = () => reject(new Error("Failed to download script from /binaries/wasm_exec.js"));
+            document.body.appendChild(script);
+          });
         }
 
         const go = new window.Go();
@@ -44,7 +55,7 @@ export default function Play() {
         
         go.run(result.instance);
         setIsWasmReady(true);
-        setOutput(["> TinyPanda playground loaded successfully."]);
+        setOutput(["> TinyPanda intrepreter loaded successfully."]);
       } catch (err) {
         console.error("WASM Bootstrapping Failure:", err);
         setOutput([`Playground initialization crashed: ${err.message}`]);
