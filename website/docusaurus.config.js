@@ -111,7 +111,7 @@ const config = {
           {
             title: 'Get Help',
             items: [
-              { label: 'Docs', to: '/' },
+              { label: 'Docs', to: '/docs/intro' },
               { label: 'Tutorial', to: '/' },
               { label: 'Examples', to: '/' },
             ],
