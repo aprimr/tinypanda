@@ -61,7 +61,7 @@ const config = {
       announcementBar: {
         id: 'announcement_bar',
         content:
-          '<span>TinyPanda v1.0.0 is now live! <b><a href="/docs/releases">Check out what\'s there</a></b>.</span>',
+          '<span>TinyPanda v1.0.0 is now live! <b><a href="https://github.com/aprimr/tinypanda/releases/latest">Check out what\'s there</a></b>.</span>',
         isCloseable: false,
       },
       docs: {
@@ -89,7 +89,7 @@ const config = {
             position: 'right',
           },
           {to: '/playground', label: 'Playground', position: 'right'},
-          {to: '/', label: 'Download', position: 'right'},
+          {to: '/download', label: 'Download', position: 'right'},
           {
             href: 'https://github.com/aprimr/tinypanda',
             label: 'GitHub',
@@ -104,7 +104,7 @@ const config = {
             title: 'TinyPanda',
             items: [
               { label: 'Playground', to: '/playground' },
-              { label: 'Download', to: '/' },
+              { label: 'Download', to: '/download' },
               { label: 'Releases', href: 'https://github.com/aprimr/tinypanda/releases' },
             ],
           },

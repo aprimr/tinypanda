@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './GetStarted.module.css';
+import Link from '@docusaurus/Link';
+
 const pkg = require('../../../package.json');
 
 export default function GetStarted() {
@@ -11,7 +13,7 @@ export default function GetStarted() {
           <h2 className={styles.heading}>Get started with Tiny Panda</h2>
           <p className={styles.subtext}>Download the latest version of TinyPanda</p>
           <div className={styles.actions}>
-            <a href="/download" className={styles.secondaryLink}>Download v{pkg.version} (latest)</a>
+            <Link to="/download" className={styles.secondaryLink}>Download v{pkg.version} (latest)</Link>
           </div>
         </div>
 

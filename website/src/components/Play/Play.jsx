@@ -145,7 +145,7 @@ export default function Play() {
             theme={colorMode === "dark" ? "tinypanda-dark" : "tinypanda-light"}
             loading="Configuring workspace components..."
             onMount={handleEditorDidMount}
-            defaultValue={`echoln("TinyPanda is fun!!!");`}
+            defaultValue={`bamboo name = "TinyPanda";\nbamboo repoLink = "github.com/aprimr/tinypanda";\n\necholn(name + " is fun!!!");\nbamboo sayhello = fn(x) {\n\techoln("Hello ", x);\n\treturn "Star " + name + " at "+ repoLink;\n};\n\nbamboo msg = sayhello(name);\necholn(msg);`}
             options={{
               minimap: { enabled: false },
               fontSize: 16,
@@ -206,7 +206,7 @@ export default function Play() {
           <p>Read through our documentation or download the tinypanda binary.</p>
           <div className={styles.btnActionGroup}>
             <Link className="button button--primary button--lg" to="/docs/intro">Explore Documentation</Link>
-            <Link className="button button--secondary button--lg" to="/">Download TinyPanda</Link>
+            <Link className="button button--secondary button--lg" to="/download">Download TinyPanda</Link>
           </div>
         </div>
         <img src="/img/mascot-03.png" alt="TinyPanda Mascot" className={styles.editorMascot}/>
