@@ -1,0 +1,91 @@
+---
+id: first-program
+title: First Program
+sidebar_label: First Program
+sidebar_position: 2
+description: Write your first tinypanda program.
+---
+
+<div style={{ textAlign: "left", userSelect: "none" }}>
+  <img
+    src="/img/favicon.ico"
+    alt="TinyPanda"
+    height="40"
+    draggable={false}
+    style={{ userSelect: "none" }}
+  />
+</div>
+
+Now that TinyPanda is installed, we can start writing and running our own programs.
+
+TinyPanda code is saved in files with the `.tp` extension, and you run them using the `tinypanda run <file.tp>` command in your terminal.
+
+
+## Hello TinyPanda
+
+Create a file named `main.tp`:
+
+```js title="main.tp"
+// This is our first program
+
+bamboo name = "TinyPanda";
+
+bamboo sayHello = fn(name) {
+  echoln("Hello", name);
+}
+
+sayHello(name);
+```
+
+Run it with:
+
+```bash
+tinypanda run main.tp
+```
+
+Output:
+
+```text
+Hello TinyPanda
+```
+:::tip
+
+👉 Try editing the name and run the program again.
+
+:::
+
+## Another Example
+
+Let's look at another program that adds two numbers.
+
+```js title="add.tp"
+bamboo add = fn(a, b) {
+  return a + b;
+}
+
+bamboo result = add(10, 20);
+
+echoln("10 + 20 =", result);
+```
+
+Run it with:
+
+```bash
+tinypanda run add.tp
+```
+
+Output:
+
+```text
+10 + 20 = 30
+```
+
+:::tip
+
+👉 Try changing the numbers and see what happens.
+
+:::
+
+## Next steps
+
+Now we are ready to learn about variables, functions, conditionals, and built-in functions in detail.
