@@ -44,10 +44,10 @@ export default function Play() {
         
         go.run(result.instance);
         setIsWasmReady(true);
-        setOutput(["> TinyPanda WebAssembly runtime environment loaded successfully."]);
+        setOutput(["> TinyPanda playground loaded successfully."]);
       } catch (err) {
         console.error("WASM Bootstrapping Failure:", err);
-        setOutput([`❌ Playground initialization crashed: ${err.message}`]);
+        setOutput([`Playground initialization crashed: ${err.message}`]);
       }
     };
 
