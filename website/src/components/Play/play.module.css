@@ -319,6 +319,9 @@
 }
 
 @media (max-width: 768px) {
+  .mainTitle {
+    font-size: 1.8rem;
+  }
   .ideContainer {
     height: 580px;
   }
