@@ -10,18 +10,7 @@ export const tinypandaLanguage = {
   ],
 
   operators: [
-    "=",
-    "+",
-    "-",
-    "*",
-    "/",
-    "!",
-    "<",
-    ">",
-    "<=",
-    ">=",
-    "==",
-    "!=",
+    "=", "+", "-", "*", "/", "!", "<", ">", "<=", ">=", "==", "!=",
   ],
 
   builtins: [
@@ -30,11 +19,19 @@ export const tinypandaLanguage = {
     "len",
     "num",
     "str",
+    "upper",
+    "lower",
   ],
 
   tokenizer: {
     root: [
-      // Keywords & identifiers
+      // 1. ALWAYS parse whitespace and comments first to bypass keyword/operator rules
+      { include: '@whitespace' },
+
+      // 2. Strings
+      [/"/, { token: "string.quote", next: "@string" }],
+
+      // 3. Keywords & Builtins & Identifiers
       [/[a-zA-Z_][\w]*/, {
         cases: {
           "@keywords": "keyword",
@@ -43,23 +40,27 @@ export const tinypandaLanguage = {
         }
       }],
 
-      // Numbers
+      // 4. Numbers
       [/\d+/, "number"],
 
-      // Strings
-      [/"/, { token: "string.quote", next: "@string" }],
-
-      // Operators
+      // 5. Operators
       [/[+\-*/=!<>]+/, "operator"],
 
-      // Brackets
+      // 6. Brackets & Delimiters
       [/[{}()]/, "@brackets"],
-
-      // Delimiters
       [/[;,]/, "delimiter"],
+    ],
 
-      // Comments (if you use //)
-      [/\/\/.*$/, "comment"],
+    whitespace: [
+      [/[ \t\r\n]+/, 'white'],
+      [/\/\/.*$/, 'comment'], 
+      [/\/\*/, 'comment', '@comment'], 
+    ],
+
+    comment: [
+      [/[^\/*]+/, 'comment'],
+      [/\*\//, 'comment', '@pop'],
+      [/[\/*]/, 'comment']
     ],
 
     string: [
