@@ -3,8 +3,6 @@ User-agent: *
 Allow: /
 
 Disallow: /binaries/
-# Allow images (for Google Image Search)
-Allow: /img/
 
 # Sitemap location
 Sitemap: https://tinypanda.netlify.app/sitemap.xml
