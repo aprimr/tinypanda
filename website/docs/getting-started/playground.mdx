@@ -1,0 +1,36 @@
+---
+id: playground
+title: Playground
+sidebar_label: Playground
+sidebar_position: 3
+description: Run TinyPanda code directly in your browser using WebAssembly.
+---
+
+If you want to try TinyPanda without installing anything on your local machine, you can use our interactive web environment. Try TinyPanda [playground](/playground).
+
+## What is the Playground?
+
+The **TinyPanda Playground** is an in-browser interpreter environment. It lets you write, edit and execute TinyPanda programs directly inside your web browser.
+
+As the runtime is entirely self-contained, execution happens instantly with zero server lag.
+
+## Key Features
+
+* **Zero Installation:** No interpreter binaries, environment configurations, or system PATH variables required.
+* **Instant Execution:** Code runs instantly right inside your browser tab.
+* **Built-in Editor:** Syntax highlighting specifically optimized for TinyPanda keywords (like `bamboo` and `fn`).
+
+## How It Works
+
+The playground compiles the TinyPanda interpreter, written in Go, directly to a WebAssembly binary that runs entirely in the browser. Your code is parsed and evaluated locally by that binary, so no source code is sent to a server.
+
+![TinyPanda Playground execution pipeline](/img/docs/playground-arch.png)
+
+## Quick Test Code
+
+Want something to copy-paste into the playground to see it in action? Try out this routine tracking workflow:
+
+```js
+bamboo message = "Hello, World!";
+echoln(message);
+```
