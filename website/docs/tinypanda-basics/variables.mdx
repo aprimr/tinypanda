@@ -1,0 +1,82 @@
+---
+title: Variables
+description: Learn how to declare and use variables in TinyPanda using the bamboo keyword.
+sidebar_position: 1
+---
+
+# Variables
+
+Variables are the fundamental building blocks used to store and manage data in TinyPanda. 
+
+TinyPanda discards generic keywords like `var` or `let` and uses **`bamboo`** keyword for variable declaration.
+
+
+## Declaration and Assignment
+
+To create a variable, use the `bamboo` keyword followed by the variable name, an assignment operator (`=`), and the value you want to store.
+
+```
+syntax: bamboo <identifier> = <value>;
+```
+
+```js
+bamboo color = "green";
+bamboo number = 7;
+bamboo isPandaHungry = true;
+```
+
+### Key Rules for Identifiers
+
+When naming your variables (identifiers), keep these standard naming rules in mind:
+
+- Must start with a letter (a-z, A-Z) or an underscore (`_`)
+- Can contain numbers after the initial character
+- Cannot use reserved language keywords (like `bamboo`, `fn`, `iff`, `otherwise`) or builtins (like `length`, `num`, `string`, `string`, `echo`, `echoln`)
+
+## Mutability
+
+By default, variables declared with `bamboo` are mutable. This means you can overwrite their contents later in your program without re-declaring the keyword.
+
+```
+syntax: <identifier> = <new_value>;
+```
+
+```js
+// Initial assignment
+bamboo state = "Panda Awake";
+echoln(state); // Outputs: Panda Awake
+
+// Re-assigning the variable
+state = "Panda Sleeping";
+echoln(state); // Outputs: Panda Sleeping
+```
+
+## Data Types
+
+The `bamboo` keyword can store any data type supported by TinyPanda:
+
+* **Primitives:** Strings (`"Hello"`), Numbers (`42`), Booleans (`true`/`false`).
+* **First-Class Functions:** Functions in TinyPanda are values, meaning you can store them directly inside a variable just like a number or a string!
+
+> ⚠️ **Note:**  TinyPanda does not support uninitialized variables. You must always assign a value when declaring a variable (e.g., `bamboo x = 123;`).
+
+## Scoping
+
+TinyPanda uses **block scoping**. Variables declared inside curly braces `{...}` like inside a function `fn`  or a conditional statement's block `iff` or `otherwise` are isolated inside those braces and cannot be accessed from outside of the block.
+
+### Lexical Scope
+
+Think of scopes like nested boxes. Inner blocks can look "out" to read parent variables, but outer environments have no visibility into what happens inside an inner block.
+
+```js
+bamboo global = "This is global scope";
+
+iff (true) {
+    bamboo local = "This is local/block scope";
+    echoln(global);
+}
+
+// Resources created inside a block scope vanish once the block exits.
+echoln(local); // Runtime Error: identifier not found: local
+```
+
