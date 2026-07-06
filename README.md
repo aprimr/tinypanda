@@ -1,7 +1,10 @@
-# TinyPanda
+<h1 align="left" style="display: flex; gap: 20px">
+  <img src="https://raw.githubusercontent.com/aprimr/tinypanda/main/website/static/img/logo.svg" height="38" alt="TinyPanda logo" />
+  <p>TinyPanda</p>
+</h1>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aprimr/tinypanda/main/website/static/img/mascot-01.svg" width="200" alt="tinypanda logo"/>
+  <img src="https://raw.githubusercontent.com/aprimr/tinypanda/main/website/static/img/mascot-01.svg" width="200" alt="tinypanda mascot"/>
 </p>
 
 <h4 align="center">
@@ -14,8 +17,8 @@
   <a href="https://github.com/aprimr/tinypanda/blob/master/LICENSE.md">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="tinypanda is released under the MIT license." />
   </a>
-  <a href="https://tinypanda.netlify.app/download">
-    <img src="https://img.shields.io/badge/tinypanda-download-blue" alt="Download tinypanda" />
+  <a href="https://tinypanda.netlify.app/docs/intro">
+    <img src="https://img.shields.io/badge/documentation-docs" alt="tinypanda docs" />
   </a>
   <a href="https://github.com/aprimr/tinypanda/releases">
     <img src="https://img.shields.io/github/v/release/aprimr/tinypanda.svg" alt="Latest Release" />
