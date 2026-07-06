@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"flag"
 	"fmt"
 	"io"
@@ -13,6 +12,7 @@ import (
 	"tinypanda/internal/object"
 	"tinypanda/internal/parser"
 	"tinypanda/internal/repl"
+	"tinypanda/internal/wasm"
 )
 
 const (
@@ -22,40 +22,9 @@ const (
 
 const Version = "1.0.0"
 
-func runTinyPandaJS(input string) string {
-	l := lexer.New(input)
-	p := parser.New(l)
-	program := p.ParseProgram()
-
-	// Catch Parsing Syntax Errors
-	if len(p.Errors()) != 0 {
-		var errBuffer bytes.Buffer
-		fmt.Fprintf(&errBuffer, "Woops! Looks like some syntax errors!\n")
-		for _, msg := range p.Errors() {
-			fmt.Fprintf(&errBuffer, "  %s\n", msg)
-		}
-		return errBuffer.String()
-	}
-
-	env := object.NewEnvironment()
-	evaluated := eval.Eval(program, env)
-
-	// Catch Runtime Engine Errors
-	if evaluated != nil && evaluated.Type() == object.ERROR_OBJ {
-		return fmt.Sprintf("Runtime Error:\n  %s", evaluated.Inspect())
-	}
-
-	// If the last expression evaluates to something that isn't null, return it
-	if evaluated != nil && evaluated.Type() != object.NULL_OBJ {
-		return evaluated.Inspect()
-	}
-
-	return ""
-}
-
 func main() {
-	// This function initializes your WASM bridge safely
-	setupWasmBridge()
+	// This function initializes WASM bridge safely
+	wasm.Setup()
 
 	// Native cli code
 	flag.Usage = func() {
