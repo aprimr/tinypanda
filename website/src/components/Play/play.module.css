@@ -104,13 +104,13 @@
 }
 
 .tabInactive {
-  display: flex;
-  align-items: center;
-  padding: 0 1.2rem;
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 0.85rem;
   color: var(--tab-inactive-text);
   opacity: 0.7;
+  cursor: pointer;
+}
+
+.tabInactive:hover {
+  opacity: 1;
 }
 
 .fileIcon {

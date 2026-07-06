@@ -1,6 +1,6 @@
 <h1 align="left" style="display: flex; gap: 20px;">
   <img src="https://raw.githubusercontent.com/aprimr/tinypanda/main/website/static/img/logo.svg" height="38" alt="TinyPanda logo" />
-  <p>TinyPanda</p>
+  <span>TinyPanda</span>
 </h1>
 
 <p align="center">
