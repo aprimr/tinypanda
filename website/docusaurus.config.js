@@ -46,7 +46,7 @@ const config = {
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          // editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/aprimr/tinypanda/edit/main/website/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -58,6 +58,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+
+      metadata: [
+        {
+          name: 'google-site-verification',
+          content: 'dmkfQq-fUyXaNk92_j7PAvkcsJ-LDl1359_CgVeSvq4'
+        }
+      ],
+
       announcementBar: {
         id: 'announcement_bar',
         content:
