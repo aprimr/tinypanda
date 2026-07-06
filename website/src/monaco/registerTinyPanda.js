@@ -67,7 +67,7 @@ export function registerTinyPanda(monaco) {
           detail: "false boolean value",
         },
         {
-          label: "retuen",
+          label: "return",
           kind: monaco.languages.CompletionItemKind.Keyword,
           insertText: "return ${1:value};",
           insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,

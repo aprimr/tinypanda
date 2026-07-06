@@ -3,63 +3,60 @@ export const tinypandaDarkTheme = {
   inherit: true,
 
   rules: [
-    // TinyPanda keywords
+    // Keywords
     {
       token: "keyword",
       foreground: "1DCEAB",
       fontStyle: "bold"
     },
 
-    // Built-in functions
+    // Built-ins
     {
       token: "builtin",
-      foreground: "1DCEAB",
+      foreground: "FF7A6B",
       fontStyle: "bold"
     },
 
-    // Variables
+    // Variables / identifiers
     {
       token: "identifier",
-      foreground: "D4D4D4"
+      foreground: "E8E6DE"
     },
 
     // Strings
     {
       token: "string",
-      foreground: "CE9178"
+      foreground: "FFC857"
     },
 
     // Numbers
     {
       token: "number",
-      foreground: "B5CEA8"
+      foreground: "FF8F70"
     },
 
     // Comments
     {
       token: "comment",
-      foreground: "6A9955",
+      foreground: "5C6B68",
       fontStyle: "italic"
     },
 
     // Operators
-    {
-      token: "operator",
-      foreground: "D4D4D4"
-    },
-
-    {
-      token: "delimiter",
-      foreground: "808080"
-    },
-
-    {
-      token: "type.identifier",
-      foreground: "4EC9B0"
-    }
+    { token: "operator", foreground: "8A938F" },
+    { token: "delimiter", foreground: "5C6560" },
+    { token: "type.identifier", foreground: "8DA8FF" }
   ],
 
-  colors: {}
+  colors: {
+    "editor.background": "#101614",
+    "editor.foreground": "#E8E6DE",
+    "editorLineNumber.foreground": "#3B4744",
+    "editorLineNumber.activeForeground": "#1DCEAB",
+    "editor.lineHighlightBackground": "#182420",
+    "editorCursor.foreground": "#1DCEAB",
+    "editor.selectionBackground": "#1DCEAB33"
+  }
 };
 
 export const tinypandaLightTheme = {
@@ -67,54 +64,58 @@ export const tinypandaLightTheme = {
   inherit: true,
 
   rules: [
+    // Keywords
     {
       token: "keyword",
-      foreground: "1DCEAB",
+      foreground: "0E7C64",
       fontStyle: "bold"
     },
 
+    // Built-ins 
     {
       token: "builtin",
-      foreground: "1DCEAB",
+      foreground: "C2452F",
       fontStyle: "bold"
     },
 
+    // Variables / identifiers
     {
       token: "identifier",
-      foreground: "24292F"
+      foreground: "1B2320"
     },
 
+    // Strings
     {
       token: "string",
-      foreground: "A31515"
+      foreground: "d37f00"
     },
 
+    // Numbers
     {
       token: "number",
-      foreground: "098658"
+      foreground: "A3512B"
     },
 
+    // Comments
     {
       token: "comment",
-      foreground: "008000",
+      foreground: "8A9490",
       fontStyle: "italic"
     },
 
-    {
-      token: "operator",
-      foreground: "000000"
-    },
-
-    {
-      token: "delimiter",
-      foreground: "808080"
-    },
-
-    {
-      token: "type.identifier",
-      foreground: "267F99"
-    }
+    // Operators & delimiters
+    { token: "operator", foreground: "33403C" },
+    { token: "delimiter", foreground: "5B655F" },
+    { token: "type.identifier", foreground: "3547A8" }
   ],
 
-  colors: {}
+  colors: {
+    "editor.background": "#FCFBF8",
+    "editor.foreground": "#1B2320",
+    "editorLineNumber.foreground": "#D1D5CF",
+    "editorLineNumber.activeForeground": "#0E7C64",
+    "editor.lineHighlightBackground": "#EFF8F5",
+    "editorCursor.foreground": "#0E7C64",
+    "editor.selectionBackground": "#1DCEAB2B"
+  }
 };
