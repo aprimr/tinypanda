@@ -321,9 +321,11 @@ func evalIffExpression(ie *ast.IffExpression, env *object.Environment) object.Ob
 	}
 
 	if isTruthy(condition) {
-		return Eval(ie.Consequence, env)
+		enclosedEnv := object.NewEnclosedEnvironment(env)
+		return Eval(ie.Consequence, enclosedEnv)
 	} else if ie.Alternative != nil {
-		return Eval(ie.Alternative, env)
+		enclosedEnv := object.NewEnclosedEnvironment(env)
+		return Eval(ie.Alternative, enclosedEnv)
 	} else {
 		return NULL
 	}
