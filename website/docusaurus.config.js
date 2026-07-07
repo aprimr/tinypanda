@@ -85,6 +85,7 @@ const config = {
 
       navbar: {
         title: 'TinyPanda',
+        
         logo: {
           alt: 'TinyPanda Logo',
           src: 'img/logo.svg',
@@ -99,10 +100,11 @@ const config = {
           {to: '/playground', label: 'Playground', position: 'right'},
           {to: '/download', label: 'Download', position: 'right'},
           {
-            href: 'https://github.com/aprimr/tinypanda',
-            label: 'GitHub',
-            position: 'right',
-          },
+          href: "https://github.com/socketio/socket.io",
+          position: "right",
+          className: "header-github-link",
+          "aria-label": "GitHub repository",
+        },
         ],
       },
 
