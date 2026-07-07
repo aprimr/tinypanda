@@ -1,0 +1,42 @@
+---
+title: Comments
+description: A guide to writing single-line and multi-line comments in TinyPanda.
+sidebar_position: 4
+---
+
+# Comments
+
+Comments are notes written for programmers to read. The TinyPanda interpreter completely ignores them during execution, making them perfect for documenting your code or temporarily disabling code segments.
+
+TinyPanda supports two styles of comments: **Single-line** and **Multi-line**.
+
+## Single-line Comments
+
+Single-line comments begin with two forward slashes `//`. Anything written after `//` on that same line is treated as a comment.
+
+```js
+// This is a single-line comment and it gets ignored by the intrepreter
+bamboo language = "TinyPanda"; 
+
+echoln("I love ", language); // You can also place comments at the end of a line!
+```
+
+## Multi-line Comments
+
+Multi-line comments (also known as block comments) begin with `/*` and end with `*/`. Everything wrapped inside these markers will be ignored, allowing your comments to span across multiple lines easily.
+
+```js
+/* 
+   This is a multi-line comment.
+   We can write any number of lines of comment inside this.
+   Intrepreter will ignore this!
+*/
+bamboo name = "foo";
+
+/*
+You can also use them to quickly comment out block of code
+fn(x) {
+  echoln(x + "bar");
+}(name);
+*/
+```
