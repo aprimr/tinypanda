@@ -1,0 +1,70 @@
+---
+title: Conditionals
+description: Learn how to control execution flow using iff and otherwise in TinyPanda.
+sidebar_position: 4
+---
+
+# Conditionals
+
+TinyPanda handles conditional logic using the **`iff`** and **`otherwise`** keywords. 
+
+Unlike many traditional languages where conditionals are structural statements, conditionals in TinyPanda are **expressions**. This means they always evaluate to a value that can be assigned or used directly.
+
+
+## Basic Syntax
+
+An `iff` conditional checks a condition. If it evaluates to true, the code block inside the first set of curly braces executes.
+
+```text
+syntax: iff (<condition>) { <statements> } otherwise { <statements> }
+```
+
+```js
+bamboo isHungry = true;
+
+iff (isHungry) {
+    echoln("Time to eat bamboo!");
+} otherwise {
+    echoln("Time to sleep.");
+}
+```
+
+> TinyPanda requires explicit curly braces `{}` for both branches, even if they only contain a single line of code.
+
+## Truthy vs Falsy Values
+
+TinyPanda has incredibly simple rules for evaluating conditions: **Only the boolean literal `false` is falsy expression.** 
+
+Absolutely everything else evaluates to `true`. This includes numbers like `0`, `1`, `-10`, or strings like `"tinypanda"` and even empty strings `""`.
+
+```js
+iff (0) {
+    echoln("0 is True!"); // This gets printed
+} otherwise {
+    echoln("0 is False");
+}
+
+iff ("tinypanda") {
+    echoln("Strings are True!"); // This gets printed
+} otherwise {
+    echoln("Strings are False");
+}
+```
+
+## Conditionals as Expressions
+
+Because `iff-otherwise` structures are expressions, they return a final value. The value of the last line executed inside the chosen block becomes the overall result of the conditional.
+
+You can assign this result directly to a `bamboo` variable:
+
+```js
+bamboo age = 15;
+
+bamboo isAdult = iff (age > 18) {
+    "You are adult";
+} otherwise {
+    "Your are not adult";
+};
+
+echoln(isAdult); // Outputs: Your are not adult
+```
