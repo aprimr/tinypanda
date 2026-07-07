@@ -1,0 +1,43 @@
+---
+title: Data Types
+description: A quick guide to TinyPanda's dynamic type system and core data types.
+sidebar_position: 2
+---
+
+# Data Types
+
+TinyPanda is **dynamically typed**. You do not declare variable types; types belong to the values. A single variable can hold any type of data and switch types freely over its lifecycle.
+
+```js
+bamboo msg = "I am a string!"; // Starts as a String
+msg = 42;                      // Changes to an Integer
+msg = true;                    // Changes to a Boolean
+```
+
+## The Core Types
+
+TinyPanda supports these fundamental data types:
+
+### 1. Strings
+Textual data wrapped in double quotes (`"..."`). 
+
+> TinyPanda only supports double quotes. Single quotes (`'...'`) will cause a syntax error.
+
+```js
+bamboo name = "Panda";
+```
+
+### 2. Integers
+Whole numbers (positive, negative, or zero) without decimals.
+
+```js
+bamboo age = 22;
+bamboo temperature = -5;
+```
+
+### 3. Booleans
+Logical truth values: either `true` or `false`.
+
+```js
+bamboo isHungry = true;
+```

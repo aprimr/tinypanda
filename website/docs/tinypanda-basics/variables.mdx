@@ -25,6 +25,32 @@ bamboo number = 7;
 bamboo isPandaHungry = true;
 ```
 
+### Storing Functions
+Functions are first-class citizens, meaning they can be bound to variables just like strings or integers.
+
+```js
+bamboo greet = fn(name) {
+    return "Hello, " + name + "!";
+};
+
+echoln(greet("Panda")); // Outputs: Hello, Panda!
+```
+
+### Storing Conditional Results
+Conditionals (`iff` statements) return the value of their executed block, allowing you to assign their outcome directly to a variable.
+
+```js
+bamboo age = 15;
+
+bamboo isAdult = iff (age > 18) {
+    true;
+} otherwise {
+    false;
+};
+
+echoln(isAdult); // Outputs: Sleepy
+```
+
 ### Key Rules for Identifiers
 
 When naming your variables (identifiers), keep these standard naming rules in mind:
@@ -50,15 +76,6 @@ echoln(state); // Outputs: Panda Awake
 state = "Panda Sleeping";
 echoln(state); // Outputs: Panda Sleeping
 ```
-
-## Data Types
-
-The `bamboo` keyword can store any data type supported by TinyPanda:
-
-* **Primitives:** Strings (`"Hello"`), Numbers (`42`), Booleans (`true`/`false`).
-* **First-Class Functions:** Functions in TinyPanda are values, meaning you can store them directly inside a variable just like a number or a string!
-
-> ⚠️ **Note:**  TinyPanda does not support uninitialized variables. You must always assign a value when declaring a variable (e.g., `bamboo x = 123;`).
 
 ## Scoping
 
