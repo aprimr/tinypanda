@@ -69,7 +69,7 @@ echoln(name + " is fun!!!");
 
 bamboo sayhello = fn(x) {
     echoln("Hello ", x);
-    return "This is fasttt!!";
+    return "This is cool!!";
 };
 
 bamboo msg = sayhello(name);

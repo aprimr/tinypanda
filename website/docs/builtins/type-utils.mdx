@@ -1,0 +1,27 @@
+---
+title: Type Utilities
+description: Functions for casting data types and evaluating types at runtime.
+sidebar_position: 2
+---
+
+# Type Utilities
+
+As TinyPanda strictly enforces matching types across operators, these functions allow you to safely cast types at runtime.
+
+
+## `str()`
+Converts an integer, or expression into its string representation. 
+
+```js
+bamboo score = 99;
+echo("Your score: " + str(score)); // Outputs: Your score: 99
+```
+
+
+## `num()`
+Converts a valid string containing a numeric literal back into an integer. 
+
+```js
+bamboo textDigits = "123";
+echoln(num(textDigits) + 7); // Outputs: 130
+```
