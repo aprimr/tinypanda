@@ -1,0 +1,97 @@
+---
+title: Functions
+description: Learn how to define and execute functions in TinyPanda using the fn keyword.
+sidebar_position: 5
+---
+
+# Functions
+
+Functions allow you to group reusable blocks of code. In TinyPanda, functions are **first-class citizens**, meaning they behave like any other value (such as a string or an integer). You can store them in variables, pass them to other functions, or return them.
+
+
+## Defining Functions
+
+Functions are defined using the **`fn`** keyword, followed by a parameter list in parentheses `(...)` and the function body inside block braces.
+
+```text
+syntax: bamboo <name> = fn(<parameter1>, <parameter2>) { <body> };
+```
+
+Because functions are values, you typically assign them to a `bamboo` variable so you can use them later:
+
+```js
+bamboo greet = fn(name) {
+    echoln("Hello, " + name + "!");
+};
+```
+
+## Calling Functions
+
+To execute a function, use the variable name followed by arguments enclosed in parentheses:
+
+```js
+greet("Panda"); // Outputs: Hello, Panda!
+```
+
+If a function does not take any arguments, call it with empty parentheses `()`:
+
+```js
+bamboo foo = fn() {
+    echoln("bar");
+};
+
+foo(); // Outputs: bar
+```
+
+## Anonymous Functions  
+An anonymous function is a function without a name. In TinyPanda, because functions are expressions, you can run an anonymous function immediately after defining it by adding parentheses () at the end.
+
+```js
+// This creates a function and runs it immediately
+fn() {
+  echo("Hello world!");
+}(); // Outputs: Hello world!
+```
+
+You can also pass arguments directly into an immediately invoked anonymous function:
+
+```js
+bamboo sum = fn(x, y) {
+  x + y;
+}(10, 20);
+
+echoln(sum); // Outputs: 30
+```
+
+
+## Returning Values
+
+Functions can send a value back to the caller using two methods:
+
+### 1. Implicit Block Returns
+Like `iff` expressions, a function block automatically returns the value of its **last evaluated line** if no explicit return statement is used.
+
+```js
+bamboo add = fn(x, y) {
+    x + y; // The result of this addition is automatically returned
+};
+
+bamboo result = add(5, 10);
+echoln(result); // Outputs: 15
+```
+
+### 2. Explicit Returns
+You can use the **`return`** keyword to immediately exit a function and pass a value back. This is useful for exiting early based on a condition.
+
+```js
+bamboo checkFoo = fn(val) {
+  iff (val == "foo") {  
+    return "bar"; // Exits the function immediately
+  }
+
+  "baz";
+};
+
+echoln(checkFoo("foo")); // Outputs: bar
+echoln(checkFoo("test")); // Outputs: baz
+```
