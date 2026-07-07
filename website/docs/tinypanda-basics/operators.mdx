@@ -1,0 +1,75 @@
+---
+title: Operators
+description: A guide to arithmetic, comparison, and logical operators in TinyPanda.
+sidebar_position: 4
+---
+
+# Operators
+
+Operators are special symbols used to perform calculations, compare values, and evaluate expressions in TinyPanda.
+
+## Arithmetic Operators
+
+TinyPanda supports standard mathematical operators for performing calculations on integers. It correctly respects operator precedence (multiplication and division are evaluated before addition and subtraction).
+
+| Operator | Operation | Example | Result |
+| :--- | :--- | :--- | :--- |
+| **`+`** | Addition | `5 + 5` | `10` |
+| **`-`** | Subtraction | `10 - 3` | `7` |
+| **`*`** | Multiplication | `4 * 2` | `8` |
+| **`/`** | Division | `10 / 2` | `5` |
+
+
+## Comparison Operators
+
+Comparison operators look at two values and evaluate down to a boolean literal (`true` or `false`). These are highly useful for controlling flow inside conditional blocks.
+
+---
+title: Comparison Operators
+---
+
+# Comparison Operators
+
+| Operator | Description                | Example    | Result  |
+| :------- | :------------------------  | :--------- | :------ |
+| ==       | Equal to                   | 5 == 5     | `true`  |
+| !=       | Not equal to               | 5 != 3     | `true`  |
+| \>       | Greater than               | 10 \> 2    | `true`  |
+| \<       | Less than                  | 4 \< 1     | `false` |
+| \>=      | Greater than or equal to   | 5 \>= 5    | `true`  |
+| \<=      | Less than or equal to      | 3 \<= 5    | `true`  |
+
+```js
+echoln(10 > 5); // Outputs: true
+echoln(10 == 5); // Outputs: false
+```
+
+## Prefix Operators
+
+Prefix operators are placed before a single value to invert it or change its state. TinyPanda supports the **`!`** (bang/exclamation) operator to invert boolean values.
+
+| Operator | Description | Example | Result |
+| :--- | :--- | :--- | :--- |
+| **`!`** | Invert / NOT | `!false`  | `false` |
+
+```js
+echoln(!"name");  // Outputs: false
+echoln(!1);       // Outputs: false
+echoln(!true);    // Outputs: false
+echoln(!false);   // Outputs: true
+```
+
+You can learn about truthy and falsy values in TinyPanda [here](/docs/tinypanda-basics/conditionals#truthy-vs-falsy-values).
+
+:::info
+TinyPanda checks your data type on the left and right side of an operator. Operations or comparisons can only be performed if the data types on both sides matches. 
+
+Mixing mismatched types across an operator will instantly halt execution with a runtime error.
+
+```js
+// Both of these will throw a runtime error!
+iff (10 > "abc") { ... }
+bamboo foo = "bar" + 100;
+```
+
+:::

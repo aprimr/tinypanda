@@ -1,7 +1,7 @@
 ---
 title: Conditionals
 description: Learn how to control execution flow using iff and otherwise in TinyPanda.
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Conditionals
@@ -38,17 +38,25 @@ TinyPanda has incredibly simple rules for evaluating conditions: **Only the bool
 Absolutely everything else evaluates to `true`. This includes numbers like `0`, `1`, `-10`, or strings like `"tinypanda"` and even empty strings `""`.
 
 ```js
-iff (0) {
-    echoln("0 is True!"); // This gets printed
+iff (0) { echoln("0 is True!"); }
+iff (99) { echoln("99 is True!"); }
+iff (-42) { echoln("-42 is True!"); }
+iff ("panda") { echoln("string is True!"); }
+iff ("") { echoln("empty string is True!"); }
+iff (false) {
+    echoln("false is truthy value");
 } otherwise {
-    echoln("0 is False");
+    echoln("false is falsy value");
 }
 
-iff ("tinypanda") {
-    echoln("Strings are True!"); // This gets printed
-} otherwise {
-    echoln("Strings are False");
-}
+/* Outputs:
+0 is True!
+99 is True!
+-42 is True!
+string is True!
+empty string is True!
+false is falsy value
+*/
 ```
 
 ## Conditionals as Expressions
