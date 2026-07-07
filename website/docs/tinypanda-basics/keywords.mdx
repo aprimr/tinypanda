@@ -1,0 +1,26 @@
+---
+title: Keywords
+description: A complete quick-reference list of reserved language keywords in TinyPanda.
+sidebar_position: 3
+---
+
+# Keywords Reference
+
+Keywords are words reserved by the TinyPanda language. Because they carry built-in operational meaning, you **cannot** use them as identifiers (variable names, function names, etc.).
+
+## TinyPanda Keywords
+
+| Keyword | Purpose | Example |
+| :--- | :--- | :--- |
+| **`bamboo`** | Declares a mutable variable. | `bamboo color = "green";` |
+| **`iff`** | Initiates a conditional execution expression branch. | `iff (isHungry) { ... }` |
+| **`otherwise`** | Final alternative branch fallback for an `iff` block. | `otherwise { ... }` |
+| **`fn`** | Defines an anonymous or named first-class function value. | `bamboo add = fn(x, y) { return x + y; };` |
+| **`return`** | Halts function execution and bubbles a specific value back out. | `return "done";` |
+| **`true`** | Boolean literal value for absolute logical truth. | `bamboo logic = true;` |
+| **`false`** | Boolean literal value representing logical falsehood (and the language's only falsy state). | `bamboo logic = false;` |
+
+When writing tinypanda program, keep these two strict rules in mind:
+
+* **Everything must be lowercase:** TinyPanda keywords only work in lowercase. Writing `BAMBOO` or `Iff` will break your code and cause an error.
+* **Keywords are reserved:** You cannot name your variables after keywords. For example, you cannot do `bamboo iff = 10;`.
