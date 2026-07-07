@@ -1,0 +1,8 @@
+{
+  "label": "Builtins",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn about TinyPanda's globally available built-in functions for data structures, casting, and standard utilities."
+  }
+}

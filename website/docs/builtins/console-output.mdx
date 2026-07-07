@@ -1,0 +1,74 @@
+---
+title: Console Output
+description: Learn how to print data to the terminal using TinyPanda's console built-ins.
+sidebar_position: 1
+---
+
+# Console Output
+
+TinyPanda provides built-in functions to print data directly to the console window. These are essential for debugging and displaying information tothe console.
+
+
+## echo
+`echo` prints a value directly to the console without adding a newline at the end. Subsequent prints will continue on the same line.
+
+```js
+echo("Hello ");
+echo("World!"); 
+// Outputs: Hello World!
+```
+
+---
+
+## echoln
+`echoln` prints a value to the console and automatically appends a newline character, moving the cursor to the next line.
+
+```js
+bamboo name = "TinyPanda";
+bamboo version = "1.0.0";
+
+echoln(name);
+echoln(version);
+// Outputs: 
+// TinyPanda
+// 1.0.0
+```
+
+## Combining Text and Variables
+There are two distinct ways to output strings alongside your variables in TinyPanda: using the + operator for matching string types, or passing multiple arguments separated by commas.
+
+### String Concatenation
+You can use the `+` operator directly inside `echo` or `echoln` to join strings and variables containing string literals.
+
+```js
+bamboo user = "TinyPanda";
+bamboo greeting = "Welcome back, ";
+
+echoln(greeting + user + "!");
+// Outputs: Welcome back, TinyPanda!
+```
+
+:::warning
+TinyPanda checks your data type on the left and right side of the operator and we can only perform concatenation only if types of both sides matches, so we cannot concat string and integer using the + operator.
+```js
+// This will throw a runtime error!
+echo("Panda! " + 888);
+```
+Fix:
+```js
+// Convert int to string while concatenating strings and int using builtin function str.
+echo("Panda! " + str(888));
+```
+:::
+
+### Multiple Arguments
+Both `echo` and `echoln` accept multiple arguments separated by a comma. The interpreter will evaluate and print each argument sequentially on the same line.
+
+This allows you to output different data types (like **strings** and **integers**) together easily without causing a type mismatch!
+
+```js
+echo("Panda! ", 888 , " ");
+echo(!true, " Multiple params ", 888 + -90 );
+
+// Outputs: Panda! 888 false Multiple params 798
+```
