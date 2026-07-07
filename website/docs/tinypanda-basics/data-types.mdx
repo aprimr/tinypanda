@@ -14,11 +14,11 @@ msg = 42;                      // Changes to an Integer
 msg = true;                    // Changes to a Boolean
 ```
 
-## The Core Types
+---
 
 TinyPanda supports these fundamental data types:
 
-### 1. Strings
+## Strings
 Textual data wrapped in double quotes (`"..."`). 
 
 > TinyPanda only supports double quotes. Single quotes (`'...'`) will cause a syntax error.
@@ -27,7 +27,23 @@ Textual data wrapped in double quotes (`"..."`).
 bamboo name = "Panda";
 ```
 
-### 2. Integers
+### Escape Characters
+TinyPanda strings support special character combinations starting with a backslash `\` to format your console output, while forward slashes `/` print normally as raw text.
+
+TinyPanda supports two escape characters:
+* `\n`: Adds a new line in the string.
+* `\t`: Adds a tab space in the string.
+
+```js
+echoln("Hello\tTinyPanda!");
+echoln("We are reading\nTinypanda Docs.");
+// Outputs:
+// Hello	TinyPanda!
+// We are reading
+// TinyPanda Docs.
+```
+
+## Integers
 Whole numbers (positive, negative, or zero) without decimals.
 
 ```js
@@ -35,7 +51,7 @@ bamboo age = 22;
 bamboo temperature = -5;
 ```
 
-### 3. Booleans
+## Booleans
 Logical truth values: either `true` or `false`.
 
 ```js
