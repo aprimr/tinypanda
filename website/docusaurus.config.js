@@ -70,7 +70,7 @@ const config = {
       announcementBar: {
         id: 'announcement_bar',
         content:
-          '<span>TinyPanda v1.0.0 is now live! <b><a href="https://github.com/aprimr/tinypanda/releases/latest">Check out what\'s there</a></b>.</span>',
+          `<span>TinyPanda v${pkg.version} is now live! <b><a href="https://github.com/aprimr/tinypanda/releases/latest">Check out what\'s there</a></b>.</span>`,
         isCloseable: false,
       },
       docs: {
@@ -145,7 +145,7 @@ const config = {
         copyright: `
           <div class="footer-copyright-custom">
             <span>© 2026 TinyPanda</span>
-            <span>v${pkg.version}</span>
+            <span><a href="https://github.com/aprimr/tinypanda/releases" target="_blank" rel="noopener">v${pkg.version}</a></span>
             <span><a href="https://github.com/aprimr" target="_blank" rel="noopener">aprimr</a></span>
           </div>
         `,

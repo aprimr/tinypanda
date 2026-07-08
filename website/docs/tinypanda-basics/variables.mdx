@@ -20,9 +20,10 @@ syntax: bamboo <identifier> = <value>;
 ```
 
 ```js
-bamboo color = "green";
-bamboo number = 7;
-bamboo isPandaHungry = true;
+bamboo color = "green"; // string
+bamboo number = 7; // integer
+bamboo pi = 3.14; // float
+bamboo isPandaHungry = true; // boolean
 ```
 
 ### Storing Functions
@@ -48,7 +49,7 @@ bamboo isAdult = iff (age > 18) {
     false;
 };
 
-echoln(isAdult); // Outputs: Sleepy
+echoln(isAdult); // Outputs: false
 ```
 
 ### Key Rules for Identifiers

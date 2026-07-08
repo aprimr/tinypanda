@@ -10,18 +10,24 @@ As TinyPanda strictly enforces matching types across operators, these functions 
 
 
 ## `str()`
-Converts an integer, or expression into its string representation. 
+Converts an integer, float, or expression into its string representation. This is essential for combining numeric data with text.
 
 ```js
 bamboo score = 99;
+bamboo pi = 3.14;
+
 echo("Your score: " + str(score)); // Outputs: Your score: 99
+echoln("Pi value: " + str(pi));    // Outputs: Pi value: 3.14
 ```
 
 
 ## `num()`
-Converts a valid string containing a numeric literal back into an integer. 
+Converts a valid string containing a numeric literal back into an integer or a float, depending on whether a decimal point is present.
 
 ```js
 bamboo textDigits = "123";
-echoln(num(textDigits) + 7); // Outputs: 130
+bamboo textFloat = "45.67";
+
+echoln(num(textDigits) + 7);    // Outputs: 130
+echoln(num(textFloat) + 0.33);  // Outputs: 46.0
 ```
