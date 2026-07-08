@@ -44,6 +44,7 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
+          showLastUpdateTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/aprimr/tinypanda/edit/main/website/',
@@ -100,7 +101,7 @@ const config = {
           {to: '/playground', label: 'Playground', position: 'right'},
           {to: '/download', label: 'Download', position: 'right'},
           {
-          href: "https://github.com/socketio/socket.io",
+          href: "https://github.com/aprimr/tinypanda",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
