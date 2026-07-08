@@ -117,8 +117,15 @@ func (l *Lexer) NextToken() Token {
 			tok.Type = LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.char) {
-			tok.Type = INT
-			tok.Literal = l.readNumber()
+			literal := l.readNumber()
+
+			if strings.Contains(literal, ".") { // if the token literal value contains `.` set its type as FLOAT
+				tok.Type = FLOAT
+				tok.Literal = literal
+			} else { // if the token literal value doesnt contains a `.` set its type as INT
+				tok.Type = INT
+				tok.Literal = literal
+			}
 			return tok
 		} else {
 			tok = newToken(ILLEGAL, l.char)
@@ -191,11 +198,28 @@ func isLetter(char byte) bool {
 	return char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z' || char == '_'
 }
 
-// readNumber reads characters until a non digit character is reached.
+// readNumber reads number and floats until a non digit character except `.` is reached.
 func (l *Lexer) readNumber() string {
 	position := l.position
+	isFloat := false
 
-	for isDigit(l.char) {
+	for isDigit(l.char) || l.char == '.' { // if found a digit or a `.` read next token
+		if l.char == '.' {
+
+			// if found next `.` then stop it, eg: 1.1.1
+			if isFloat {
+				break
+			}
+
+			// Check if  next character after `.` is a number or not,
+			// If yes, advance the pointer if not, break
+			if !isDigit(l.peekChar()) {
+				break
+			}
+
+			isFloat = true
+		}
+
 		l.readChar()
 	}
 

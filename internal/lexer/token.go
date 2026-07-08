@@ -11,6 +11,7 @@ const (
 	// Identifiers
 	IDENT  TokenType = "IDENT"
 	INT    TokenType = "INT"
+	FLOAT  TokenType = "FLOAT"
 	STRING TokenType = "STRING"
 
 	// Operators
@@ -31,7 +32,7 @@ const (
 
 	// Others
 	COMMA     TokenType = "COMMA"
-	SEMICOLON TokenType = "SELMICOLON"
+	SEMICOLON TokenType = "SEMICOLON"
 
 	LPAREN TokenType = "("
 	RPAREN TokenType = ")"
