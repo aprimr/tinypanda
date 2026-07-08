@@ -25,7 +25,7 @@ var builtins = map[string]*object.Builtin{
 		},
 	},
 
-	// num converts a string int into a int64 and returns it
+	// num converts a string integer or float to integer or float and returns it
 	"num": {
 		Fn: func(args ...object.Object) object.Object {
 			if len(args) != 1 {
@@ -42,9 +42,16 @@ var builtins = map[string]*object.Builtin{
 					return newError("argument to `num` not supported, got EMPTY_STRING")
 				}
 
-				converted, err := strconv.ParseInt(arg.Value, 10, 64)
-				if err == nil { // if err is nil return the int object with converted value
-					return &object.Integer{Value: converted}
+				if strings.Contains(arg.Value, ".") { // If the string is float
+					converted, err := strconv.ParseFloat(arg.Value, 64)
+					if err == nil { // if err is nil return the float object with converted value
+						return &object.Float{Value: converted}
+					}
+				} else { // If the string is int
+					converted, err := strconv.ParseInt(arg.Value, 10, 64)
+					if err == nil { // if err is nil return the int object with converted value
+						return &object.Integer{Value: converted}
+					}
 				}
 
 				// if err occurs parsing string like "abc" return a newError
@@ -69,6 +76,10 @@ var builtins = map[string]*object.Builtin{
 
 			case *object.Integer:
 				converted := strconv.FormatInt(arg.Value, 10)
+				return &object.String{Value: converted}
+
+			case *object.Float:
+				converted := fmt.Sprintf("%g", arg.Value)
 				return &object.String{Value: converted}
 
 			default:
