@@ -20,7 +20,7 @@ const (
 	Red   = "\033[31m"
 )
 
-const Version = "1.0.0"
+const Version = "1.1.0"
 
 func main() {
 	// This function initializes WASM bridge safely
