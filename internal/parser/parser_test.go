@@ -737,6 +737,47 @@ func testBooleanLiteral(t *testing.T, exp ast.Expression, value bool) bool {
 	return true
 }
 
+func TestFloatLiteralExpression(t *testing.T) {
+	tests := []struct {
+		input         string
+		expectedValue float64
+	}{
+		{"5.5;", 5.5},
+		{"3.14159;", 3.14159},
+		{"0.003;", 0.003},
+	}
+
+	for _, tt := range tests {
+		l := lexer.New(tt.input)
+		p := New(l)
+		program := p.ParseProgram()
+		checkParserErrors(t, p)
+
+		if len(program.Statements) != 1 {
+			t.Fatalf("program.Statements does not contain 1 statement. got=%d", len(program.Statements))
+		}
+
+		stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+		if !ok {
+			t.Fatalf("program.Statements[0] is not ast.ExpressionStatement. got=%T", program.Statements[0])
+		}
+
+		literal, ok := stmt.Expression.(*ast.FloatLiteral)
+		if !ok {
+			t.Fatalf("exp is not *ast.FloatLiteral. got=%T", stmt.Expression)
+		}
+
+		if literal.Value != tt.expectedValue {
+			t.Errorf("literal.Value not %f. got=%f", tt.expectedValue, literal.Value)
+		}
+
+		expectedTokenLiteral := fmt.Sprintf("%g", tt.expectedValue)
+		if literal.TokenLiteral() != expectedTokenLiteral {
+			t.Errorf("literal.TokenLiteral() not %s. got=%s", expectedTokenLiteral, literal.TokenLiteral())
+		}
+	}
+}
+
 func checkParserErrors(t *testing.T, p *Parser) {
 	errors := p.Errors()
 

@@ -67,6 +67,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(lexer.IFF, p.parseIffExpression)
 	p.registerPrefix(lexer.FN, p.parseFunctionLiteral)
 	p.registerPrefix(lexer.STRING, p.parseStringLiteral)
+	p.registerPrefix(lexer.FLOAT, p.parseFloatLiteral)
 
 	// Initialize infix map: Routes tokens found in the middle of an expression to their parser functions.
 	p.infixParseFns = make(map[lexer.TokenType]infixParseFn)
@@ -267,7 +268,22 @@ func (p *Parser) parseIntegerLiteral() ast.Expression {
 
 	value, err := strconv.ParseInt(p.curToken.Literal, 10, 64)
 	if err != nil {
-		msg := fmt.Sprintf("could ot parse %v as integer", p.curToken.Literal)
+		msg := fmt.Sprintf("could not parse %v as integer", p.curToken.Literal)
+		p.errors = append(p.errors, msg)
+		return nil
+	}
+
+	lit.Value = value
+	return lit
+}
+
+// parseFloatLiteral converts the current token literal value into valid float AST node.
+func (p *Parser) parseFloatLiteral() ast.Expression {
+	lit := &ast.FloatLiteral{Token: p.curToken}
+
+	value, err := strconv.ParseFloat(p.curToken.Literal, 64)
+	if err != nil {
+		msg := fmt.Sprintf("could not parse %v as float", p.curToken.Literal)
 		p.errors = append(p.errors, msg)
 		return nil
 	}
