@@ -142,7 +142,7 @@ func (i *Identifier) expressionNode()      {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
 func (i *Identifier) String() string       { return i.Value }
 
-// IntegerLiteral: e.g: 5;
+// IntegerLiteral: e.g: 5
 type IntegerLiteral struct {
 	Token lexer.Token
 	Value int64
@@ -151,6 +151,16 @@ type IntegerLiteral struct {
 func (il *IntegerLiteral) expressionNode()      {}
 func (il *IntegerLiteral) TokenLiteral() string { return il.Token.Literal }
 func (il *IntegerLiteral) String() string       { return il.Token.Literal }
+
+// FloatLiteral: e.g: 3.16
+type FloatLiteral struct {
+	Token lexer.Token
+	Value float64
+}
+
+func (fl *FloatLiteral) expressionNode()      {}
+func (fl *FloatLiteral) TokenLiteral() string { return fl.Token.Literal }
+func (fl *FloatLiteral) String() string       { return fl.Token.Literal }
 
 // StringLiteral: e.g: "hello world";
 type StringLiteral struct {
