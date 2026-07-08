@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './get.module.css';
+import pkg from "../../../package.json"
 
 const platforms = [
   {
@@ -80,7 +81,7 @@ export default function Get() {
       <section className={styles.hero}>
         <div className={styles.heroContainer}>
           <h1 className={styles.title}>Download TinyPanda</h1>
-          <p className={styles.subtitle}>Get your environment ready to run programs in seconds.</p>
+          <p className={styles.subtitle}>Download the latest binary and start running TinyPanda programs in seconds.</p>
 
           <div className={styles.tabRow} role="tablist" aria-label="Choose your operating system">
             {platforms.map((platform) => {

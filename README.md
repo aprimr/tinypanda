@@ -58,7 +58,7 @@ No installation required. Head over to the web-based playground powered by WebAs
 
 Download the latest binary for your OS from the [Releases page](https://github.com/aprimr/tinypanda/releases) or [download](https://tinypanda.netlify.app/download) latest binary.
 
-### 3. Your first script
+### 3. First program
 
 Create a file named `main.tp`:
 
@@ -76,7 +76,7 @@ bamboo msg = sayhello(name);
 echoln(msg);
 ```
 
-Run it locally via the CLI:
+Run it via the CLI:
 
 ```bash
 tinypanda run main.tp

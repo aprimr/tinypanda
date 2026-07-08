@@ -9,18 +9,26 @@ const pkg = require('../../../package.json');
 
 const DEFAULT_TP_CODE = `bamboo name = "TinyPanda";\nbamboo repoLink = "github.com/aprimr/tinypanda";\n\necholn(name + " is fun!!!");\nbamboo sayhello = fn(x) {\n\techoln("Hello ", x);\n\treturn "Star " + name + " at "+ repoLink;\n};\n\nbamboo msg = sayhello(name);\necholn(msg);`;
 
-const DEFAULT_README = `=========
-TinyPanda
-=========
+const DEFAULT_README = `
+=================
+TinyPanda v${pkg.version}
+=================
 
-A small interpreted programming language written in Go.
+A dynamically typed, interpreted programming language written in Go.
 
 License:     MIT
 Repository:  github.com/aprimr/tinypanda
 ----------------------------------------
 
-This playground runs a WebAssembly build of the TinyPanda
-interpreter directly in your browser. No servers so your code executes completely locally in milliseconds!
+This playground runs a WebAssembly build of the TinyPanda interpreter directly in your browser so it executes in milliseconds!
+
+Run TinyPanda Locally
+---------------------
+1. Download the pre-compiled binary for your OS here: https://github.com/aprimr/tinypanda/releases
+2. Rename the downloaded binary to "tinypanda".
+3. Add the location of the tinypanda binary to your Path environment variable.
+4. Start an interactive REPL session by executing: tinypanda
+5. Or run an existing tinypadna file (.tp): tinypanda run main.tp
 
 Getting started
 ---------------

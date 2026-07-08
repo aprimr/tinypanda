@@ -12,7 +12,7 @@ const pkg = require('./package.json');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'TinyPanda',
-  tagline: 'A lightweight, dynamically typed programming language.',
+  tagline: 'A dynamically typed, intrepreted programming language.',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -145,7 +145,7 @@ const config = {
         copyright: `
           <div class="footer-copyright-custom">
             <span>© 2026 TinyPanda</span>
-            <span><a href="https://github.com/aprimr/tinypanda/releases" target="_blank" rel="noopener">v${pkg.version}</a></span>
+            <span><a href="https://github.com/aprimr/tinypanda/releases" target="_blank" rel="noopener">v${pkg.version} (latest)</a></span>
             <span><a href="https://github.com/aprimr" target="_blank" rel="noopener">aprimr</a></span>
           </div>
         `,

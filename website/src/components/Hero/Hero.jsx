@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Heading from '@theme/Heading';
 import styles from './hero.module.css';
+import pkg from "../../../package.json"
 
 export default function Hero() {
   const {siteConfig} = useDocusaurusContext();
@@ -10,7 +11,7 @@ export default function Hero() {
     <header className={styles.hero}>
       <div className="container">
         <Heading as="h1" className={styles.title}>
-          {siteConfig.title}
+          {siteConfig.title} <span className={styles.version}>v{pkg.version}</span>
         </Heading>
         <p className={styles.subtitle}>
           {siteConfig.tagline}
