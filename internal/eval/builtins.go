@@ -63,7 +63,7 @@ var builtins = map[string]*object.Builtin{
 		},
 	},
 
-	// str converts a intiger into string and returns a string object
+	// str converts a integer into string and returns a string object
 	"str": {
 		Fn: func(args ...object.Object) object.Object {
 			if len(args) != 1 {
@@ -85,6 +85,17 @@ var builtins = map[string]*object.Builtin{
 			default:
 				return newError("argument to `str` not supported, got %s", args[0].Type())
 			}
+		},
+	},
+
+	// what returns the type of the data it gets
+	"what": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			return &object.String{Value: string(args[0].Type())}
 		},
 	},
 

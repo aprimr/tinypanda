@@ -256,6 +256,9 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 		return &object.Integer{Value: leftVal * rightVal}
 
 	case "/":
+		if rightVal == 0 {
+			return newError("cannot divide by zero")
+		}
 		return &object.Float{Value: float64(leftVal) / float64(rightVal)}
 
 	case ">":
@@ -294,6 +297,9 @@ func evalFloatInfixExpression(operator string, leftVal, rightVal float64) object
 		return &object.Float{Value: leftVal * rightVal}
 
 	case "/":
+		if rightVal == 0 {
+			return newError("cannot divide by zero")
+		}
 		return &object.Float{Value: leftVal / rightVal}
 
 	case ">":

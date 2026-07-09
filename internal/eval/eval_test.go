@@ -437,6 +437,11 @@ func TestBuiltinFunctions(t *testing.T) {
 		{`str()`, "wrong number of arguments. got=0, expected=1"},
 		{`str(abc)`, "identifier not found: abc"},
 
+		{`what(10)`, "INTEGER"},
+		{`what()`, "wrong number of arguments. got=0, expected=1"},
+		{`what("panda")`, "STRING"},
+		{`bamboo x = fn() {}; what(x);`, "FUNCTION"},
+
 		{`upper("hello")`, "HELLO"},
 		{`upper("TinyPanda")`, "TINYPANDA"},
 		{`upper("123abc")`, "123ABC"},
