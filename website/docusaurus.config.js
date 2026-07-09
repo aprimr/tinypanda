@@ -61,7 +61,7 @@ const config = {
     ({
 
       metadata: [
-        {name: 'google-site-verification',content: 'dmkfQq-fUyXaNk92_j7PAvkcsJ-LDl1359_CgVeSvq4'},
+        {name: 'google-site-verification',content: 'YD0sz6k-ClAKt1HHhqfkKr0gCgFggOKxdPrhwTDvocM'},
         {name: 'keywords', content: 'tinypanda, programming language, tinypanda docs, tinypanda playground, open source language'},
       ],
 
