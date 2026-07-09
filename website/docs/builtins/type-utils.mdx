@@ -31,3 +31,21 @@ bamboo textFloat = "45.67";
 echoln(num(textDigits) + 7);    // Outputs: 130
 echoln(num(textFloat) + 0.33);  // Outputs: 46.0
 ```
+
+## `what()`
+Checks the data type of any value, variable, or math calculation and returns it as a text string.
+
+* **Returns:** A `STRING` of the type name (like `"INT"`, `"FLOAT"`, `"STRING"`, `"FUNCTION"`).
+
+```js
+// Checking raw values or expressions
+what("Hello world!");     // Returns: "STRING"
+what(true);               // Returns: "BOOLEAN"
+what(22 / 7);             // Returns: "FLOAT"
+
+// Checking a function block itself
+what(fn(){});             // Returns: "FUNCTION"
+
+// Checking the returned execution result of a function
+what(fn(){ 100; }());     // Returns: "INTEGER"
+```

@@ -18,6 +18,30 @@ TinyPanda supports standard mathematical operators for performing calculations o
 | **`-`** | Subtraction | `10 - 3` | `7` |
 | **`*`** | Multiplication | `4 * 2` | `8` |
 | **`/`** | Division | `10 / 2` | `5` |
+| **`%`** | Mod | `10 % 3` | `1` |
+
+### Zero Division Safety
+
+Attempting to divide or mod by `0` or `0.0` will throw a runtime error instead of crashing the program.
+
+```js
+echoln(10 / 0);   // Runtime Error: cannot divide by zero
+echoln(10.5 % 0); // Runtime Error: cannot divide by zero
+```
+
+:::info[Auto Type Cast]
+* **Integer Math:** Performing division `/` or mod `%` on two `INT` operands always executes integer math and returns a `INT` value.
+```js
+what(10 % 2); // Returns: INTEGER
+```
+* **Float Cast:** If any operand in the expression is a `FLOAT`, the other operand is also casted to `FLOAT` type, and it always returns a `FLOAT` value, even if the final mathematical result is a `INT` value.
+```js
+what(10 % 2.5); // Returns: FLOAT
+```
+
+`what(<ident>)` is a builtin function which returns the data type of the `ident`, learn nore about it [here](/docs/builtins/type-utils#what).
+:::
+
 
 
 ## Comparison Operators
@@ -44,7 +68,7 @@ Prefix operators are placed before a single value to invert it or change its sta
 
 | Operator | Description | Example | Result |
 | :--- | :--- | :--- | :--- |
-| **`!`** | Invert / NOT | `!false`  | `false` |
+| **`!`** | Invert / NOT | `!false`  | `true` |
 
 ```js
 echoln(!"name");  // Outputs: false
