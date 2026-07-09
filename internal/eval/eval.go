@@ -2,6 +2,7 @@ package eval
 
 import (
 	"fmt"
+	"math"
 	"tinypanda/internal/ast"
 	"tinypanda/internal/object"
 )
@@ -205,7 +206,7 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 		// If type of left side is integer type cast its value and extract it
 		// Else extract the value of float
 		if left.Type() == object.INTEGER_OBJ {
-			leftVal = float64(left.(*object.Integer).Value) // Type case int to float64 and update the Float Object
+			leftVal = float64(left.(*object.Integer).Value) // Type cast int to float64 and update the Float Object
 		} else {
 			leftVal = left.(*object.Float).Value
 		}
@@ -213,7 +214,7 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 		// If type of right side is integer type cast its value and extract it
 		// Else extract the value of float
 		if right.Type() == object.INTEGER_OBJ {
-			rightVal = float64(right.(*object.Integer).Value) // Type case int to float64 and update the Float Object
+			rightVal = float64(right.(*object.Integer).Value) // Type cast int to float64 and update the Float Object
 		} else {
 			rightVal = right.(*object.Float).Value
 		}
@@ -261,6 +262,12 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 		}
 		return &object.Float{Value: float64(leftVal) / float64(rightVal)}
 
+	case "%":
+		if rightVal == 0 {
+			return newError("cannot divide by zero")
+		}
+		return &object.Integer{Value: leftVal % rightVal}
+
 	case ">":
 		return nativeBoolToBooleanObject(leftVal > rightVal)
 
@@ -301,6 +308,12 @@ func evalFloatInfixExpression(operator string, leftVal, rightVal float64) object
 			return newError("cannot divide by zero")
 		}
 		return &object.Float{Value: leftVal / rightVal}
+
+	case "%":
+		if rightVal == 0 {
+			return newError("cannot divide by zero")
+		}
+		return &object.Float{Value: math.Mod(leftVal, rightVal)}
 
 	case ">":
 		return nativeBoolToBooleanObject(leftVal > rightVal)

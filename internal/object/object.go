@@ -3,6 +3,7 @@ package object
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 	"strings"
 	"tinypanda/internal/ast"
 )
@@ -42,7 +43,13 @@ type Float struct {
 }
 
 func (f *Float) Type() ObjectType { return FLOAT_OBJ }
-func (f *Float) Inspect() string  { return fmt.Sprintf("%g", f.Value) } // %g formatter limits trailing zeros
+func (f *Float) Inspect() string {
+	val := f.Value
+	if val == 0.0 {
+		val = 0.0 // Clears the negative sign. eg -0 -> 0
+	}
+	return strconv.FormatFloat(val, 'g', 15, 64)
+}
 
 // String Object
 type String struct {

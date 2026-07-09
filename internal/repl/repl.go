@@ -77,7 +77,7 @@ func runLexerDebug(line string, out io.Writer) {
 		if tok.Type == "EOF" || tok.Type == "" {
 			break
 		}
-		fmt.Fprintf(out, "{Type: %s, Value: %q}\n", tok.Type, tok.Literal)
+		fmt.Fprintf(out, "{TokenType: %s, Value: %q}\n", tok.Type, tok.Literal)
 	}
 }
 

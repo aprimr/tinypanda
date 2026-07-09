@@ -57,6 +57,9 @@ func (l *Lexer) NextToken() Token {
 	case '/':
 		tok = newToken(SLASH, l.char)
 
+	case '%':
+		tok = newToken(MOD, l.char)
+
 	case '!':
 		if l.peekChar() == '=' {
 			char := l.char

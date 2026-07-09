@@ -21,6 +21,7 @@ const (
 	ASTERISK TokenType = "ASTERISK"
 	SLASH    TokenType = "SLASH"
 	EXCLAM   TokenType = "EXCLAM"
+	MOD      TokenType = "MOD"
 
 	// Comparision
 	LT        TokenType = "LT"

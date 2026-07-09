@@ -27,6 +27,7 @@ func TestNextToken(t *testing.T) {
 
 		10 == 10;
 		10 != 9;
+		5 % 2;
 
 		"Hello World";
 		"aprim.dev";
@@ -131,6 +132,10 @@ func TestNextToken(t *testing.T) {
 		{INT, "10"},
 		{NOTEQUALS, "!="},
 		{INT, "9"},
+		{SEMICOLON, ";"},
+		{INT, "5"},
+		{MOD, "%"},
+		{INT, "2"},
 		{SEMICOLON, ";"},
 
 		{STRING, "Hello World"},
