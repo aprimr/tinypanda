@@ -42,6 +42,7 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
+        gtag: {trackingID: 'G-XXXXXXXXXX', anonymizeIP: true,}, // For google analytics
         docs: {
           sidebarPath: './sidebars.js',
           showLastUpdateTime: true,
