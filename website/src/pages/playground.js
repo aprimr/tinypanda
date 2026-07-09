@@ -12,8 +12,9 @@ export default function Playground() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title="Playground"
-      description="Try TinyPanda in your browser"
+      title="TinyPanda Interactive Playground"
+      description="Write and run TinyPanda code directly in your browser. No installation required. Explore syntax, run scripts, and experiment with code."
+      keywords={['tinypanda playground', 'tinypanda language', 'tinypadna interpreter', 'try tinypanda', 'tinypanda interpreted language']}
     >
       <Play />
     </Layout>

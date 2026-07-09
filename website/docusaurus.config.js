@@ -12,14 +12,14 @@ const pkg = require('./package.json');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'TinyPanda',
-  tagline: 'A dynamically typed, intrepreted programming language.',
+  tagline: 'A dynamically typed, interpreted programming language.',
   favicon: 'img/favicon.ico',
 
   future: {
     v4: true,
   },
 
-  url: 'https://tinypanda.netlify.app',
+  url: 'https://tinypanda.is-cool.dev',
   baseUrl: '/',
 
   // GitHub pages deployment config.
@@ -61,10 +61,8 @@ const config = {
     ({
 
       metadata: [
-        {
-          name: 'google-site-verification',
-          content: 'dmkfQq-fUyXaNk92_j7PAvkcsJ-LDl1359_CgVeSvq4'
-        }
+        {name: 'google-site-verification',content: 'dmkfQq-fUyXaNk92_j7PAvkcsJ-LDl1359_CgVeSvq4'},
+        {name: 'keywords', content: 'tinypanda, programming language, tinypanda docs, tinypanda playground, open source language'},
       ],
 
       announcementBar: {
