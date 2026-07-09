@@ -42,7 +42,7 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        gtag: {trackingID: 'G-XXXXXXXXXX', anonymizeIP: true,}, // For google analytics
+        gtag: {trackingID: 'G-K5JGL8JLHE', anonymizeIP: true,}, // For google analytics
         docs: {
           sidebarPath: './sidebars.js',
           showLastUpdateTime: true,
@@ -56,7 +56,7 @@ const config = {
       }),
     ],
   ],
-
+  
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
