@@ -18,6 +18,7 @@ const (
 	PRODUCT     // * or / or %
 	PREFIX      // +X or !X
 	CALL        // myFn(X)
+	INDEX       // list[index]
 )
 
 // This is the precedence table, it associates token types with their precedence.
@@ -35,6 +36,7 @@ var precedences = map[lexer.TokenType]int{
 	lexer.MOD:       PRODUCT,
 	lexer.LPAREN:    CALL,
 	lexer.ASSIGN:    ASSIGN,
+	lexer.LBRACKET:  INDEX,
 }
 
 type prefixParseFn func() ast.Expression
@@ -86,6 +88,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(lexer.LPAREN, p.parseCallExpression)
 	p.registerInfix(lexer.ASSIGN, p.parseAssignmentExpression)
 	p.registerInfix(lexer.MOD, p.parseInfixExpression)
+	p.registerInfix(lexer.LBRACKET, p.parseIndexExpression)
 
 	// Read two tokens to initialize both curToken and peekToken
 	p.nextToken()
@@ -503,6 +506,17 @@ func (p *Parser) parseExpressionList(end lexer.TokenType) []ast.Expression {
 		return nil
 	}
 	return list
+}
+
+// parseIndexExpression
+func (p *Parser) parseIndexExpression(left ast.Expression) ast.Expression {
+	exp := &ast.IndexExpression{Token: p.curToken, Left: left}
+	p.nextToken()
+	exp.Index = p.parseExpression(LOWEST)
+	if !p.expectPeek(lexer.RBRACKET) {
+		return nil
+	}
+	return exp
 }
 
 // parseCallArguments
