@@ -8,6 +8,7 @@ import (
 )
 
 var builtins = map[string]*object.Builtin{
+
 	// len returns the no of characters in a string
 	"len": {
 		Fn: func(args ...object.Object) object.Object {
@@ -28,6 +29,7 @@ var builtins = map[string]*object.Builtin{
 		},
 	},
 
+	// --- Type Utils
 	// num converts a string integer or float to integer or float and returns it
 	"num": {
 		Fn: func(args ...object.Object) object.Object {
@@ -95,7 +97,7 @@ var builtins = map[string]*object.Builtin{
 	},
 
 	// what returns the type of the data it gets
-	"what": {
+	"whatIs": {
 		Fn: func(args ...object.Object) object.Object {
 			if len(args) != 1 {
 				return newError("wrong number of arguments. got=%d, expected=1", len(args))
@@ -105,6 +107,7 @@ var builtins = map[string]*object.Builtin{
 		},
 	},
 
+	// --- String Utils
 	// upper converts a string to Uppercase
 	"upper": {
 		Fn: func(args ...object.Object) object.Object {
@@ -141,6 +144,7 @@ var builtins = map[string]*object.Builtin{
 		},
 	},
 
+	// --- Console Output
 	// echo prints strings or any object side by side
 	"echo": {
 		Fn: func(args ...object.Object) object.Object {
@@ -161,6 +165,127 @@ var builtins = map[string]*object.Builtin{
 			fmt.Println() // Print a newline after all agrs are handled
 
 			return NULL
+		},
+	},
+
+	// --- List Builtins
+	// first returns the element on the 0th index on the list
+	"first": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			// if list is not passed to the function return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("argument to `first` must be LIST. got=%s", args[0].Type())
+			}
+
+			list := args[0].(*object.List)
+			if len(list.Elements) > 0 {
+				return list.Elements[0]
+			}
+
+			return NULL
+		},
+	},
+
+	// last returns the last element of the list
+	"last": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			// if list is not passed to the function return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("argument to `last` must be LIST. got=%s", args[0].Type())
+			}
+
+			list := args[0].(*object.List)
+			if listLength := len(list.Elements); listLength > 0 {
+				return list.Elements[listLength-1]
+			}
+
+			return NULL
+		},
+	},
+
+	// rest returns the rest of the list except the element on the 0th index
+	"rest": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			// if list is not passed to the function return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("argument to `rest` must be LIST. got=%s", args[0].Type())
+			}
+
+			list := args[0].(*object.List)
+			if listLength := len(list.Elements); listLength > 0 {
+				newElements := make([]object.Object, listLength-1) // create a new slice of size length of actual list size - 1
+				copy(newElements, list.Elements[1:listLength])     // copy rest of list except 0th elenent in newElements slice
+				return &object.List{Elements: newElements}
+			}
+
+			return NULL
+		},
+	},
+
+	// append(list, value)
+	// append accepts two parameters: a list identifier and a value to append
+	// it appends the value to the end of list, mutating the original list and returns the length of new list.
+	"append": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, expected=2", len(args))
+			}
+
+			// if list is not passed to the function return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("argument to `append` must be LIST. got=%s", args[0].Type())
+			}
+
+			list := args[0].(*object.List)
+			listLength := len(list.Elements)
+			newElements := make([]object.Object, listLength+1)
+			copy(newElements, list.Elements)
+			newElements[listLength] = args[1]
+
+			list.Elements = newElements
+			return &object.Integer{Value: int64(listLength + 1)}
+		},
+	},
+
+	// drop removes the last item by mutating the original list, and returns the dropped item.
+	"drop": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			// if list is not passed to the function return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("argument to `pop` must be LIST. got=%s", args[0].Type())
+			}
+
+			list := args[0].(*object.List)
+			listLength := len(list.Elements)
+
+			// If list is empty, return null
+			if listLength == 0 {
+				return &object.Null{}
+			}
+
+			dropped := list.Elements[listLength-1]
+
+			newElements := make([]object.Object, listLength-1)
+			copy(newElements, list.Elements[:listLength-1])
+
+			list.Elements = newElements
+			return dropped
 		},
 	},
 }
