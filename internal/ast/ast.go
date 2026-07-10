@@ -343,6 +343,7 @@ func (ce *CallExpression) String() string {
 	return out.String()
 }
 
+// IndexExpression represents a list
 type IndexExpression struct {
 	Token lexer.Token
 	Left  Expression
