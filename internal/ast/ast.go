@@ -226,6 +226,29 @@ func (b *Boolean) expressionNode()      {}
 func (b *Boolean) TokenLiteral() string { return b.Token.Literal }
 func (b *Boolean) String() string       { return b.Token.Literal }
 
+// ListLiteral: eg [10, -10, "panda", true]
+type ListLiteral struct {
+	Token    lexer.Token
+	Elements []Expression
+}
+
+func (ll *ListLiteral) expressionNode()      {}
+func (ll *ListLiteral) TokenLiteral() string { return ll.Token.Literal }
+func (ll *ListLiteral) String() string {
+	var out bytes.Buffer
+
+	elements := []string{}
+	for _, el := range ll.Elements {
+		elements = append(elements, el.String())
+	}
+
+	out.WriteString("[")
+	out.WriteString(strings.Join(elements, ", "))
+	out.WriteString("]")
+	return out.String()
+
+}
+
 // IffExpression: e.g: iff (condition) {statements} otherwise {statements}
 type IffExpression struct {
 	Token       lexer.Token

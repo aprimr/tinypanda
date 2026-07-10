@@ -69,6 +69,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(lexer.FN, p.parseFunctionLiteral)
 	p.registerPrefix(lexer.STRING, p.parseStringLiteral)
 	p.registerPrefix(lexer.FLOAT, p.parseFloatLiteral)
+	p.registerPrefix(lexer.LBRACKET, p.parseListLiteral) // Because `[` is in prefix position in a list
 
 	// Initialize infix map: Routes tokens found in the middle of an expression to their parser functions.
 	p.infixParseFns = make(map[lexer.TokenType]infixParseFn)
@@ -294,6 +295,15 @@ func (p *Parser) parseFloatLiteral() ast.Expression {
 	return lit
 }
 
+// parseListLiteral parses list literals (e.g: [1, "hello", false])
+func (p *Parser) parseListLiteral() ast.Expression {
+	list := &ast.ListLiteral{Token: p.curToken}
+
+	// parse all elements inside the `[` and `]` brackets
+	list.Elements = p.parseExpressionList(lexer.RBRACKET)
+	return list
+}
+
 // parseStringLiteral returns a AST expression node.
 func (p *Parser) parseStringLiteral() ast.Expression {
 	return &ast.StringLiteral{Token: p.curToken, Value: p.curToken.Literal}
@@ -466,8 +476,33 @@ func (p *Parser) parseBlockStatement() *ast.BlockStatement {
 // parseCallExpression parses a function call invocation expression in the AST.
 func (p *Parser) parseCallExpression(function ast.Expression) ast.Expression {
 	exp := &ast.CallExpression{Token: p.curToken, Function: function}
-	exp.Arguments = p.parseCallArguments()
+	exp.Arguments = p.parseExpressionList(lexer.RPAREN)
 	return exp
+}
+
+// parseExpressionList parses a comma-separated list of expressions until it encounters the termination token `end`.
+func (p *Parser) parseExpressionList(end lexer.TokenType) []ast.Expression {
+	list := []ast.Expression{}
+
+	// Hanlde empty list, i.e. next token is `]`
+	if p.peekTokenIs(end) {
+		p.nextToken()
+		return list
+	}
+
+	p.nextToken()
+	list = append(list, p.parseExpression(LOWEST))
+
+	for p.peekTokenIs(lexer.COMMA) {
+		p.nextToken()
+		p.nextToken()
+		list = append(list, p.parseExpression(LOWEST))
+	}
+
+	if !p.expectPeek(end) {
+		return nil
+	}
+	return list
 }
 
 // parseCallArguments

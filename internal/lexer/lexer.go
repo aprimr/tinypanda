@@ -105,6 +105,12 @@ func (l *Lexer) NextToken() Token {
 	case '}':
 		tok = newToken(RBRACE, l.char)
 
+	case '[':
+		tok = newToken(LBRACKET, l.char)
+
+	case ']':
+		tok = newToken(RBRACKET, l.char)
+
 	case 0:
 		tok.Type = EOF
 		tok.Literal = ""

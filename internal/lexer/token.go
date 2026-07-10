@@ -35,10 +35,12 @@ const (
 	COMMA     TokenType = "COMMA"
 	SEMICOLON TokenType = "SEMICOLON"
 
-	LPAREN TokenType = "("
-	RPAREN TokenType = ")"
-	LBRACE TokenType = "{"
-	RBRACE TokenType = "}"
+	LPAREN   TokenType = "("
+	RPAREN   TokenType = ")"
+	LBRACE   TokenType = "{"
+	RBRACE   TokenType = "}"
+	LBRACKET TokenType = "["
+	RBRACKET TokenType = "]"
 
 	// Keywords
 	BAMBOO    TokenType = "BAMBOO"    // let

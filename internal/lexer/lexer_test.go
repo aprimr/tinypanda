@@ -34,6 +34,8 @@ func TestNextToken(t *testing.T) {
 		"aprim \nregmi";
 		"Hello \tWorld";
 		"Hello \\World";
+
+		[1, 2];
 		`
 
 	tests := []struct {
@@ -148,6 +150,14 @@ func TestNextToken(t *testing.T) {
 		{SEMICOLON, ";"},
 		{STRING, "Hello \\World"},
 		{SEMICOLON, ";"},
+
+		{LBRACKET, "["},
+		{INT, "1"},
+		{COMMA, ","},
+		{INT, "2"},
+		{RBRACKET, "]"},
+		{SEMICOLON, ";"},
+		{EOF, ""},
 	}
 
 	l := New(input)
