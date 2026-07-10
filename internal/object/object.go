@@ -20,7 +20,7 @@ const (
 	FUNCTION_OBJ     = "FUNCTION"
 	STRING_OBJ       = "STRING"
 	BUILTIN_OBJ      = "BUILTIN_OBJ"
-	LIST_OBJ         = "LIST_OBJ"
+	LIST_OBJ         = "LIST"
 )
 
 type Object interface {
