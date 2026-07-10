@@ -4,6 +4,7 @@ import { useColorMode } from '@docusaurus/theme-common';
 import styles from './play.module.css';
 import Editor from '@monaco-editor/react';
 import { registerTinyPanda } from "../../monaco/registerTinyPanda";
+import { Expand } from 'lucide-react';
 
 const pkg = require('../../../package.json');
 
@@ -181,17 +182,20 @@ export default function Play() {
             </div>
           </div>
           
-          <button
-            className={`${styles.runActionBtn} ${isWasmReady && isMainActive ? styles.runReady : styles.runLoading}`}
-            onClick={handleRunCode}
-            disabled={isRunDisabled}
-          >
-            {isWasmReady ? (
-                <>Run</>
-            ) : (
-              <span className={styles.spinner}></span>
-            )}
-          </button>
+          <div className={styles.btnGroup}>
+            <button className={styles.fullscreen} onClick={()=>{ window.location.href = "/editor"}}><Expand size={14} /></button>
+            <button
+              className={`${styles.runActionBtn} ${isWasmReady && isMainActive ? styles.runReady : styles.runLoading}`}
+              onClick={handleRunCode}
+              disabled={isRunDisabled}
+            >
+              {isWasmReady ? (
+                  <>Run</>
+              ) : (
+                <span className={styles.spinner}></span>
+              )}
+            </button>
+          </div>
         </div>
 
         <div className={styles.editorBody}>

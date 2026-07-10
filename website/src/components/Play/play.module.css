@@ -119,7 +119,21 @@
   color: var(--ifm-color-primary);
 }
 
-/* Run Action Trigger Controls */
+.btnGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btnGroup .fullscreen{
+  display: flex;
+  justify-content: center;
+  background-color:  var(--header-bg);
+  border: none;
+  cursor: pointer;
+}
+
 .runActionBtn {
   display: flex;
   align-items: center;

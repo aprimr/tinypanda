@@ -10,7 +10,7 @@ export const tinypandaLanguage = {
   ],
 
   operators: [
-    "=", "+", "-", "*", "/", "!", "<", ">", "<=", ">=", "==", "!=",
+    "=", "+", "-", "*", "/", "!", "<", ">", "<=", ">=", "==", "!=", "%",
   ],
 
   builtins: [
@@ -21,6 +21,7 @@ export const tinypandaLanguage = {
     "str",
     "upper",
     "lower",
+    "what",
   ],
 
   tokenizer: {
@@ -44,7 +45,7 @@ export const tinypandaLanguage = {
       [/\d+/, "number"],
 
       // 5. Operators
-      [/[+\-*/=!<>]+/, "operator"],
+      [/[+\-*/=!<>%]+/, "operator"],
 
       // 6. Brackets & Delimiters
       [/[{}()]/, "@brackets"],

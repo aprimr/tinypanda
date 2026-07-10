@@ -1,0 +1,342 @@
+.app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  user-select: none;
+}
+
+/* ---------- Theme tokens ---------- */
+.dark {
+  --tb-bg: #323233;
+  --tb-text: #cccccc;
+  --tabbar-bg: #252526;
+  --tab-active-bg: #1e1e1e;
+  --tab-inactive-text: #969696;
+  --tab-active-text: #ffffff;
+  --tab-border: #252526;
+  --editor-bg: #1e1e1e;
+  --border: #2d2d2d;
+  --terminal-bg: #1e1e1e;
+  --terminal-header-bg: #1e1e1e;
+  --terminal-text: #cccccc;
+  --terminal-error: #f14c4c;
+  --terminal-prompt: #6a9955;
+  --status-bg: #007acc;
+  --status-text: #ffffff;
+  --run-bg: #0e639c;
+  --run-bg-hover: #1177bb;
+  --run-text: #ffffff;
+  --run-disabled-bg: #3c3c3c;
+  --run-disabled-text: #7a7a7a;
+  --dot-unsaved: #ffffff;
+  --scrollbar: #4a4a4a;
+}
+
+.light {
+  --tb-bg: #dddddd;
+  --tb-text: #3b3b3b;
+  --tabbar-bg: #f3f3f3;
+  --tab-active-bg: #ffffff;
+  --tab-inactive-text: #6b6b6b;
+  --tab-active-text: #1e1e1e;
+  --tab-border: #e3e3e3;
+  --editor-bg: #ffffff;
+  --border: #e0e0e0;
+  --terminal-bg: #ffffff;
+  --terminal-header-bg: #f3f3f3;
+  --terminal-text: #262626;
+  --terminal-error: #cd3131;
+  --terminal-prompt: #008000;
+  --status-bg: #007acc;
+  --status-text: #ffffff;
+  --run-bg: #007acc;
+  --run-bg-hover: #0086e0;
+  --run-text: #ffffff;
+  --run-disabled-bg: #e0e0e0;
+  --run-disabled-text: #9a9a9a;
+  --dot-unsaved: #1a1a1a;
+  --scrollbar: #c2c2c2;
+}
+
+/* ---------- Title bar ---------- */
+.titleBar {
+  height: 30px;
+  min-height: 30px;
+  background: var(--tb-bg);
+  color: var(--tb-text);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 10px;
+  font-size: 0.78rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.titleText {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Inter";
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.titleBarSpacer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.themeToggle {
+  width: 26px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--tb-text);
+  cursor: pointer;
+  border-radius: 3px;
+  opacity: 0.85;
+}
+
+.themeToggle:hover {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.15);
+}
+
+/* ---------- Body layout ---------- */
+.body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* ---------- Editor column ---------- */
+.editorColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ---------- Tab bar ---------- */
+.tabBar {
+  height: 36px;
+  min-height: 36px;
+  background: var(--tabbar-bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: stretch;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  font-size: 0.82rem;
+  border-right: 1px solid var(--tab-border);
+  position: relative;
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--status-bg);
+}
+
+.tabDotUnsaved {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-unsaved);
+  opacity: 0.6;
+}
+
+.tabBarSpacer {
+  flex: 1;
+}
+
+.runButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 5px 10px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 3px;
+  background: var(--run-bg);
+  color: var(--run-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.runButton:hover:not(:disabled) {
+  background: var(--run-bg-hover);
+}
+
+.runButton:disabled {
+  background: var(--run-disabled-bg);
+  color: var(--run-disabled-text);
+  cursor: not-allowed;
+}
+
+/* ---------- Editor pane ---------- */
+.editorPane {
+  flex: 1;
+  min-height: 0;
+  background: var(--editor-bg);
+}
+
+/* ---------- Terminal ---------- */
+.terminal {
+  height: 220px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  background: var(--terminal-bg);
+  border-top: 1px solid var(--border);
+  transition: height 0.15s ease, min-height 0.15s ease;
+}
+
+.terminalCollapsed {
+  height: 36px;
+  min-height: 36px;
+}
+
+.terminalHeader {
+  height: 36px;
+  min-height: 36px;
+  background: var(--terminal-header-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.terminalTabs {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.terminalTabActive {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--tab-active-text);
+  border-bottom: 1px solid var(--status-bg);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.terminalActions {
+  display: flex;
+  gap: 4px;
+}
+
+.terminalIconBtn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--tab-inactive-text);
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.terminalIconBtn:hover:not(:disabled) {
+  background: rgba(128, 128, 128, 0.15);
+  color: var(--tab-active-text);
+}
+
+.terminalIconBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.terminalViewport {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px;
+  font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+.terminalRow {
+  color: var(--terminal-text);
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.terminalRowError {
+  color: var(--terminal-error);
+}
+
+.terminalPrompt {
+  color: var(--terminal-prompt);
+  user-select: none;
+}
+
+/* ---------- Status bar ---------- */
+.statusBar {
+  height: 22px;
+  min-height: 22px;
+  background: var(--status-bg);
+  color: var(--status-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 0.72rem;
+}
+
+.statusLeft, .statusRight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.statusItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+/* ---------- Scrollbars (webkit) ---------- */
+.terminalViewport::-webkit-scrollbar {
+  width: 10px;
+}
+.terminalViewport::-webkit-scrollbar-thumb {
+  background: var(--scrollbar);
+  border-radius: 5px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .titleText {
+    font-size: 0.72rem;
+  }
+  .statusRight .statusItem:nth-child(2),
+  .statusRight .statusItem:nth-child(3) {
+    display: none;
+  }
+}

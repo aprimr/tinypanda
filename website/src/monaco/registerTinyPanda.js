@@ -140,6 +140,13 @@ export function registerTinyPanda(monaco) {
           insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
           detail: "Converts a target string string to lowercase",
         },
+        {
+          label: "what",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "what(${1:ident});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the data type of passed identifier",
+        },
 
         // --- Snippet Boilerplates ---
         {

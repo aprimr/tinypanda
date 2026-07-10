@@ -8,16 +8,16 @@
 </p>
 
 <h4 align="center">
-  <a href="https://tinypanda.netlify.app/">Website</a> |
-  <a href="https://tinypanda.netlify.app/download">Download</a> |
-  <a href="https://tinypanda.netlify.app/playground">Playground</a>
+  <a href="https://tinypanda.is-cool.dev/">Website</a> |
+  <a href="https://tinypanda.is-cool.dev/download">Download</a> |
+  <a href="https://tinypanda.is-cool.dev/playground">Playground</a>
 </h4>
 
 <p align="center">
   <a href="https://github.com/aprimr/tinypanda/blob/master/LICENSE.md">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="tinypanda is released under the MIT license." />
   </a>
-  <a href="https://tinypanda.netlify.app/docs/intro">
+  <a href="https://tinypanda.is-cool.dev/docs/intro">
     <img src="https://img.shields.io/badge/documentation-docs" alt="tinypanda docs" />
   </a>
   <a href="https://github.com/aprimr/tinypanda/releases">
@@ -52,11 +52,11 @@
 
 No installation required. Head over to the web-based playground powered by WebAssembly:
 
-[Launch the tinypanda Playground](https://tinypanda.netlify.app/playground)
+[Launch the tinypanda Playground](https://tinypanda.is-cool.dev/playground)
 
 ### 2. Installation (CLI)
 
-Download the latest binary for your OS from the [Releases page](https://github.com/aprimr/tinypanda/releases) or [download](https://tinypanda.netlify.app/download) latest binary.
+Download the latest binary for your OS from the [Releases page](https://github.com/aprimr/tinypanda/releases) or [download](https://tinypanda.is-cool.dev/download) latest binary.
 
 ### 3. First program
 
@@ -84,7 +84,7 @@ tinypanda run main.tp
 
 ## Documentation
 
-For the complete reference manual and language specification, see the [tinypanda documentation](https://tinypanda.netlify.app/docs/intro).
+For the complete reference manual and language specification, see the [tinypanda documentation](https://tinypanda.is-cool.dev/docs/intro).
 
 ## License
 
