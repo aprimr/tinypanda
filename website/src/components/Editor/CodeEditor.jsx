@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
 import { Play, Trash2, ChevronDown, ChevronUp, CheckCircle2, Sun, Moon, GitBranch, Check } from 'lucide-react';
 import { registerTinyPanda } from '../../monaco/registerTinyPanda';
-import styles from './CodeEditor.module.css';
+import styles from './codeeditor.module.css';
 
 const DEFAULT_TP_CODE = `bamboo name = "TinyPanda";
 echoln(name);

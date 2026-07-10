@@ -7,7 +7,6 @@
   user-select: none;
 }
 
-/* ---------- Theme tokens ---------- */
 .dark {
   --tb-bg: #323233;
   --tb-text: #cccccc;
