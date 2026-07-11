@@ -468,4 +468,48 @@ var builtins = map[string]*object.Builtin{
 			}
 		},
 	},
+
+	//  floor rounds a number DOWN to the nearest integer (toward -∞).
+	// It accepts both INTEGER and FLOAT values and always returns an INTEGER.
+	// e.g: 4.4 -> 4, 4.7 -> 4, 10.99 -> 10
+	"floor": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch args[0].Type() {
+			case object.INTEGER_OBJ:
+				return args[0]
+
+			case object.FLOAT_OBJ:
+				return &object.Integer{Value: int64(math.Floor(args[0].(*object.Float).Value))}
+
+			default:
+				return newError("argument to `floor` must be INTEGER or FLOAT. got=%s", args[0].Type())
+			}
+		},
+	},
+
+	// ceil rounds a number UP to the nearest integer (toward +∞).
+	// It accepts both INTEGER and FLOAT values and always returns an INTEGER.
+	// e.g: 4.4 -> 5, 4.7 -> 5, 10.99 -> 11
+	"ceil": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch args[0].Type() {
+			case object.INTEGER_OBJ:
+				return args[0]
+
+			case object.FLOAT_OBJ:
+				return &object.Integer{Value: int64(math.Ceil(args[0].(*object.Float).Value))}
+
+			default:
+				return newError("argument to `ceil` must be INTEGER or FLOAT. got=%s", args[0].Type())
+			}
+		},
+	},
 }
