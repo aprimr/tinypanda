@@ -9,7 +9,7 @@ import (
 
 var builtins = map[string]*object.Builtin{
 
-	// len returns the no of characters in a string
+	// len returns the no of characters in a string or no of elements in a list
 	"len": {
 		Fn: func(args ...object.Object) object.Object {
 			if len(args) != 1 {
@@ -25,6 +25,48 @@ var builtins = map[string]*object.Builtin{
 
 			default:
 				return newError("argument to `len` not supported, got %s", args[0].Type())
+			}
+		},
+	},
+
+	// reverse can accept a list or a string and returns the reverse value of the list or string
+	// reverse only returns the reversed value, it doesnt muatates the original list or string
+	"reverse": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			// if list is not passed to the function return error
+			if !(args[0].Type() == object.LIST_OBJ || args[0].Type() == object.STRING_OBJ) {
+				return newError("argument to `reverse` must be LIST or STRING. got=%s", args[0].Type())
+			}
+
+			switch args[0].Type() {
+			case object.LIST_OBJ:
+				list := args[0].(*object.List)
+				listLength := len(list.Elements)
+
+				// A empty slice of capacity same as original list to store reversed list
+				reverse := make([]object.Object, listLength)
+				// reverse eg. list: [10, true, "hello"] rev: ["hello", true, 10]
+				// Loop the list and copy the element from back to front
+				for i := range list.Elements {
+					reverse[i] = list.Elements[listLength-1-i]
+				}
+
+				return &object.List{Elements: reverse}
+
+			case object.STRING_OBJ:
+				var reverse string
+
+				for _, s := range args[0].(*object.String).Value {
+					reverse = string(s) + reverse
+				}
+				return &object.String{Value: reverse}
+
+			default:
+				return &object.Null{}
 			}
 		},
 	},
@@ -324,45 +366,54 @@ var builtins = map[string]*object.Builtin{
 		},
 	},
 
-	// reverse can accept a list or a string and returns the reverse value of the list or string
-	// reverse only returns the reversed value, it doesnt muatates the original list or string
-	"reverse": {
+	// contains(list, value)
+	"contains": {
 		Fn: func(args ...object.Object) object.Object {
-			if len(args) != 1 {
-				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, expected=2", len(args))
 			}
 
-			// if list is not passed to the function return error
-			if !(args[0].Type() == object.LIST_OBJ || args[0].Type() == object.STRING_OBJ) {
-				return newError("argument to `reverse` must be LIST or STRING. got=%s", args[0].Type())
+			// if list is not passed as first argument return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("first argument to `contains` must be LIST. got=%s", args[0].Type())
 			}
 
-			switch args[0].Type() {
-			case object.LIST_OBJ:
-				list := args[0].(*object.List)
-				listLength := len(list.Elements)
+			list := args[0].(*object.List)
 
-				// A empty slice of capacity same as original list to store reversed list
-				reverse := make([]object.Object, listLength)
-				// reverse eg. list: [10, true, "hello"] rev: ["hello", true, 10]
-				// Loop the list and copy the element from back to front
-				for i := range list.Elements {
-					reverse[i] = list.Elements[listLength-1-i]
+			// loop through the list of elements to find the value, if it exists return true, if not return fasle
+			for _, el := range list.Elements {
+				if el.Type() == args[1].Type() && el.Inspect() == args[1].Inspect() {
+					return TRUE
 				}
-
-				return &object.List{Elements: reverse}
-
-			case object.STRING_OBJ:
-				var reverse string
-
-				for _, s := range args[0].(*object.String).Value {
-					reverse = string(s) + reverse
-				}
-				return &object.String{Value: reverse}
-
-			default:
-				return &object.Null{}
 			}
+
+			return FALSE
+		},
+	},
+
+	// posOf(list, value)
+	// returns the index of the value if it is in list else returns -1
+	"posOf": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, expected=2", len(args))
+			}
+
+			// if list is not passed as first argument return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("first argument to `contains` must be LIST. got=%s", args[0].Type())
+			}
+
+			list := args[0].(*object.List)
+
+			// loop through the list of elements to find the value, if it exists return true, if not return fasle
+			for i, el := range list.Elements {
+				if el.Type() == args[1].Type() && el.Inspect() == args[1].Inspect() {
+					return &object.Integer{Value: int64(i)}
+				}
+			}
+
+			return &object.Integer{Value: -1}
 		},
 	},
 }
