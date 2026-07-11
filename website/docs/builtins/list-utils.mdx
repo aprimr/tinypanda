@@ -1,0 +1,125 @@
+---
+title: List Utilities
+description: Complete reference guide for TinyPanda's built-in list manipulation functions.
+sidebar_position: 4
+---
+
+TinyPanda provides a set of built-in functions designed to safely interact with, modify, and inspect lists.
+
+## Core Operations
+
+### `first`
+
+Retrieves the very first element (index `0`) from the list. Returns `null` if the list is empty.
+
+* **Arguments:** `list`
+* **Returns:** `Any` | `null`
+
+```js
+bamboo name = ["bamboo", "tinypanda", "aprim"];
+echoln(first(name)); // Outputs: aprim
+
+echoln(first([])); // Outputs: null
+```
+
+### `last`
+
+Retrieves the absolute last element from the list. Returns `null` if the list is empty.
+
+* **Arguments:** `list`
+* **Returns:** `Any` | `null`
+
+```js
+bamboo numbers = [1, 2, 99];
+echoln(last(numbers)); // Outputs: 99
+```
+
+### `rest`
+
+Returns a fresh copy of the list containing every item *except* for the first element. Returns `null` if the list is empty.
+
+* **Arguments:** `list`
+* **Returns:** `List` | `null`
+
+```js
+bamboo numbers = [1, 2, 3, 4];
+bamboo restNum = rest(numbers);
+echoln(restNum); // Outputs: [2, 3, 4]
+```
+
+## Mutation Operations
+
+### `append`
+
+Adds an element directly to the end of a list, mutating the original structure in-place. It returns an integer representing the updated length of the list.
+
+* **Arguments:** `list`, `value` (Any type)
+* **Returns:** `Integer`
+
+```js
+bamboo myList = [10, 20];
+bamboo length = append(myList, "panda");
+
+echoln(length); // Outputs: 3
+echoln(myList);   // Outputs: [10, 20, "panda"]
+```
+
+### `drop`
+
+Removes the very last element from a list, mutating the original list in-place. It returns the item that was dropped, or `null` if the list was already empty.
+
+* **Arguments:** `list`
+* **Returns:** `Any` | `null`
+
+```js
+bamboo items = [10, 20, fn(){ "hello"; }()];
+bamboo dropped = drop(items);
+
+echoln(dropped, " ", whatIs(dropped)); // Outputs: hello STRING
+echoln(items);  // Outputs: [10, 20]
+```
+
+## Search & Utility Operations
+
+### `contains`
+
+Checks whether a target value exists within a list. This checks both the type and the value. For example, a number like 100 will not match a string like "100".
+
+* **Arguments:** `list`, `value` (Any type)
+* **Returns:** `Boolean`
+
+```js
+bamboo items = [100, "200", true];
+
+echoln(contains(items, 100));   // Outputs: true
+echoln(contains(items, "100")); // Outputs: false (Strict type protection)
+```
+
+### `posOf`
+
+Locates the 0-based index position of an element inside the list. Returns `-1` if the value cannot be found or if there is a mismatch in data types.
+
+* **Arguments:** `list`, `value` (Any type)
+* **Returns:** `Integer`
+
+```js
+bamboo myList = ["aprim", 55, false];
+
+echoln(posOf(myList, 55));      // Outputs: 1
+echoln(posOf(myList, "aprim")); // Outputs: 0
+echoln(posOf(myList, "55"));    // Outputs: -1 
+```
+
+### `join`
+
+Converts every individual element inside a list to its string representation and joins them together using a string separator.
+
+* **Arguments:** `list`, `separator` (String)
+* **Returns:** `String`
+
+```js
+bamboo data = [42, true, "hello"];
+bamboo result = join(data, ", ");
+
+echoln(result); // Outputs: "42, true, hello"
+```

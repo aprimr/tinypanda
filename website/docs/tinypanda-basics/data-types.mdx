@@ -17,7 +17,7 @@ msg = true;                    // Changes to a Boolean
 
 ---
 
-TinyPanda supports these fundamental data types:
+TinyPanda supports these following fundamental data types:
 
 ## Strings
 Textual data wrapped in double quotes (`"..."`). 
@@ -26,7 +26,9 @@ Textual data wrapped in double quotes (`"..."`).
 
 ```js
 bamboo name = "Panda";
+whatIs(name) // Outputs: STRING
 ```
+> Check out all available string builtins [here](/docs/builtins/string-utils).
 
 ### Escape Characters
 TinyPanda strings support special character combinations starting with a backslash `\` to format your console output, while forward slashes `/` print normally as raw text.
@@ -67,3 +69,39 @@ Logical truth values: either `true` or `false`.
 ```js
 bamboo isHungry = true;
 ```
+
+## Lists
+List in TinyPanda are ordered, dynamic collections of values. List are used to store a bunch of items together in one place. Think of them as a collection container.
+
+### Creating an Array
+Arrays are initialized using square brackets `[...]` with elements separated by commas `,`. You can assign them to identifiers using the `bamboo` keyword just like any other data type:
+
+```js
+bamboo numbers = [10, 20, 30];
+bamboo emptyList = [];
+echoln(whatIs(numbers)); // Outputs: LIST
+```
+
+### Mixed-Type Collections
+TinyPanda lets you mix different kinds of data inside the same list. You don't have to stick to just numbers or just words. You can mix them all up together:
+
+```js
+bamboo myList = [99, true, "hello", 3.14, fn(x){x * x}(9)];;
+```
+
+### Strict Type Safety
+Even though you can mix items, TinyPanda keeps track of exactly what type each item is. It never guesses or accidentally changes a type.
+
+:::info[Important note]
+A integer like `99` is not the same thing as a string `"99"`. Because TinyPanda checks both the value and the type, they will never match by accident!
+```js
+bamboo list1 = [99, "10", true, "aprim"];
+echoln(whatIs(list1[0])) // Outputs: INT
+echoln(whatIs(list1[1])) // Outputs: STRING
+echoln(contains(list1, 10)) // Outputs: false
+echoln(contains(list1, "99")) // Outputs: false
+```
+:::
+
+> Check out all available list builtins [here](/docs/builtins/list-utils).
+
