@@ -3,6 +3,7 @@ package eval
 import (
 	"fmt"
 	"math"
+	"math/rand"
 	"strconv"
 	"strings"
 	"tinypanda/internal/object"
@@ -582,6 +583,47 @@ var builtins = map[string]*object.Builtin{
 			}
 
 			return &object.Float{Value: math.Pow(base, exp)}
+		},
+	},
+
+	"rand": {
+		Fn: func(args ...object.Object) object.Object {
+			switch len(args) {
+			case 0:
+				// rand() - returns float betn 0 and 1
+				return &object.Float{Value: rand.Float64()}
+
+			case 1:
+				// rand(n) - returns integer bentn 0 and n
+				n, ok := args[0].(*object.Integer)
+				if !ok {
+					return newError("argument to `rand` must be INTEGER. got=%s", args[0].Type())
+				}
+				if n.Value <= 0 {
+					return newError("argument to `rand` must be positive. got=%v", n.Value)
+				}
+
+				return &object.Integer{Value: rand.Int63n(n.Value)}
+
+			case 2:
+				// rand(min, max) - returns a integer beth min and max
+				min, ok := args[0].(*object.Integer)
+				max, ok := args[1].(*object.Integer)
+
+				if !ok {
+					return newError("arguments to `rand` must be INTEGER. got=%s, %s", args[0].Type(), args[1].Type())
+				}
+
+				if min.Value >= max.Value {
+					return newError("min must be less than max.")
+				}
+
+				return &object.Integer{Value: min.Value + rand.Int63n(max.Value-min.Value)}
+
+			default:
+				return newError("wrong number of arguments. got=%d, max=2", len(args))
+			}
+
 		},
 	},
 }
