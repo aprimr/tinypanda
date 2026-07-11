@@ -512,4 +512,76 @@ var builtins = map[string]*object.Builtin{
 			}
 		},
 	},
+
+	// sqrt returns the square root of a non negative value
+	// It accepts both INTEGER and FLOAT values and always returns a FLOAT.
+	"sqrt": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch args[0].Type() {
+			case object.INTEGER_OBJ:
+				if args[0].(*object.Integer).Value < 0 {
+					return newError("argument to `sqrt` must be a non-negative. got=%v", args[0].Inspect())
+				}
+				return &object.Float{Value: math.Sqrt(float64(args[0].(*object.Integer).Value))}
+
+			case object.FLOAT_OBJ:
+				if args[0].(*object.Float).Value < 0 {
+					return newError("argument to `sqrt` must be a non-negative. got=%v", args[0].Inspect())
+				}
+				return &object.Float{Value: math.Sqrt(args[0].(*object.Float).Value)}
+
+			default:
+				return newError("argument to `sqrt` must be INTEGER or FLOAT. got=%s", args[0].Type())
+			}
+		},
+	},
+
+	// pow(base, power)
+	// It accepts both INTEGER and FLOAT values and always returns a FLOAT.
+	"pow": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, expected=2", len(args))
+			}
+
+			if !(args[0].Type() == object.FLOAT_OBJ || args[0].Type() == object.INTEGER_OBJ) {
+				return newError("first argument to `pow` must be a INTEGER or FLOAT. got=%v", args[0].Type())
+			}
+
+			if !(args[1].Type() == object.FLOAT_OBJ || args[1].Type() == object.INTEGER_OBJ) {
+				return newError("second argument to `pow` must be a INTEGER or FLOAT. got=%v", args[1].Type())
+			}
+
+			// Convert base to float64
+			var base float64
+			switch args[0].Type() {
+			case object.INTEGER_OBJ:
+				base = float64(args[0].(*object.Integer).Value)
+			case object.FLOAT_OBJ:
+				base = args[0].(*object.Float).Value
+			}
+
+			// Convert exponent to float64
+			var exp float64
+			switch args[1].Type() {
+			case object.INTEGER_OBJ:
+				exp = float64(args[1].(*object.Integer).Value)
+			case object.FLOAT_OBJ:
+				exp = args[1].(*object.Float).Value
+			}
+
+			if base == 0 && exp < 0 {
+				return newError("pow(0, negative) is undefined")
+			}
+			if base < 0 && math.Abs(math.Round(exp)-exp) > 1e-12 && math.Abs(exp-math.Floor(exp)) > 1e-12 {
+				return newError("pow(negative, non-integer) is undefined")
+			}
+
+			return &object.Float{Value: math.Pow(base, exp)}
+		},
+	},
 }
