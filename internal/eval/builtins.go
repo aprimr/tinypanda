@@ -416,4 +416,33 @@ var builtins = map[string]*object.Builtin{
 			return &object.Integer{Value: -1}
 		},
 	},
+
+	// --- Math Builtins
+	// abs returns the absolute value of a integer
+	"abs": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch args[0].Type() {
+			case object.INTEGER_OBJ:
+				if args[0].(*object.Integer).Value > 0 {
+					return args[0]
+				} else {
+					return &object.Integer{Value: -args[0].(*object.Integer).Value}
+				}
+
+			case object.FLOAT_OBJ:
+				if args[0].(*object.Float).Value > 0 {
+					return args[0]
+				} else {
+					return &object.Float{Value: -args[0].(*object.Float).Value}
+				}
+
+			default:
+				return newError("argument to `abs` must be INTEGER or FLOAT. got=%s", args[0].Type())
+			}
+		},
+	},
 }
