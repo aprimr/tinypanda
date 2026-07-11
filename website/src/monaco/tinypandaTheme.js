@@ -20,7 +20,8 @@ export const tinypandaDarkTheme = {
     // Variables / identifiers
     {
       token: "identifier",
-      foreground: "E8E6DE"
+      foreground: "C7D1CC",
+      fontStyle: "italic"
     },
 
     // Strings
@@ -71,7 +72,7 @@ export const tinypandaLightTheme = {
       fontStyle: "bold"
     },
 
-    // Built-ins 
+    // Built-ins
     {
       token: "builtin",
       foreground: "C2452F",
@@ -81,7 +82,8 @@ export const tinypandaLightTheme = {
     // Variables / identifiers
     {
       token: "identifier",
-      foreground: "1B2320"
+      foreground: "2E3A36",
+      fontStyle: "italic"
     },
 
     // Strings

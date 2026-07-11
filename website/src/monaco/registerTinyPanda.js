@@ -7,7 +7,7 @@ import {
 export function registerTinyPanda(monaco) {
   const languageId = "tinypanda";
 
-  // 1. Core Registration
+  // Core Registration
   if (!monaco.languages.getLanguages().some((lang) => lang.id === languageId)) {
     monaco.languages.register({ id: languageId });
   }
@@ -16,7 +16,7 @@ export function registerTinyPanda(monaco) {
   monaco.editor.defineTheme("tinypanda-dark", tinypandaDarkTheme);
   monaco.editor.defineTheme("tinypanda-light", tinypandaLightTheme);
 
-  // 2. Pair Config (Fixes auto-closing brackets and quotes)
+  // Pair Config (Fixes auto-closing brackets and quotes)
   monaco.languages.setLanguageConfiguration(languageId, {
     comments: {
       lineComment: "//",       
@@ -43,7 +43,7 @@ export function registerTinyPanda(monaco) {
     ],
   });
 
-  // 3. Autocomplete / IntelliSense Configuration
+  // Autocomplete / IntelliSense Configuration
   monaco.languages.registerCompletionItemProvider(languageId, {
     provideCompletionItems: (model, position) => {
       const suggestions = [
@@ -141,12 +141,195 @@ export function registerTinyPanda(monaco) {
           detail: "Converts a target string string to lowercase",
         },
         {
-          label: "what",
+          label: "whatIs",
           kind: monaco.languages.CompletionItemKind.Function,
-          insertText: "what(${1:ident});",
+          insertText: "whatIs(${1:ident});",
           insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
           detail: "Returns the data type of passed identifier",
         },
+        {
+          label: "first",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "first(${1:list});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the first element of a list",
+        },
+        {
+          label: "last",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "last(${1:list});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the last element of a list",
+        },
+        {
+          label: "rest",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "rest(${1:list});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns a copy of the list excluding the first element",
+        },
+        {
+          label: "append",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "append(${1:list},${2:value});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Appends a value to a list and returns the new length",
+        },
+        {
+          label: "drop",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "drop(${1:list});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Removes and returns the last item from a list",
+        },
+        {
+          label: "join",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "join(${1:list},${2:separator});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Joins elements of a list into a string with a separator",
+        },
+        {
+          label: "contains",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "contains(${1:list},${2:value});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Checks if a value exists within a list using strict typing",
+        },
+        {
+          label: "posOf",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "posOf(${1:list},${2:value});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the index of a value in a list, or -1 if not found",
+        },
+        {
+          label: "abs",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "abs(${1:number});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the absolute positive value of a number",
+        },
+        {
+          label: "round",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "round(${1:number});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Rounds a floating-point number to the nearest integer",
+        },
+        {
+          label: "floor",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "floor(${1:number});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Rounds a number downward to the nearest integer",
+        },
+        {
+          label: "ceil",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "ceil(${1:number});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Rounds a number upward to the nearest integer",
+        },
+        {
+          label: "min",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "min(${1:num1},${2:num2});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the smaller of two numeric values",
+        },
+        {
+          label: "max",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "max(${1:num1},${2:num2});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the larger of two numeric values",
+        },
+        {
+          label: "pow",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "pow(${1:base},${2:exponent});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Raises a base number to the power of an exponent",
+        },
+        {
+          label: "abs",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "abs(${1:x});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the absolute (non-negative) value of a number",
+        },
+        {
+          label: "round",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "round(${1:x});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Rounds a number to the nearest integer",
+        },
+        {
+          label: "floor",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "floor(${1:x});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Rounds a number down to the nearest integer",
+        },
+        {
+          label: "ceil",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "ceil(${1:x});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Rounds a number up to the nearest integer",
+        },
+        {
+          label: "sqrt",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "sqrt(${1:x});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns the square root of a non-negative number",
+        },
+        {
+          label: "pow",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "pow(${1:base},${2:exponent});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Raises a base number to the power of an exponent",
+        },
+        {
+          label: "rand",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "rand();",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Generates a random float between 0.0 and 1.0",
+        },
+        {
+          label: "rand (limit)",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "rand(${1:max});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Generates a random integer from 0 up to max (exclusive)",
+        },
+        {
+          label: "rand (range)",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "rand(${1:min},${2:max});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Generates a random integer between min and max (exclusive)",
+        },
+        {
+          label: "rand (range)",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "rand(${1:min},${2:max});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Generates a random integer between min and max (exclusive)",
+        },
+        {
+          label: "reverse",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "reverse(${1:string or list});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Returns reversed order of a list or a string",
+        },
+
 
         // --- Snippet Boilerplates ---
         {
