@@ -2,6 +2,7 @@ package eval
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"tinypanda/internal/object"
@@ -442,6 +443,28 @@ var builtins = map[string]*object.Builtin{
 
 			default:
 				return newError("argument to `abs` must be INTEGER or FLOAT. got=%s", args[0].Type())
+			}
+		},
+	},
+
+	// round returns the nearest integer value of a floating-point number
+	// It accepts both INTEGER and FLOAT values and always returns an INTEGER.
+	// e.g: 4.4 -> 4, 4.7 -> 5
+	"round": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			switch args[0].Type() {
+			case object.INTEGER_OBJ:
+				return args[0]
+
+			case object.FLOAT_OBJ:
+				return &object.Integer{Value: int64(math.Round(args[0].(*object.Float).Value))}
+
+			default:
+				return newError("argument to `round` must be INTEGER or FLOAT. got=%s", args[0].Type())
 			}
 		},
 	},
