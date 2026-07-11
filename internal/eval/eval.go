@@ -132,6 +132,9 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	case *ast.IffExpression:
 		return evalIffExpression(node, env)
 
+	case *ast.TernaryExpression:
+		return evalTernaryExpression(node, env)
+
 	case *ast.ReturnStatement:
 		val := Eval(node.ReturnValue, env)
 
@@ -468,6 +471,22 @@ func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object
 	}
 
 	return newError("identifier not found: %s", node.Value)
+}
+
+// evalTernaryExpression evaluates ternary expression
+// If condition is truthy then return the evaluated object of the consequence else return evaluated object of alternative
+func evalTernaryExpression(node *ast.TernaryExpression, env *object.Environment) object.Object {
+	condition := Eval(node.Condition, env)
+
+	if isError(condition) {
+		return condition
+	}
+
+	if isTruthy(condition) {
+		return Eval(node.Consequence, env)
+	} else {
+		return Eval(node.Alternative, env)
+	}
 }
 
 func applyFunction(fn object.Object, args []object.Object) object.Object {

@@ -3,7 +3,9 @@
 
 package lexer
 
-import "strings"
+import (
+	"strings"
+)
 
 type Lexer struct {
 	input        string // raw source code to be tokenized
@@ -59,6 +61,12 @@ func (l *Lexer) NextToken() Token {
 
 	case '%':
 		tok = newToken(MOD, l.char)
+
+	case '?':
+		tok = newToken(QUESTION, l.char)
+
+	case ':':
+		tok = newToken(COLON, l.char)
 
 	case '!':
 		if l.peekChar() == '=' {

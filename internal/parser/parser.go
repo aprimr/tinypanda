@@ -12,6 +12,7 @@ const (
 	_ int = iota
 	LOWEST
 	ASSIGN
+	TERNARY     // ?
 	EQUALS      // == or !=
 	LESSGREATER // <, >, <= and >=
 	SUM         // + or -
@@ -37,6 +38,8 @@ var precedences = map[lexer.TokenType]int{
 	lexer.LPAREN:    CALL,
 	lexer.ASSIGN:    ASSIGN,
 	lexer.LBRACKET:  INDEX,
+	lexer.QUESTION:  TERNARY,
+	lexer.COLON:     TERNARY,
 }
 
 type prefixParseFn func() ast.Expression
@@ -89,6 +92,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(lexer.ASSIGN, p.parseAssignmentExpression)
 	p.registerInfix(lexer.MOD, p.parseInfixExpression)
 	p.registerInfix(lexer.LBRACKET, p.parseIndexExpression)
+	p.registerInfix(lexer.QUESTION, p.parseTernaryExpression)
 
 	// Read two tokens to initialize both curToken and peekToken
 	p.nextToken()
@@ -398,6 +402,30 @@ func (p *Parser) parseIffExpression() ast.Expression {
 
 		// Parse block statements after OTHERWISE parenthesis
 		expr.Alternative = p.parseBlockStatement()
+	}
+
+	return expr
+}
+
+// parseTernaryExpression parses a `condition ? stmt : stmt ;` expression
+func (p *Parser) parseTernaryExpression(condition ast.Expression) ast.Expression {
+	expr := &ast.TernaryExpression{Token: p.curToken, Condition: condition}
+
+	p.nextToken() // consume '?'
+
+	// parse consequence expression
+	expr.Consequence = p.parseExpression(TERNARY)
+
+	// check if next token is `:`
+	if !p.expectPeek(lexer.COLON) {
+		return nil
+	}
+	p.nextToken()
+
+	// parse alternative expression
+	expr.Alternative = p.parseExpression(LOWEST)
+	if expr.Alternative == nil {
+		return nil
 	}
 
 	return expr

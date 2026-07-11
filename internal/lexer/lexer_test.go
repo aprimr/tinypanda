@@ -36,6 +36,7 @@ func TestNextToken(t *testing.T) {
 		"Hello \\World";
 
 		[1, 2];
+		x = 5 % 2 == 0 ? true : false;
 		`
 
 	tests := []struct {
@@ -156,6 +157,19 @@ func TestNextToken(t *testing.T) {
 		{COMMA, ","},
 		{INT, "2"},
 		{RBRACKET, "]"},
+		{SEMICOLON, ";"},
+
+		{IDENT, "x"},
+		{ASSIGN, "="},
+		{INT, "5"},
+		{MOD, "%"},
+		{INT, "2"},
+		{EQUALS, "=="},
+		{INT, "0"},
+		{QUESTION, "?"},
+		{TRUE, "true"},
+		{COLON, ":"},
+		{FALSE, "false"},
 		{SEMICOLON, ";"},
 		{EOF, ""},
 	}

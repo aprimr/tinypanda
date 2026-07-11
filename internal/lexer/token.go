@@ -22,6 +22,8 @@ const (
 	SLASH    TokenType = "SLASH"
 	EXCLAM   TokenType = "EXCLAM"
 	MOD      TokenType = "MOD"
+	QUESTION TokenType = "?"
+	COLON    TokenType = ":"
 
 	// Comparision
 	LT        TokenType = "LT"
@@ -68,6 +70,8 @@ var keywords = map[string]TokenType{
 	"true":      TRUE,
 	"false":     FALSE,
 	"return":    RETURN,
+	"?":         QUESTION,
+	":":         COLON,
 }
 
 // LookupIdent maps an identifier literal string to its corresponding TokenType.

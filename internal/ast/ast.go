@@ -2,6 +2,7 @@ package ast
 
 import (
 	"bytes"
+	"fmt"
 	"strings"
 	"tinypanda/internal/lexer"
 )
@@ -362,4 +363,18 @@ func (ie *IndexExpression) String() string {
 	out.WriteString("])")
 
 	return out.String()
+}
+
+// Ternary Expression e.g: condition ? consequence : alternative ;
+type TernaryExpression struct {
+	Token       lexer.Token
+	Condition   Expression
+	Consequence Expression
+	Alternative Expression
+}
+
+func (te *TernaryExpression) expressionNode()      {}
+func (te *TernaryExpression) TokenLiteral() string { return te.Token.Literal }
+func (te *TernaryExpression) String() string {
+	return fmt.Sprintf("(%s ? %s : %s)", te.Condition.String(), te.Consequence.String(), te.Alternative.String())
 }

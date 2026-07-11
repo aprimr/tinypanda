@@ -149,7 +149,7 @@ func TestExclamOperator(t *testing.T) {
 func TestIfElseExpressions(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected interface{}
+		expected any
 	}{
 		{"iff (true) { 10 }", 10},
 		{"iff (false) { 10 }", nil},
@@ -162,6 +162,28 @@ func TestIfElseExpressions(t *testing.T) {
 	for _, tt := range tests {
 		evaluated := testEval(tt.input)
 		integer, ok := tt.expected.(int)
+		if ok {
+			testIntegerObject(t, evaluated, int64(integer))
+		} else {
+			testNullObject(t, evaluated)
+		}
+	}
+}
+
+func TestTernaryExpressions(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected any
+	}{
+		{"true ? 10 : 0 ;", 10},
+		{"10 < 5 ? 10 : 9 ;", 9},
+		{"!true ? 10 : 99+1 ;", 100},
+		{"100 / 10 %2 == 0 ? 10 : 0 ;", 10},
+	}
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		integer, ok := tt.expected.(int)
+
 		if ok {
 			testIntegerObject(t, evaluated, int64(integer))
 		} else {
@@ -444,10 +466,10 @@ func TestBuiltinFunctions(t *testing.T) {
 		{`str()`, "wrong number of arguments. got=0, expected=1"},
 		{`str(abc)`, "identifier not found: abc"},
 
-		{`what(10)`, "INTEGER"},
-		{`what()`, "wrong number of arguments. got=0, expected=1"},
-		{`what("panda")`, "STRING"},
-		{`bamboo x = fn() {}; what(x);`, "FUNCTION"},
+		{`whatIs(10)`, "INTEGER"},
+		{`whatIs()`, "wrong number of arguments. got=0, expected=1"},
+		{`whatIs("panda")`, "STRING"},
+		{`bamboo x = fn() {}; whatIs(x);`, "FUNCTION"},
 
 		{`upper("hello")`, "HELLO"},
 		{`upper("TinyPanda")`, "TINYPANDA"},

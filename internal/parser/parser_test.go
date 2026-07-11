@@ -837,3 +837,37 @@ func TestParsingIndexExpressions(t *testing.T) {
 		return
 	}
 }
+func TestTernaryExpression(t *testing.T) {
+	input := "10 > 5 ? 100 : 200;"
+
+	l := lexer.New(input)
+	p := New(l)
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	if len(program.Statements) != 1 {
+		t.Fatalf("program has wrong number of statements. got=%d", len(program.Statements))
+	}
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("not expression statement. got=%T", program.Statements[0])
+	}
+
+	ternary, ok := stmt.Expression.(*ast.TernaryExpression)
+	if !ok {
+		t.Fatalf("not ternary expression. got=%T", stmt.Expression)
+	}
+
+	if !testInfixExpression(t, ternary.Condition, 10, ">", 5) {
+		return
+	}
+
+	if !testIntegerLiteral(t, ternary.Consequence, 100) {
+		return
+	}
+
+	if !testIntegerLiteral(t, ternary.Alternative, 200) {
+		return
+	}
+}
