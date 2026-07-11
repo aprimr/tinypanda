@@ -10,7 +10,7 @@
 <h4 align="center">
   <a href="https://tinypanda.is-cool.dev/">Website</a> |
   <a href="https://tinypanda.is-cool.dev/download">Download</a> |
-  <a href="https://tinypanda.is-cool.dev/playground">Playground</a>
+  <a href="https://tinypanda.is-cool.dev/editor">Code Editor</a>
 </h4>
 
 <p align="center">
@@ -26,7 +26,7 @@
 </p>
 
 <p align="center">
-  A minimalist, small, interpreted programming language written entirely in Go. Designed to run natively as a lightweight CLI tool and seamlessly in the browser via WebAssembly.
+  A tiny, dynamically typed, interpreted programming language written in Go. Designed to run natively as a lightweight CLI tool and seamlessly in the browser via WebAssembly.
 </p>
 
 ## Features

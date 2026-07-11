@@ -323,4 +323,46 @@ var builtins = map[string]*object.Builtin{
 			return &object.String{Value: joinedString}
 		},
 	},
+
+	// reverse can accept a list or a string and returns the reverse value of the list or string
+	// reverse only returns the reversed value, it doesnt muatates the original list or string
+	"reverse": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, expected=1", len(args))
+			}
+
+			// if list is not passed to the function return error
+			if !(args[0].Type() == object.LIST_OBJ || args[0].Type() == object.STRING_OBJ) {
+				return newError("argument to `reverse` must be LIST or STRING. got=%s", args[0].Type())
+			}
+
+			switch args[0].Type() {
+			case object.LIST_OBJ:
+				list := args[0].(*object.List)
+				listLength := len(list.Elements)
+
+				// A empty slice of capacity same as original list to store reversed list
+				reverse := make([]object.Object, listLength)
+				// reverse eg. list: [10, true, "hello"] rev: ["hello", true, 10]
+				// Loop the list and copy the element from back to front
+				for i := range list.Elements {
+					reverse[i] = list.Elements[listLength-1-i]
+				}
+
+				return &object.List{Elements: reverse}
+
+			case object.STRING_OBJ:
+				var reverse string
+
+				for _, s := range args[0].(*object.String).Value {
+					reverse = string(s) + reverse
+				}
+				return &object.String{Value: reverse}
+
+			default:
+				return &object.Null{}
+			}
+		},
+	},
 }
