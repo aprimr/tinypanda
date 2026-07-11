@@ -1,0 +1,190 @@
+---
+title: Math Utilities
+description: TinyPanda built-in mathematical functions
+sidebar_position: 5
+---
+
+TinyPanda provides built-in functions for common mathematical operations. These functions accept `INTEGER` and `FLOAT` values and return the type documented for each function.
+
+## abs
+
+Returns the absolute (non-negative) value of a number.
+
+**Syntax**
+
+```js
+abs(x)
+```
+
+- `x` — `INTEGER` or `FLOAT`
+- Returns: same type as `x`
+
+```js
+abs(5)      // 5
+abs(-5)     // 5
+abs(3.14)   // 3.14
+abs(-3.14)  // 3.14
+```
+
+## round
+
+Rounds a number to the nearest integer. Halfway values (`.5`) round away from zero.
+
+**Syntax**
+
+```js
+round(x)
+```
+
+- `x` — `INTEGER` or `FLOAT`
+- Returns: `INTEGER`
+
+```js
+round(4.2)   // 4
+round(4.7)   // 5
+round(4.5)   // 5
+round(-4.5)  // -5
+round(5)     // 5
+```
+
+## floor
+
+Rounds a number down to the nearest integer (toward negative infinity).
+
+**Syntax**
+
+```js
+floor(x)
+```
+
+- `x` — `INTEGER` or `FLOAT`
+- Returns: `INTEGER`
+
+```js
+floor(5.9)   // 5
+floor(5.1)   // 5
+floor(-5.1)  // -6
+floor(-5.9)  // -6
+floor(5)     // 5
+```
+
+## ceil
+
+Rounds a number up to the nearest integer (toward positive infinity).
+
+**Syntax**
+
+```js
+ceil(x)
+```
+
+- `x` — `INTEGER` or `FLOAT`
+- Returns: `INTEGER`
+
+```js
+ceil(5.1)    // 6
+ceil(5.9)    // 6
+ceil(-5.1)   // -5
+ceil(-5.9)   // -5
+ceil(5)      // 5
+```
+
+## sqrt
+
+Returns the square root of a non-negative number.
+
+**Syntax**
+
+```js
+sqrt(x)
+```
+
+- `x` — `INTEGER` or `FLOAT`, must be `>= 0`
+- Returns: `FLOAT`
+
+**Errors**
+
+- `sqrt(-1)` → ``argument to `sqrt` must be a non-negative``
+
+```js
+sqrt(4)     // 4.0
+sqrt(2)     // 1.4142135623730951
+sqrt(0.25)  // 0.5
+sqrt(0)     // 0.0
+```
+
+## pow
+
+Returns `x` raised to the power of `y`.
+
+**Syntax**
+
+```js
+pow(x, y)
+```
+
+- `x` — `INTEGER` or `FLOAT` (base)
+- `y` — `INTEGER` or `FLOAT` (exponent)
+- Returns: `FLOAT`
+
+**Errors**
+
+- `pow(0, -1)` → `pow(0, negative) is undefined`
+- `pow(-2, 0.5)` → `pow(negative, non-integer) is undefined`
+
+```js
+pow(2, 3)    // 8.0
+pow(2.5, 2)  // 6.25
+pow(4, 0.5)  // 2.0
+pow(2, -1)   // 0.5
+pow(3, 0)    // 1.0
+pow(0, 5)    // 0.0
+```
+
+## rand
+
+Generates a pseudo-random number. The return type and range depend on how many arguments are passed.
+
+### `rand()`
+
+Returns a random `FLOAT` in the range `[0, 1)` (0.0 inclusive, 1.0 exclusive).
+
+```js
+rand()          // 0.742187...
+rand()          // 0.123456...
+```
+
+### `rand(n)`
+
+Returns a random `INTEGER` in the range `[0, n)` (0 inclusive, n exclusive).
+
+- `n` must be a positive `INTEGER`
+
+```js
+rand(10)        // 7
+rand(10)        // 3
+rand(6)         // 4 (dice roll)
+```
+
+**Errors**
+
+- `rand(-5)` → ``argument to `rand` must be positive``
+- `rand(0)` → ``argument to `rand` must be positive``
+
+### `rand(min, max)`
+
+Returns a random `INTEGER` in the range `[min, max)` (min inclusive, max exclusive).
+
+- `min` and `max` must be `INTEGER`
+- `min` must be less than `max`
+
+```js
+rand(1, 7)      // 4 (dice roll)
+rand(5, 10)     // 7
+rand(-5, 5)     // -2
+```
+
+**Errors**
+
+- `rand(5, 2)` → `min must be less than max.`
+- `rand(1, 2, 3)` → `wrong number of arguments, expected 0, 1, or 2`

@@ -9,7 +9,7 @@ sidebar_position: 2
 As TinyPanda strictly enforces matching types across operators, these functions allow you to safely cast types at runtime.
 
 
-## `str()`
+## str
 Converts an integer, float, or expression into its string representation. This is essential for combining numeric data with text.
 
 ```js
@@ -21,7 +21,7 @@ echoln("Pi value: " + str(pi));    // Outputs: Pi value: 3.14
 ```
 
 
-## `num()`
+## num
 Converts a valid string containing a numeric literal back into an integer or a float, depending on whether a decimal point is present.
 
 ```js
@@ -32,7 +32,7 @@ echoln(num(textDigits) + 7);    // Outputs: 130
 echoln(num(textFloat) + 0.33);  // Outputs: 46.0
 ```
 
-## `whatIs()`
+## whatIs
 Checks the data type of any value, variable, or math calculation and returns it as a text string.
 
 * **Returns:** A `STRING` of the type name (like `"INT"`, `"FLOAT"`, `"STRING"`, `"FUNCTION"`).
