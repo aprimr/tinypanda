@@ -245,7 +245,7 @@ var builtins = map[string]*object.Builtin{
 
 			// if list is not passed to the function return error
 			if args[0].Type() != object.LIST_OBJ {
-				return newError("argument to `append` must be LIST. got=%s", args[0].Type())
+				return newError("first argument to `append` must be LIST. got=%s", args[0].Type())
 			}
 
 			list := args[0].(*object.List)
@@ -286,6 +286,41 @@ var builtins = map[string]*object.Builtin{
 
 			list.Elements = newElements
 			return dropped
+		},
+	},
+
+	// join(list, string)
+	// join joins the elements of a list by the string provided and returns the final string
+	"join": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, expected=2", len(args))
+			}
+
+			// if list is not passed as first argument return error
+			if args[0].Type() != object.LIST_OBJ {
+				return newError("first argument to `join` must be LIST. got=%s", args[0].Type())
+			}
+
+			// if second argument is not a string return error
+			if args[1].Type() != object.STRING_OBJ {
+				return newError("second argument to `join` must be STRING. got=%s", args[1].Type())
+			}
+
+			list := args[0].(*object.List)
+			listLength := len(list.Elements)
+
+			var joinedString string
+			for i, el := range list.Elements {
+				// for last element dont add the join string on end
+				if i == listLength-1 {
+					joinedString = joinedString + el.Inspect()
+				} else {
+					joinedString = joinedString + el.Inspect() + args[1].Inspect()
+				}
+			}
+
+			return &object.String{Value: joinedString}
 		},
 	},
 }
