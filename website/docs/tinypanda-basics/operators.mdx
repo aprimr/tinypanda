@@ -42,7 +42,22 @@ what(10 % 2.5); // Returns: FLOAT
 `what(<ident>)` is a builtin function which returns the data type of the `ident`, learn nore about it [here](/docs/builtins/type-utils#what).
 :::
 
+## Increment and Decrement Operators
+TinyPanda supports postfix increment (`++`) and postfix decrement (`--`) operators. These operators provide a clean, shortcut syntax to mutate existing numerical variables in place by adding or subtracting by 1.
 
+> Only `INTEGER` and `FLOAT` can be incremented or decremented.
+
+```js
+bamboo num = 10;
+num++;
+echoln(num); // Outputs: 11
+```
+:::danger[INFO]
+In TinyPanda, `++` and `--` are statements, not expressions. This means they mutate the variable but do not return a value. You cannot assign them to other variables or pass them into function.
+```js
+bamboo x = i++; // This is a imvalid syntax
+```
+:::
 
 ## Comparison Operators
 

@@ -11,9 +11,9 @@ TinyPanda handles conditional logic using the **`iff`** and **`otherwise`** keyw
 Unlike many traditional languages where conditionals are structural statements, conditionals in TinyPanda are **expressions**. This means they always evaluate to a value that can be assigned or used directly.
 
 
-## Basic Syntax
+## iff... otherwise...
 
-An `iff` conditional checks a condition. If it evaluates to true, the code block inside the first set of curly braces executes.
+An `iff` conditional checks a condition. If it evaluates to true, the code block inside the first set of curly braces executes. If condition evaluates to false, the code block inside the second set of curly braces executes.
 
 ```text
 syntax: iff (<condition>) { <statements> } otherwise { <statements> }
@@ -30,6 +30,24 @@ iff (isHungry) {
 ```
 
 > TinyPanda requires explicit curly braces `{}` for both branches, even if they only contain a single line of code.
+
+## Ternary Operator
+The ternary operator provides a sleek, one-line shortcut for writing conditional expressions. Just like `iff-otherwise`, the ternary operator evaluates directly to a value.
+
+```js
+syntax: <condition> ? <statement> : <statement>;
+```
+
+If condition evaluates to true first statement gets executed, else second statement gets executed.
+
+Example:
+```js
+bamboo score = 85;
+bamboo result = score > = 50 ? "Pass" : "Fail";
+
+echoln(result); // Outputs: Pass
+```
+
 
 ## Truthy vs Falsy Values
 
@@ -59,7 +77,7 @@ false is falsy value
 */
 ```
 
-## Conditionals as Expressions
+## iff otherwise as Expressions
 
 Because `iff-otherwise` structures are expressions, they return a final value. The value of the last line executed inside the chosen block becomes the overall result of the conditional.
 
