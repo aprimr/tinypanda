@@ -378,3 +378,27 @@ func (te *TernaryExpression) TokenLiteral() string { return te.Token.Literal }
 func (te *TernaryExpression) String() string {
 	return fmt.Sprintf("(%s ? %s : %s)", te.Condition.String(), te.Consequence.String(), te.Alternative.String())
 }
+
+// Increment Statement e.g: ++;
+type IncrementStatement struct {
+	Token      lexer.Token
+	Identifier *Identifier
+}
+
+func (is *IncrementStatement) statementNode()       {}
+func (is *IncrementStatement) TokenLiteral() string { return is.Token.Literal }
+func (is *IncrementStatement) String() string {
+	return is.Identifier.String() + "++"
+}
+
+// Decrement Statement e.g: ++;
+type DecrementStatement struct {
+	Token      lexer.Token
+	Identifier *Identifier
+}
+
+func (ds *DecrementStatement) statementNode()       {}
+func (ds *DecrementStatement) TokenLiteral() string { return ds.Token.Literal }
+func (ds *DecrementStatement) String() string {
+	return ds.Identifier.String() + "--"
+}

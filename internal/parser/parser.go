@@ -164,6 +164,14 @@ func (p *Parser) parseStatement() ast.Statement {
 		return p.parseBambooStatement()
 	case lexer.RETURN:
 		return p.parseReturnStatement()
+	case lexer.IDENT:
+		if p.peekToken.Type == lexer.INCREMENT {
+			return p.parseIncrementStatement()
+		}
+		if p.peekToken.Type == lexer.DECREMENT {
+			return p.parseDecrementStatement()
+		}
+		return p.parseExpressionStatement()
 	default:
 		return p.parseExpressionStatement()
 	}
@@ -256,6 +264,34 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 		p.nextToken()
 	}
 
+	return stmt
+}
+
+// parseIncrementStatement parses a decrement operator like: x++;
+func (p *Parser) parseIncrementStatement() *ast.IncrementStatement {
+	stmt := &ast.IncrementStatement{
+		Token:      p.peekToken, // The ++ token
+		Identifier: &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal},
+	}
+	p.nextToken()
+
+	if p.peekTokenIs(lexer.SEMICOLON) {
+		p.nextToken()
+	}
+	return stmt
+}
+
+// parseDecrementStatement parses a decrement operator like: x--;
+func (p *Parser) parseDecrementStatement() *ast.DecrementStatement {
+	stmt := &ast.DecrementStatement{
+		Token:      p.peekToken, // The -- token
+		Identifier: &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal},
+	}
+	p.nextToken()
+
+	if p.peekTokenIs(lexer.SEMICOLON) {
+		p.nextToken()
+	}
 	return stmt
 }
 
