@@ -142,6 +142,37 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 			return val
 		}
 		return &object.ReturnValue{Value: val}
+
+	case *ast.IncrementStatement:
+		val, ok := env.Get(node.Identifier.Value)
+		if !ok {
+			return newError("identifier not foud: %s", node.Identifier.Value)
+		}
+
+		switch val.Type() {
+		case object.INTEGER_OBJ:
+			env.Set(node.Identifier.Value, &object.Integer{Value: val.(*object.Integer).Value + 1})
+
+		case object.FLOAT_OBJ:
+			env.Set(node.Identifier.Value, &object.Float{Value: val.(*object.Float).Value + 1})
+		}
+		return nil
+
+	case *ast.DecrementStatement:
+		val, ok := env.Get(node.Identifier.Value)
+		if !ok {
+			return newError("identifier not foud: %s", node.Identifier.Value)
+		}
+
+		switch val.Type() {
+		case object.INTEGER_OBJ:
+			env.Set(node.Identifier.Value, &object.Integer{Value: val.(*object.Integer).Value - 1})
+
+		case object.FLOAT_OBJ:
+			env.Set(node.Identifier.Value, &object.Float{Value: val.(*object.Float).Value - 1})
+		}
+		return nil
+
 	}
 
 	return nil
