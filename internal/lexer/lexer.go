@@ -48,10 +48,22 @@ func (l *Lexer) NextToken() Token {
 		}
 
 	case '+':
-		tok = newToken(PLUS, l.char)
+		if l.peekChar() == '+' {
+			char := l.char
+			l.readChar()
+			tok = Token{Type: INCREMENT, Literal: string(char) + string(l.char)}
+		} else {
+			tok = newToken(PLUS, l.char)
+		}
 
 	case '-':
-		tok = newToken(MINUS, l.char)
+		if l.peekChar() == '-' {
+			char := l.char
+			l.readChar()
+			tok = Token{Type: DECREMENT, Literal: string(char) + string(l.char)}
+		} else {
+			tok = newToken(MINUS, l.char)
+		}
 
 	case '*':
 		tok = newToken(ASTERISK, l.char)

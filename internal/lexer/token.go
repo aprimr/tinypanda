@@ -15,15 +15,17 @@ const (
 	STRING TokenType = "STRING"
 
 	// Operators
-	ASSIGN   TokenType = "ASSIGN"
-	PLUS     TokenType = "PLUS"
-	MINUS    TokenType = "MINUS"
-	ASTERISK TokenType = "ASTERISK"
-	SLASH    TokenType = "SLASH"
-	EXCLAM   TokenType = "EXCLAM"
-	MOD      TokenType = "MOD"
-	QUESTION TokenType = "?"
-	COLON    TokenType = ":"
+	ASSIGN    TokenType = "ASSIGN"
+	PLUS      TokenType = "PLUS"
+	MINUS     TokenType = "MINUS"
+	ASTERISK  TokenType = "ASTERISK"
+	SLASH     TokenType = "SLASH"
+	EXCLAM    TokenType = "EXCLAM"
+	MOD       TokenType = "MOD"
+	INCREMENT TokenType = "INCREMENT"
+	DECREMENT TokenType = "DECREMENT"
+	QUESTION  TokenType = "?"
+	COLON     TokenType = ":"
 
 	// Comparision
 	LT        TokenType = "LT"

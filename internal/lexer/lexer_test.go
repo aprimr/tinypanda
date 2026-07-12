@@ -37,6 +37,8 @@ func TestNextToken(t *testing.T) {
 
 		[1, 2];
 		x = 5 % 2 == 0 ? true : false;
+		x = x++;
+		y = y--;
 		`
 
 	tests := []struct {
@@ -171,6 +173,19 @@ func TestNextToken(t *testing.T) {
 		{COLON, ":"},
 		{FALSE, "false"},
 		{SEMICOLON, ";"},
+
+		{IDENT, "x"},
+		{ASSIGN, "="},
+		{IDENT, "x"},
+		{INCREMENT, "++"},
+		{SEMICOLON, ";"},
+
+		{IDENT, "y"},
+		{ASSIGN, "="},
+		{IDENT, "y"},
+		{DECREMENT, "--"},
+		{SEMICOLON, ";"},
+
 		{EOF, ""},
 	}
 
