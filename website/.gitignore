@@ -5,7 +5,6 @@
 /build
 
 # Temp
-/static
 
 # Generated files
 .docusaurus
