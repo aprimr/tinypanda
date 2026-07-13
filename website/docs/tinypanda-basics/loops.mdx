@@ -1,0 +1,43 @@
+---
+title: Loops
+description: A guide to loop structures, control flow, and iterative execution in TinyPanda.
+sidebar_position: 8
+---
+
+
+Loops in TinyPanda allow you to execute blocks of code repeatedly. 
+
+
+## loop (While Loop)
+
+The `loop` statement acts as a traditional while loop. It repeats its block statements as long as its condition expression evaluates to true.
+
+### Syntax
+
+```javascript
+loop (condition) {
+    // statements to execute
+}
+```
+
+:::info[NOTE]
+The body of a loop must **always** be enclosed in curly braces `{ }`, even if it only contains a single statement.
+:::
+
+### Usage
+
+To run a loop, initialize a control variable, set a termination boundary in the condition, and update the variable inside the loop body.
+
+```javascript
+bamboo x = 1;
+
+loop (x <= 3) {
+    echoln("The value of x is " + str(x));
+    x++;
+}
+
+// Output:
+// The value of x is 1
+// The value of x is 2
+// The value of x is 3
+```
