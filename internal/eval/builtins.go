@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 	"tinypanda/internal/object"
 )
 
@@ -624,6 +625,223 @@ var builtins = map[string]*object.Builtin{
 				return newError("wrong number of arguments. got=%d, max=2", len(args))
 			}
 
+		},
+	},
+
+	// --- Time Builtins
+	// now returns the current Unix timestamp in millisecond using the device clock
+	"now": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 0 {
+				return newError("wrong number of arguments. got=%d, want=0", len(args))
+			}
+
+			return &object.Integer{Value: time.Now().UnixMilli()}
+		},
+	},
+
+	// getSec(start - end)
+	// returns the elapsed time in second between a start and end millisecond timestamp.
+	"getSec": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, want=2", len(args))
+			}
+
+			startInt, ok := args[0].(*object.Integer)
+			endInt, ok := args[1].(*object.Integer)
+			if !ok {
+				return newError("arguments to getSec must be Integers. got=%s and %s", args[0].Type(), args[1].Type())
+			}
+
+			elapsedSeconds := float64(endInt.Value-startInt.Value) / 1000.0
+
+			return &object.Float{Value: elapsedSeconds}
+		},
+	},
+
+	// getMs(start - end)
+	// getMs returns the elapsed time in milliseconds between a start and end timestamp.
+	"getMs": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, want=2", len(args))
+			}
+
+			startInt, ok1 := args[0].(*object.Integer)
+			endInt, ok2 := args[1].(*object.Integer)
+			if !ok1 || !ok2 {
+				return newError("arguments to getMs must be Integers. got=%s and %s", args[0].Type(), args[1].Type())
+			}
+
+			return &object.Integer{Value: endInt.Value - startInt.Value}
+		},
+	},
+
+	// getMin(start - end)
+	// getMin returns the elapsed time in minutes between a start and end timestamp.
+	"getMin": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, want=2", len(args))
+			}
+
+			startInt, ok1 := args[0].(*object.Integer)
+			endInt, ok2 := args[1].(*object.Integer)
+			if !ok1 || !ok2 {
+				return newError("arguments to getMin must be Integers. got=%s and %s", args[0].Type(), args[1].Type())
+			}
+
+			// 1000ms * 60 seconds = 60,000ms per minute
+			elapsedMinutes := float64(endInt.Value-startInt.Value) / 60000.0
+			return &object.Float{Value: elapsedMinutes}
+		},
+	},
+
+	// getHr(start - end)
+	// getHr returns the elapsed time in hours between a start and end timestamp.
+	"getHr": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, want=2", len(args))
+			}
+
+			startInt, ok1 := args[0].(*object.Integer)
+			endInt, ok2 := args[1].(*object.Integer)
+			if !ok1 || !ok2 {
+				return newError("arguments to getHr must be Integers. got=%s and %s", args[0].Type(), args[1].Type())
+			}
+
+			// 1000ms * 60s * 60m = 3,600,000ms per hour
+			elapsedHours := float64(endInt.Value-startInt.Value) / 3600000.0
+			return &object.Float{Value: elapsedHours}
+		},
+	},
+
+	// getYear(timestamp)
+	// getYear returns the 4-digit calendar year from a millisecond timestamp.
+	"getYear": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+
+			ts, ok := args[0].(*object.Integer)
+			if !ok {
+				return newError("argument to getYear must be an Integer. got=%s", args[0].Type())
+			}
+
+			t := time.UnixMilli(ts.Value)
+			return &object.Integer{Value: int64(t.Year())}
+		},
+	},
+
+	// getMonth(timestamp)
+	// getMonth returns the calendar month as an integer.
+	"getMonth": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+			ts, ok := args[0].(*object.Integer)
+			if !ok {
+				return newError("argument to getMonth must be an Integer. got=%s", args[0].Type())
+			}
+
+			t := time.UnixMilli(ts.Value)
+			return &object.Integer{Value: int64(t.Month())}
+		},
+	},
+
+	// getMonth(timestamp)
+	// getDate returns the day of the month (1 to 31).
+	"getDate": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+			ts, ok := args[0].(*object.Integer)
+			if !ok {
+				return newError("argument to getDate must be an Integer. got=%s", args[0].Type())
+			}
+
+			t := time.UnixMilli(ts.Value)
+			return &object.Integer{Value: int64(t.Day())}
+		},
+	},
+
+	// getDay(timestamp)
+	// getDay returns the day of the week as string ("sunday", "monday", ..., "saturday").
+	"getDay": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+			ts, ok := args[0].(*object.Integer)
+			if !ok {
+				return newError("argument to getDay must be an Integer. got=%s", args[0].Type())
+			}
+
+			t := time.UnixMilli(ts.Value).Weekday()
+			var day string
+
+			switch t {
+			case 0:
+				day = "sunday"
+			case 1:
+				day = "monday"
+			case 2:
+				day = "tuesday"
+			case 3:
+				day = "wednesday"
+			case 4:
+				day = "thursday"
+			case 5:
+				day = "friday"
+			case 6:
+				day = "saturday"
+			}
+
+			return &object.String{Value: day}
+		},
+	},
+
+	// sleep(value)
+	// sleep pauses the execution of the current program
+	"sleep": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+
+			var duration time.Duration
+
+			switch arg := args[0].(type) {
+			case *object.Integer:
+				duration = time.Duration(arg.Value) * time.Millisecond
+
+			case *object.String:
+				inputStr := arg.Value
+
+				if _, err := strconv.Atoi(inputStr); err == nil {
+					inputStr += "ms"
+				}
+
+				// Use Go's native parser to handle "100ms", "10s", "1m", etc.
+				parsed, err := time.ParseDuration(inputStr)
+				if err != nil {
+					return newError("invalid sleep duration format: %q. error: %v", arg.Value, err)
+				}
+				duration = parsed
+
+			default:
+				return newError("argument to sleep must be an Integer or String. got=%s", args[0].Type())
+			}
+
+			// Pause the execution
+			time.Sleep(duration)
+
+			return &object.Null{}
 		},
 	},
 }
