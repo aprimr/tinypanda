@@ -871,3 +871,34 @@ func TestTernaryExpression(t *testing.T) {
 		return
 	}
 }
+
+func TestLoopStatement(t *testing.T) {
+	input := `
+	loop(x < 5) {}
+	loop(x < 10) { echoln(x); x++;}
+	`
+
+	l := lexer.New(input)
+	p := New(l)
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	if len(program.Statements) != 2 {
+		t.Fatalf("program.Statements does not contain 2 statements. got=%d", len(program.Statements))
+	}
+
+	for _, stmt := range program.Statements {
+		loopStatement, ok := stmt.(*ast.LoopStatement)
+		if !ok {
+			t.Errorf("stmt not *ast.LoopStatement. got=%T", stmt)
+			continue
+		}
+		if loopStatement.TokenLiteral() != "loop" {
+			t.Errorf("loopStatement.TokenLiteral not 'loop', got %q",
+				loopStatement.TokenLiteral())
+		}
+		if loopStatement.Statements == nil {
+			t.Errorf("loopStatement.Statements is nil")
+		}
+	}
+}

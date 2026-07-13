@@ -132,6 +132,9 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	case *ast.IffExpression:
 		return evalIffExpression(node, env)
 
+	case *ast.LoopStatement:
+		return evalLoopStatement(node, env)
+
 	case *ast.TernaryExpression:
 		return evalTernaryExpression(node, env)
 
@@ -489,6 +492,37 @@ func evalIffExpression(ie *ast.IffExpression, env *object.Environment) object.Ob
 	} else {
 		return NULL
 	}
+}
+
+// evalLoopStatement runs an infinite loop and checks if the condition is true
+// If condition is true then execute the block statements
+// If condition is false break the infinite loop
+func evalLoopStatement(node *ast.LoopStatement, env *object.Environment) object.Object {
+	var result object.Object = NULL // Default fallback
+
+	for {
+		condition := Eval(node.Condition, env)
+
+		if isError(condition) {
+			return condition
+		}
+
+		if isTruthy(condition) {
+			result = evalBlockStatements(node.Statements, env)
+
+			// If any error occur, or return value
+			if result != nil {
+				resType := result.Type()
+				if resType == object.ERROR_OBJ || resType == object.RETURN_VALUE_OBJ {
+					return result
+				}
+			}
+		} else { // break the infinite loop if the condition is false
+			break
+		}
+	}
+
+	return result
 }
 
 // evalIdentifier looks up the value of identifier in the environment map

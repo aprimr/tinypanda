@@ -172,6 +172,8 @@ func (p *Parser) parseStatement() ast.Statement {
 			return p.parseDecrementStatement()
 		}
 		return p.parseExpressionStatement()
+	case lexer.LOOP:
+		return p.parseLoopStatement()
 	default:
 		return p.parseExpressionStatement()
 	}
@@ -465,6 +467,34 @@ func (p *Parser) parseTernaryExpression(condition ast.Expression) ast.Expression
 	}
 
 	return expr
+}
+
+// parseLoopStatement parses a statement starting with token 'loop'
+// e.g: loop(x<10) { x++; }
+func (p *Parser) parseLoopStatement() *ast.LoopStatement {
+	stmt := &ast.LoopStatement{Token: p.curToken}
+
+	// return error if the token after loop is not "("
+	if !p.expectPeek(lexer.LPAREN) {
+		return nil
+	}
+	p.nextToken()
+
+	// parse looping condition
+	stmt.Condition = p.parseExpression(LOWEST)
+
+	// return error if the token after condition is not ")" followed by "{"
+	if !p.expectPeek(lexer.RPAREN) {
+		return nil
+	}
+	if !p.expectPeek(lexer.LBRACE) {
+		return nil
+	}
+
+	// parse block statement inside the braces
+	stmt.Statements = p.parseBlockStatement()
+
+	return stmt
 }
 
 // parseFunctionLiteral parses function and constructs its AST node.
