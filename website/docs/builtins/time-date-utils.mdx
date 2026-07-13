@@ -1,0 +1,53 @@
+---
+id: time-date-utils
+title: Time & Date Utilities
+sidebar_label: Time & Date
+sidebar_position: 6
+description: Guide to using TinyPanda's built-in time benchmarking, delay tracking, and calendar extraction functions.
+---
+
+TinyPanda provides built-in functions to easily work with dates, manipulate time intervals, or handle sleep. All internal timestamps are stored as **milliseconds**.
+
+## Timestamp & Sleep
+
+### now
+Returns the current Unix timestamp in milliseconds.
+
+> syntax: `now();` 
+
+```javascript
+bamboo start = now(); // e.g., 1783957595
+```
+
+### sleep
+Pauses the execution of the program for a specific timeframe.
+
+> syntax: `sleep(durationString);`
+
+```javascript
+sleep("2s");    // Pauses for 2 seconds
+sleep("100ms"); // Pauses for 100 milliseconds
+sleep("500");   // Pauses for 500 milliseconds (fallback)
+```
+
+## Time Helpers
+These functions calculate the exact decimal duration elapsed between a `start` and an `end` millisecond timestamp.
+> Syntax: `FunctionName(StartTimestamp, EndTimestamp)`
+
+| Function | Arguments | Return Type | Description |
+| :--- | :--- | :--- | :--- |
+| `getMs(start, end)` | `(Integer, Integer)` | `Integer` | Returns total elapsed milliseconds. |
+| `getSec(start, end)` | `(Integer, Integer)` | `Float` | Returns elapsed time in seconds with decimal precision. |
+| `getMin(start, end)` | `(Integer, Integer)` | `Float` | Returns elapsed time in minutes. |
+| `getHr(start, end)` | `(Integer, Integer)` | `Float` | Returns elapsed time in hours. |
+
+## Date Helpers
+These functions extract clear calendar components from a single millisecond Unix timestamp.
+> Syntax: `FunctionName(Timestamp)`
+
+| Function | Arguments | Return Type | Description / Example |
+| :--- | :--- | :--- | :--- |
+| `getYear(ts)` | `(Integer)` | `Integer` | Returns the 4-digit calendar year (e.g., `2026`). |
+| `getMonth(ts)` | `(Integer)` | `Integer` | Returns the calendar month from `1` to `12` (e.g., `7` for July). |
+| `getDate(ts)` | `(Integer)` | `Integer` | Returns the day of the month from `1` to `31` (e.g., `13`). |
+| `getDay(ts)` | `(Integer)` | `String` | Returns the day of the week (`Sunday`, `Monday`, ..., `Saturday`). |
