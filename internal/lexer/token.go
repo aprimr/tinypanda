@@ -54,6 +54,7 @@ const (
 	TRUE      TokenType = "TRUE"
 	FALSE     TokenType = "FALSE"
 	RETURN    TokenType = "RETURN"
+	LOOP      TokenType = "LOOP"
 )
 
 // Token represents a single unit produced by the Lexer.
@@ -74,6 +75,7 @@ var keywords = map[string]TokenType{
 	"return":    RETURN,
 	"?":         QUESTION,
 	":":         COLON,
+	"loop":      LOOP,
 }
 
 // LookupIdent maps an identifier literal string to its corresponding TokenType.

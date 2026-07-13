@@ -402,3 +402,24 @@ func (ds *DecrementStatement) TokenLiteral() string { return ds.Token.Literal }
 func (ds *DecrementStatement) String() string {
 	return ds.Identifier.String() + "--"
 }
+
+// Loop Statement e.g: loop(x<10) {x++;}
+type LoopStatement struct {
+	Token      lexer.Token
+	Condition  Expression
+	Statements *BlockStatement
+}
+
+func (ls *LoopStatement) statementNode()       {}
+func (ls *LoopStatement) TokenLiteral() string { return ls.Token.Literal }
+func (ls *LoopStatement) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("loop(")
+	out.WriteString(ls.Condition.String())
+	out.WriteString(") {")
+	out.WriteString(ls.Statements.String())
+	out.WriteString("}")
+
+	return out.String()
+}

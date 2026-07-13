@@ -39,6 +39,8 @@ func TestNextToken(t *testing.T) {
 		x = 5 % 2 == 0 ? true : false;
 		x = x++;
 		y = y--;
+
+		loop(x<10) { x++; }
 		`
 
 	tests := []struct {
@@ -185,6 +187,18 @@ func TestNextToken(t *testing.T) {
 		{IDENT, "y"},
 		{DECREMENT, "--"},
 		{SEMICOLON, ";"},
+
+		{LOOP, "loop"},
+		{LPAREN, "("},
+		{IDENT, "x"},
+		{LT, "<"},
+		{INT, "10"},
+		{RPAREN, ")"},
+		{LBRACE, "{"},
+		{IDENT, "x"},
+		{INCREMENT, "++"},
+		{SEMICOLON, ";"},
+		{RBRACE, "}"},
 
 		{EOF, ""},
 	}
