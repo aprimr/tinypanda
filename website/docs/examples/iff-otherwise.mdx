@@ -1,0 +1,60 @@
+---
+title: Iff Otherwise
+description: Simple examples of using iff and otherwise in TinyPanda.
+sidebar_position: 1
+---
+
+Use `iff` and `otherwise` to help your program make simple decisions.
+
+## Simple Yes-Check
+
+This script checks if a condition is true. If it is, it runs the code inside the curly braces.
+
+```js
+bamboo isHungry = true;
+
+iff (isHungry) {
+    echoln("Panda is hungry!!");
+}
+
+// Output:
+// Panda is hungry!!
+```
+
+## Iff Otherwise check
+
+Use `otherwise` to handle the alternative path when your `iff` condition is false.
+
+```js
+bamboo age = 20;
+
+iff (age >= 18) {
+    echoln("You are an adult!");
+} otherwise {
+    echoln("You are a kid!");
+}
+
+// Output:
+// You are an adult!
+```
+
+## Nested Iff Otherwise
+
+If you have more than two options, you can nest an `iff` inside an `otherwise` block to check another condition.
+
+```js
+bamboo age = 15;
+
+iff (age >= 18) {
+    echoln("You are an adult!");
+} otherwise {
+    iff (age >= 13) {
+        echoln("You are a teenager!");
+    } otherwise {
+        echoln("You are a child!");
+    }
+}
+
+// Output:
+// You are a teenager!
+```
