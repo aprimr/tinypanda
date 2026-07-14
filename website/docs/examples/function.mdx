@@ -1,0 +1,70 @@
+---
+title: Functions
+description: Learn how to write reusable blocks of code using the fn keyword in TinyPanda.
+sidebar_position: 3
+---
+
+Functions let you group a block of code together, give it a name, and run it whenever you want. This keeps your code clean and prevents you from writing the same logic twice.
+
+## Hello World
+
+This function takes a parameter (a name) and prints a greeting message in the console.
+
+```js
+bamboo greet = fn(name) {
+    echoln("Hello, " + name);
+};
+
+// Call the function
+greet("World");
+greet("Aprim");
+
+// Output:
+// Hello, World
+// Hello, Aprim
+```
+
+## Returning a Value
+
+Use the `return` keyword to send a calculated value back to where the function was called.
+
+```js
+bamboo add = fn(num1, num2) {
+    return num1 + num2;
+};
+
+// Call the function and save the result in a variable
+bamboo total = add(12, 8);
+
+echoln("Total is " + str(total));
+
+// Output:
+// Total is 20
+```
+
+---
+
+## Check Even or Odd
+
+You can combine functions with `iff` and `otherwise` to return different values depending on the inputs.
+
+```js
+bamboo isEven = fn(num) {
+    iff (num % 2 == 0) {
+        return true;
+    } otherwise {
+        return false;
+    }
+};
+
+bamboo number = 7;
+
+iff (isEven(number)) {
+    echoln(str(number) + " is even!");
+} otherwise {
+    echoln(str(number) + " is odd!");
+}
+
+// Output:
+// 7 is odd!
+```
