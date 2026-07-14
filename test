@@ -1,1 +1,0 @@
-bamboo x = 1; bamboo start = now(); echoln("Looping started"); loop(x < 10000) { echo(str(x) + "\t"); x++; } bamboo end = now(); echoln("Time to execute loop is "+ str(getSec(start, end)) + " second");
