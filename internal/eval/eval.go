@@ -135,6 +135,9 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	case *ast.LoopStatement:
 		return evalLoopStatement(node, env)
 
+	case *ast.ForStatement:
+		return evalForStatement(node, env)
+
 	case *ast.TernaryExpression:
 		return evalTernaryExpression(node, env)
 
@@ -515,6 +518,48 @@ func evalLoopStatement(node *ast.LoopStatement, env *object.Environment) object.
 				resType := result.Type()
 				if resType == object.ERROR_OBJ || resType == object.RETURN_VALUE_OBJ {
 					return result
+				}
+			}
+		} else { // break the infinite loop if the condition is false
+			break
+		}
+	}
+
+	return result
+}
+
+func evalForStatement(node *ast.ForStatement, env *object.Environment) object.Object {
+	if node.Init != nil {
+		initVal := Eval(node.Init, env)
+		if isError(initVal) {
+			return initVal
+		}
+	}
+
+	var result object.Object = NULL // Default fallback
+
+	for {
+		condition := Eval(node.Condition, env)
+		if isError(condition) {
+			return condition
+		}
+
+		if isTruthy(condition) {
+			loopEnv := object.NewEnclosedEnvironment(env)
+			result = evalBlockStatements(node.Statements, loopEnv)
+
+			// If any error occur, or return value
+			if result != nil {
+				resType := result.Type()
+				if resType == object.ERROR_OBJ || resType == object.RETURN_VALUE_OBJ {
+					return result
+				}
+			}
+
+			if node.Iteration != nil {
+				iterVal := Eval(node.Iteration, env)
+				if isError(iterVal) {
+					return iterVal
 				}
 			}
 		} else { // break the infinite loop if the condition is false
