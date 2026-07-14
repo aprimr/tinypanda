@@ -1,0 +1,27 @@
+bamboo uniqueList = fn(arr) {
+    bamboo result = [];
+    bamboo i = 0;
+    bamboo n = len(arr);
+
+    loop (i < n) {
+        bamboo current = arr[i];
+        
+        // Only append if it's not already in our result list
+        iff (contains(result, current) == false) {
+            append(result, current);
+        }
+        
+        i = i + 1;
+    }
+    return result;
+};
+
+bamboo rawData = [1, 2, 2, 3, 4, 4, 4, 5, 1];
+bamboo cleanData = uniqueList(rawData);
+
+echoln("Original: " + join(rawData, ", "));
+echoln("Unique:   " + join(cleanData, ", "));
+
+// Output:
+// Original: 1, 2, 2, 3, 4, 4, 4, 5, 1
+// Unique:   1, 2, 3, 4, 5
