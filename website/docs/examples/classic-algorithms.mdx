@@ -1,0 +1,138 @@
+---
+title: Classic Algorithms
+description: Practical implementations of classic computer science algorithms in TinyPanda.
+sidebar_position: 7
+---
+
+Implementing classic algorithms is the best way to see how TinyPanda's loops, conditionals, lists, and functions work together to solve real-world problems.
+
+## Fibonacci Series Generator
+
+Generates a sequence of $N$ Fibonacci numbers where each number is the sum of the two preceding ones.
+
+```js
+bamboo fibonacci = fn(n) {
+    bamboo sequence = [];
+    
+    iff (n <= 0) {
+        return sequence;
+    }
+    
+    iff (n == 1) {
+        append(sequence, 0);
+        return sequence;
+    }
+
+    // Initialize first two elements
+    append(sequence, 0);
+    append(sequence, 1);
+
+    bamboo i = 2;
+    loop (i < n) {
+        bamboo nextVal = sequence[i - 1] + sequence[i - 2];
+        append(sequence, nextVal);
+        i = i + 1;
+    }
+    
+    return sequence;
+};
+
+bamboo result = fibonacci(10);
+echoln("Fibonacci (10): " + join(result, ", "));
+
+// Output:
+// Fibonacci (10): 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+```
+
+## Factorial Calculator
+
+An iterative program that calculates the product of all positive integers less than or equal to $N$.
+
+```js
+bamboo factorial = fn(n) {
+    bamboo result = 1;
+    bamboo i = 1;
+
+    loop (i <= n) {
+        result = result * i;
+        i = i + 1;
+    }
+
+    return result;
+};
+
+bamboo num = 5;
+bamboo fact = factorial(num);
+
+echoln(str(num) + "! = " + str(fact));
+
+// Output:
+// 5! = 120
+```
+
+## Prime Number Checker
+
+Checks whether a target integer is a prime number by verifying if it has any divisors other than 1 and itself.
+
+```js
+bamboo isPrime = fn(n) {
+    iff (n <= 1) {
+        return false;
+    }
+
+    bamboo i = 2;
+    loop (i * i <= n) {
+        iff (n % i == 0) {
+            return false; // Found a divisor, not prime
+        }
+        i = i + 1;
+    }
+    
+    return true;
+};
+
+bamboo numToCheck = 29;
+
+iff (isPrime(numToCheck)) {
+    echoln(str(numToCheck) + " is a prime number.");
+} otherwise {
+    echoln(str(numToCheck) + " is not a prime number.");
+}
+
+// Output:
+// 29 is a prime number.
+```
+
+## Remove Duplicates from a List
+
+Iterates through a list and constructs a new list containing only unique items by verifying presence prior to insertion.
+
+```js
+bamboo uniqueList = fn(arr) {
+    bamboo result = [];
+    bamboo i = 0;
+    bamboo n = len(arr);
+
+    loop (i < n) {
+        bamboo current = arr[i];
+        
+        // Only append if it's not already in our result list
+        iff (contains(result, current) == false) {
+            append(result, current);
+        }
+        
+        i = i + 1;
+    }
+    return result;
+};
+
+bamboo rawData = [1, 2, 2, 3, 4, 4, 4, 5, 1];
+bamboo cleanData = uniqueList(rawData);
+
+echoln("Original: " + join(rawData, ", "));
+echoln("Unique:   " + join(cleanData, ", "));
+
+// Output:
+// Original: 1, 2, 2, 3, 4, 4, 4, 5, 1
+// Unique:   1, 2, 3, 4, 5
+```
