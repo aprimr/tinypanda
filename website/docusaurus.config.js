@@ -22,6 +22,22 @@ const config = {
   url: 'https://tinypanda.is-cool.dev',
   baseUrl: '/',
 
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {
+        type: 'application/ld+json',
+      },
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        'name': 'TinyPanda',
+        'alternateName': ['TinyPanda Language', 'TinyPanda Website', 'TinyPanda Interpreter', 'TinyPanda Programming Language', 'TinyPanda Lang'],
+        'url': 'https://tinypanda.is-cool.dev/',
+      }),
+    },
+  ],
+
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'aprimr', // Usually your GitHub org/user name.
@@ -122,7 +138,6 @@ const config = {
             title: 'Get Help',
             items: [
               { label: 'Docs', to: '/docs/intro' },
-              { label: 'Tutorial', to: '/' },
               { label: 'Examples', to: '/' },
             ],
           },
