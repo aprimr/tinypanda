@@ -1,0 +1,56 @@
+---
+title: Loops
+description: Learn how to repeat code using loop and for in TinyPanda.
+sidebar_position: 2
+---
+
+Loops let you run a block of code multiple times without writing it over and over again.
+
+## Simple Counter
+
+The `loop` runs repeatedly as long as its condition is true. It acts like a `while` loop in other languages.
+
+```js
+bamboo count = 1;
+
+loop (count <= 5) {
+    echoln("Counter is: " + str(count));
+    count++; // Increment the counter
+}
+
+// Output:
+// Counter is: 1
+// Counter is: 2
+// Counter is: 3
+// Counter is: 4
+// Counter is: 5
+```
+
+
+## Counting Even Numbers
+
+The `for` loop is perfect when you know exactly how many times you want to loop. 
+
+:::tip[IMPORTANT]
+In TinyPanda, remember to declare your loop variable (`bamboo i`) *before* you start the loop!
+:::
+
+```js
+bamboo i = 1;
+
+echoln("Even numbers up to 10:");
+
+for (i = 1; i <= 10; i++) {
+    iff (i % 2 == 0) {
+        echoln(str(i));
+    }
+}
+
+// Output:
+// Even numbers up to 10:
+// 2
+// 4
+// 6
+// 8
+// 10
+````
