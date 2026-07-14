@@ -1,0 +1,87 @@
+---
+title: Working with Lists
+description: Simple examples of using lists in TinyPanda.
+sidebar_position: 4
+---
+
+Use these examples to see how lists and list utilities work in TinyPanda.
+
+## Get First and Last Item
+
+A simple program to grab the first and last names from a list.
+
+```js
+bamboo names = ["panda", "tinypanda", "aprim"];
+
+echoln(first(names));
+echoln(last(names));
+
+// Output:
+// panda
+// aprim
+```
+
+## Adding and Removing Items
+
+This program adds "water" to the list, then removes it.
+
+```js
+bamboo myList = ["bamboo"];
+
+// Add "water" to list
+append(myList, "water");
+echoln(join(myList, ", "));
+
+// Remove "water"  from the list
+drop(myList);
+echoln(join(myList, ", "));
+
+// Output:
+// bamboo, water
+// bamboo
+```
+
+## Check if Item Exists
+
+A quick check to see if "bamboo" is inside our list.
+
+```js
+bamboo inventory = ["bamboo", "water"];
+
+iff (contains(inventory, "bamboo")) {
+    echoln("We have bamboo!");
+} otherwise {
+    echoln("No bamboo found.");
+}
+
+// Output:
+// We have bamboo!
+```
+
+## Calculate Average of List Elements 
+
+This program takes a list of numbers, loops through them to calculate the sum, and divides by the list length to find the average.
+
+```js
+bamboo marks = [85, 90, 78, 92, 88];
+bamboo sum = 0;
+bamboo i = 0;
+
+// Loop through the list and add each number to the sum
+loop (i < len(marks)) {
+    sum = sum + marks[i];
+    i++;
+}
+
+// Calculate the average
+bamboo average = sum / len(marks);
+
+echoln("Numbers: " + join(marks, ", "));
+echoln("Sum = " + str(sum));
+echoln("Average = " + str(average));
+
+// Output:
+// Numbers: 85, 90, 78, 92, 88
+// Sum = 433
+// Average = 86
+```
