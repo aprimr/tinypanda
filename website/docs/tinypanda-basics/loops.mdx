@@ -1,12 +1,10 @@
 ---
 title: Loops
-description: A guide to loop structures, control flow, and iterative execution in TinyPanda.
+description: A comprehensive guide to loops, control flow, and iterative execution using the loop and for structures in TinyPanda.
 sidebar_position: 8
 ---
 
-
 Loops in TinyPanda allow you to execute blocks of code repeatedly. 
-
 
 ## loop (While Loop)
 
@@ -14,7 +12,7 @@ The `loop` statement acts as a traditional while loop. It repeats its block stat
 
 ### Syntax
 
-```javascript
+```js
 loop (condition) {
     // statements to execute
 }
@@ -28,7 +26,7 @@ The body of a loop must **always** be enclosed in curly braces `{ }`, even if it
 
 To run a loop, initialize a control variable, set a termination boundary in the condition, and update the variable inside the loop body.
 
-```javascript
+```js
 bamboo x = 1;
 
 loop (x <= 3) {
@@ -40,4 +38,44 @@ loop (x <= 3) {
 // The value of x is 1
 // The value of x is 2
 // The value of x is 3
+```
+
+
+## for Loop
+
+The `for` statement provides a clean way to write counter-controlled loops. 
+
+:::warning[SYNTAX CONSTRAINT]
+ All loop variables must be declared in the outer scope before the loop begins.
+:::
+
+### Syntax
+
+```js
+for (initializer; condition; iteration) {
+    // statements to execute
+}
+```
+
+* **`initializer`**: A standard assignment expression (e.g., `x = 0`) that sets the starting value of an already declared variable.
+* **`condition`**: An expression checked before each iteration. The loop runs as long as this evaluates to true.
+* **`iteration`**: An update statement executed at the end of every loop iteration (typically postfix operators like `x++` or `x--`, or assignment statements).
+
+### Usage
+
+To run a `for` loop, declare your iteration variable outside first, and then initialize and increment it inside the loop header:
+
+```js
+bamboo i = 0;
+
+for (i = 0; i < 5; i++) {
+    echoln(i);
+}
+
+// Output:
+// 0
+// 1
+// 2
+// 3
+// 4
 ```
