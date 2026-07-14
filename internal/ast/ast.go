@@ -424,3 +424,30 @@ func (ls *LoopStatement) String() string {
 
 	return out.String()
 }
+
+// For Statement e.g: for(i=0; i<10; i++) {...}
+type ForStatement struct {
+	Token      lexer.Token
+	Init       Statement // the for init statement i=0
+	Condition  Expression
+	Iteration  Statement
+	Statements *BlockStatement
+}
+
+func (fs *ForStatement) statementNode()       {}
+func (fs *ForStatement) TokenLiteral() string { return fs.Token.Literal }
+func (fs *ForStatement) String() string {
+	var out bytes.Buffer
+
+	out.WriteString(fs.Token.Literal)
+	out.WriteString(" (")
+	out.WriteString(fs.Init.String())
+	out.WriteString("; ")
+	out.WriteString(fs.Condition.String())
+	out.WriteString("; ")
+	out.WriteString(fs.Iteration.String())
+	out.WriteString(") ")
+	out.WriteString(fs.Statements.String())
+
+	return out.String()
+}

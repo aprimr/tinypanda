@@ -174,6 +174,8 @@ func (p *Parser) parseStatement() ast.Statement {
 		return p.parseExpressionStatement()
 	case lexer.LOOP:
 		return p.parseLoopStatement()
+	case lexer.FOR:
+		return p.parseForStatement()
 	default:
 		return p.parseExpressionStatement()
 	}
@@ -492,6 +494,53 @@ func (p *Parser) parseLoopStatement() *ast.LoopStatement {
 	}
 
 	// parse block statement inside the braces
+	stmt.Statements = p.parseBlockStatement()
+
+	return stmt
+}
+
+// parseForStatement parses a statement starting with for token
+func (p *Parser) parseForStatement() *ast.ForStatement {
+	stmt := &ast.ForStatement{Token: p.curToken}
+
+	// check if next token is '('
+	if !p.expectPeek(lexer.LPAREN) {
+		return nil
+	}
+	p.nextToken() // parse '(' token
+
+	// parse init statement
+	stmt.Init = p.parseExpressionStatement()
+
+	if p.curTokenIs(lexer.SEMICOLON) {
+		p.nextToken() // parse semicolon token
+	}
+
+	// Parse the condition
+	stmt.Condition = p.parseExpression(LOWEST)
+
+	if !p.expectPeek(lexer.SEMICOLON) {
+		return nil
+	}
+	p.nextToken() // parse semicolon token
+
+	// Parse increment statement
+	if p.peekTokenIs(lexer.INCREMENT) {
+		stmt.Iteration = p.parseIncrementStatement()
+	} else if p.peekTokenIs(lexer.DECREMENT) {
+		stmt.Iteration = p.parseDecrementStatement()
+	} else {
+		stmt.Iteration = p.parseExpressionStatement()
+	}
+
+	if !p.expectPeek(lexer.RPAREN) {
+		return nil
+	}
+
+	if !p.expectPeek(lexer.LBRACE) {
+		return nil
+	}
+
 	stmt.Statements = p.parseBlockStatement()
 
 	return stmt
