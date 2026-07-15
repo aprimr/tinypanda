@@ -5,9 +5,17 @@ import { registerTinyPanda } from '../../monaco/registerTinyPanda';
 import styles from './codeeditor.module.css';
 
 const DEFAULT_TP_CODE = `bamboo name = "TinyPanda";
+bamboo year =  2026;
+bamboo isReady = true;
+
 echoln(name);
-echoln(what(name));
-`;
+echoln(whatIs(name));
+
+echoln(year);
+echoln(whatIs(year));
+
+echoln(isReady);
+echoln(whatIs(isReady));`;
 
 const THEME_STORAGE_KEY = 'tinypanda-editor-theme';
 

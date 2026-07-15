@@ -8,7 +8,7 @@ import { Expand } from 'lucide-react';
 
 const pkg = require('../../../package.json');
 
-const DEFAULT_TP_CODE = `bamboo name = "TinyPanda";\nbamboo repoLink = "github.com/aprimr/tinypanda";\n\necholn(name + " is fun!!!");\nbamboo sayhello = fn(x) {\n\techoln("Hello ", x);\n\treturn "Star " + name + " at "+ repoLink;\n};\n\nbamboo msg = sayhello(name);\necholn(msg);`;
+const DEFAULT_TP_CODE = `bamboo i = 0;\n\nbamboo start = now();\nfor(i = 0; i < 10; i++) {\n\tiff (i % 2 == 0) {\n\t\techoln("Hello World!");\n\t} otherwise {\n\t\techoln("Tinypanda is fun!!!");\n\t}\n}\nbamboo end = now();\necholn("\\nLoop took ", str(getSec(start, end)), " second");`;
 
 const DEFAULT_README = `
 =================
