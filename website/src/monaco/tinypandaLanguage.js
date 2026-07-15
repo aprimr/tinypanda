@@ -7,10 +7,12 @@ export const tinypandaLanguage = {
     "return",
     "true",
     "false",
+    "loop",
+    "for"
   ],
 
   operators: [
-    "=", "+", "-", "*", "/", "!", "<", ">", "<=", ">=", "==", "!=", "%",
+    "=", "+", "-", "*", "/", "!", "<", ">", "<=", ">=", "==", "!=", "%", "++", "--",
   ],
 
   builtins: [
@@ -40,6 +42,17 @@ export const tinypandaLanguage = {
     "pow",
     "rand",
     "reverse",
+
+    "now",
+    "sleep",
+    "getMs",
+    "getSec",
+    "getMin",
+    "getHr",
+    "getYear",
+    "getMonth",
+    "getDate",
+    "getDay",
   ],
 
   tokenizer: {

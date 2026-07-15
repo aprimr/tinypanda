@@ -89,6 +89,22 @@ export function registerTinyPanda(monaco) {
           detail: "Fallback otherwise statement block",
           documentation: "Executes if the preceding condition block evaluates to false.",
         },
+        {
+          label: "loop",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: "loop (${1:condition}) {\n\t${2:// statement}\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "While loop evaluation block",
+          documentation: "Runs the block repeatedly as long as the condition remains true.",
+        },
+        {
+          label: "for",
+          kind: monaco.languages.CompletionItemKind.Keyword,
+          insertText: "for (${1:init}; ${2:condition}; ${3:iteration) {\n\t${4:// statements}\n}}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Structured loop block",
+          documentation: "Standard iteration layout supporting initialization, conditions, and steps.",
+        },
         
         // --- Built-in Functions ---
         {
@@ -328,6 +344,77 @@ export function registerTinyPanda(monaco) {
           insertText: "reverse(${1:string or list});",
           insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
           detail: "Returns reversed order of a list or a string",
+        },
+
+        {
+          label: "now",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "now();",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Current Unix timestamp in milliseconds",
+        },
+        {
+          label: "sleep",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "sleep(${1:durationString});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Pause script execution (e.g. \"2s\", \"100ms\")",
+        },
+        {
+          label: "getMs",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getMs(${1:start}, ${2:end});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Total elapsed duration in milliseconds",
+        },
+        {
+          label: "getSec",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getSec(${1:start}, ${2:end});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Elapsed duration in seconds (Float precision)",
+        },
+        {
+          label: "getMin",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getMin(${1:start}, ${2:end});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Elapsed duration in minutes (Float)",
+        },
+        {
+          label: "getHr",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getHr(${1:start}, ${2:end});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Elapsed duration in hours (Float)",
+        },
+        {
+          label: "getYear",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getYear(${1:timestamp});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Extract 4-digit calendar year from ms timestamp",
+        },
+        {
+          label: "getMonth",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getMonth(${1:timestamp});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Extract month digit (1-12) from ms timestamp",
+        },
+        {
+          label: "getDate",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getDate(${1:timestamp});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Extract day element of month (1-31) from timestamp",
+        },
+        {
+          label: "getDay",
+          kind: monaco.languages.CompletionItemKind.Function,
+          insertText: "getDay(${1:timestamp});",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          detail: "Extract literal weekday string (e.g. \"Wednesday\")",
         },
 
 
